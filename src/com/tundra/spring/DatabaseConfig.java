@@ -28,8 +28,10 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class DatabaseConfig {
 	
-   private  final static String USERNAME="root";
-   private  final static String PASSWORD="new12345";
+	private  final static String USERNAME="root";
+	private  final static String PASSWORD="new12345";
+//	private  final static String USERNAME="localapp";
+//  private  final static String PASSWORD="l0calapp";
    
    
    private String URL = "jdbc:mysql://127.0.0.1:3306/tundra";

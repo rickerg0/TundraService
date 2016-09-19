@@ -1,18 +1,13 @@
 package com.tundra.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import com.tundra.interfaces.LocationDAO;
-import com.tundra.interfaces.OrganizationDAO;
+import com.tundra.database.Organization;
 
-@Service
-public class TundraService {
-  
-//	@Autowired
-//	LocationDAO locationDAO;
-//	@Autowired
-//	OrganizationDAO organizationDAO;
-	
-	
+public interface TundraService {
+
+	List<Organization> findAllOrganizations();
+
+	Organization findOrganization(int id);
+
 }

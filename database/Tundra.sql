@@ -24,7 +24,7 @@ USE `tundra` ;
 DROP TABLE IF EXISTS `tundra`.`Organization` ;
 
 CREATE TABLE IF NOT EXISTS `tundra`.`Organization` (
-  `Id` INT NOT NULL,
+  `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `Address1` VARCHAR(45) NOT NULL,
   `Address2` VARCHAR(45) NULL,
@@ -44,7 +44,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tundra`.`Location` ;
 
 CREATE TABLE IF NOT EXISTS `tundra`.`Location` (
-  `Id` INT NOT NULL,
+  `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `Latitude` DECIMAL NULL,
   `Longitude` DECIMAL NULL,
@@ -67,7 +67,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tundra`.`ExibitTag` ;
 
 CREATE TABLE IF NOT EXISTS `tundra`.`ExibitTag` (
-  `Id` INT NOT NULL,
+  `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `Tag` VARCHAR(45) NOT NULL,
   `Description` VARCHAR(45) NOT NULL,
@@ -90,7 +90,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tundra`.`ExibitTagMedia` ;
 
 CREATE TABLE IF NOT EXISTS `tundra`.`ExibitTagMedia` (
-  `Id` INT NOT NULL,
+  `Id` INT NOT NULL AUTO_INCREMENT,
   `MimeType` VARCHAR(45) NOT NULL,
   `Content` BLOB NOT NULL,
   `Created` DATETIME NOT NULL,
