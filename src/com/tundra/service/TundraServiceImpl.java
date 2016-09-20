@@ -32,4 +32,15 @@ public class TundraServiceImpl implements TundraService {
 		return organizationDAO.findOne(id);
 	}
 	
+	@Override
+	public List<Organization> findByName(String name) {
+		return organizationDAO.findByName(name);
+	}
+	
+	@Override
+	public List<Organization> findByNameAndCity(String name, String city) {
+		return organizationDAO.findByNameAndCity(name, city);
+	}
+	
+	
 }
