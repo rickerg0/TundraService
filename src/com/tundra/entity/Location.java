@@ -3,30 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tundra.database;
+package com.tundra.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 /**
  *
  * @author rickerg0
  */
 @Entity
-@Table(name = "organization")
-public class Organization implements Serializable {
+@Table(name = "location")
+public class Location implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,49 +39,42 @@ public class Organization implements Serializable {
     @Basic(optional = false)
     @Column(name = "Name")
     private String name;
-    @Basic(optional = false)
-    @Column(name = "Address1")
-    private String address1;
-    @Column(name = "Address2")
-    private String address2;
-    @Basic(optional = false)
-    @Column(name = "City")
-    private String city;
-    @Basic(optional = false)
-    @Column(name = "State")
-    private String state;
-    @Basic(optional = false)
-    @Column(name = "Zip")
-    private String zip;
-    @Basic(optional = false)
-    @Column(name = "Phone")
-    private String phone;
+    @Column(name = "Latitude")
+    private BigDecimal latitude;
+    @Column(name = "Longitude")
+    private BigDecimal longitude;
     @Basic(optional = false)
     @Column(name = "Created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
+    public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
+	@Basic(optional = false)
     @Column(name = "Updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "organization", fetch = FetchType.EAGER)
-    private Set<Location> locationSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId", fetch = FetchType.EAGER)
+    private Set<Exibittag> exibittagSet;
+    @JoinColumn(name = "Organization_Id", referencedColumnName = "Id")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Organization organization;
 
-    public Organization() {
+    public Location() {
     }
 
-    public Organization(Integer id) {
+    public Location(Integer id) {
         this.id = id;
     }
 
-    public Organization(Integer id, String name, String address1, String city, String state, String zip, String phone, Date created, Date updated) {
+    public Location(Integer id, String name, Date created, Date updated) {
         this.id = id;
         this.name = name;
-        this.address1 = address1;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.phone = phone;
         this.created = created;
         this.updated = updated;
     }
@@ -99,52 +95,20 @@ public class Organization implements Serializable {
         this.name = name;
     }
 
-    public String getAddress1() {
-        return address1;
+    public BigDecimal getLatitude() {
+        return latitude;
     }
 
-    public void setAddress1(String address1) {
-        this.address1 = address1;
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
     }
 
-    public String getAddress2() {
-        return address2;
+    public BigDecimal getLongitude() {
+        return longitude;
     }
 
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
     }
 
     public Date getCreated() {
@@ -163,13 +127,15 @@ public class Organization implements Serializable {
         this.updated = updated;
     }
 
-    public Set<Location> getLocationSet() {
-        return locationSet;
+    public Set<Exibittag> getExibittagSet() {
+        return exibittagSet;
     }
 
-    public void setLocationSet(Set<Location> locationSet) {
-        this.locationSet = locationSet;
+    public void setExibittagSet(Set<Exibittag> exibittagSet) {
+        this.exibittagSet = exibittagSet;
     }
+
+    
 
     @Override
     public int hashCode() {
@@ -181,10 +147,10 @@ public class Organization implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Organization)) {
+        if (!(object instanceof Location)) {
             return false;
         }
-        Organization other = (Organization) object;
+        Location other = (Location) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -193,7 +159,7 @@ public class Organization implements Serializable {
 
     @Override
     public String toString() {
-        return "dbsucker.Organization[ id=" + id + " ]";
+        return "dbsucker.Location[ id=" + id + " ]";
     }
     
 }

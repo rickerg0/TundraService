@@ -3,22 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tundra.database;
+package com.tundra.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,8 +24,8 @@ import javax.persistence.TemporalType;
  * @author rickerg0
  */
 @Entity
-@Table(name = "location")
-public class Location implements Serializable {
+@Table(name = "exibittagmedia")	
+public class Exibittagmedia implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,44 +33,34 @@ public class Location implements Serializable {
     @Column(name = "Id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "Name")
-    private String name;
-    @Column(name = "Latitude")
-    private BigDecimal latitude;
-    @Column(name = "Longitude")
-    private BigDecimal longitude;
+    @Column(name = "MimeType")
+    private String mimeType;
+    @Basic(optional = false)
+    @Column(name = "Content",columnDefinition="blob")
+    private byte[] content;
     @Basic(optional = false)
     @Column(name = "Created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    public Organization getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}
-
-	@Basic(optional = false)
+    @Basic(optional = false)
     @Column(name = "Updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId", fetch = FetchType.EAGER)
-    private Set<Exibittag> exibittagSet;
-    @JoinColumn(name = "Organization_Id", referencedColumnName = "Id")
+    @JoinColumn(name = "Exibit_Id", referencedColumnName = "Id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Organization organization;
+    private Exibittag exibitId;
 
-    public Location() {
+    public Exibittagmedia() {
     }
 
-    public Location(Integer id) {
+    public Exibittagmedia(Integer id) {
         this.id = id;
     }
 
-    public Location(Integer id, String name, Date created, Date updated) {
+    public Exibittagmedia(Integer id, String mimeType, byte[] content, Date created, Date updated) {
         this.id = id;
-        this.name = name;
+        this.mimeType = mimeType;
+        this.content = content;
         this.created = created;
         this.updated = updated;
     }
@@ -87,28 +73,20 @@ public class Location implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getMimeType() {
+        return mimeType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
     }
 
-    public BigDecimal getLatitude() {
-        return latitude;
+    public byte[] getContent() {
+        return content;
     }
 
-    public void setLatitude(BigDecimal latitude) {
-        this.latitude = latitude;
-    }
-
-    public BigDecimal getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(BigDecimal longitude) {
-        this.longitude = longitude;
+    public void setContent(byte[] content) {
+        this.content = content;
     }
 
     public Date getCreated() {
@@ -127,15 +105,13 @@ public class Location implements Serializable {
         this.updated = updated;
     }
 
-    public Set<Exibittag> getExibittagSet() {
-        return exibittagSet;
+    public Exibittag getExibitId() {
+        return exibitId;
     }
 
-    public void setExibittagSet(Set<Exibittag> exibittagSet) {
-        this.exibittagSet = exibittagSet;
+    public void setExibitId(Exibittag exibitId) {
+        this.exibitId = exibitId;
     }
-
-    
 
     @Override
     public int hashCode() {
@@ -147,10 +123,10 @@ public class Location implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Location)) {
+        if (!(object instanceof Exibittagmedia)) {
             return false;
         }
-        Location other = (Location) object;
+        Exibittagmedia other = (Exibittagmedia) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -159,7 +135,7 @@ public class Location implements Serializable {
 
     @Override
     public String toString() {
-        return "dbsucker.Location[ id=" + id + " ]";
+        return "dbsucker.Exibittagmedia[ id=" + id + " ]";
     }
     
 }

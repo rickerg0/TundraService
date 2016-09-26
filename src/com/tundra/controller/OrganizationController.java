@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tundra.database.Organization;
+import com.tundra.entity.Organization;
 import com.tundra.service.TundraService;
 
 @Controller 
 
-@RequestMapping("/test")
-public class SpringController implements  Serializable {
+@RequestMapping("/org")
+public class OrganizationController implements  Serializable {
 
 	private static final String ERROR_PREFIX = "Whoops : ";
 	/**
@@ -39,7 +39,7 @@ public class SpringController implements  Serializable {
 		}
 	}
 	
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getOrgs(HttpServletResponse httpResponse) {
 		try {
 			return new ResponseEntity<List<Organization>>(tundraService.findAllOrganizations(),HttpStatus.OK);
@@ -56,15 +56,6 @@ public class SpringController implements  Serializable {
 			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 			
-	}
-
-	@RequestMapping(value="/name/{name}/{city}", method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> getOrgByNameAndCity(HttpServletResponse httpResponse, @PathVariable(value="name") String name, @PathVariable(value="city") String city) {
-		try {
-			return new ResponseEntity<List<Organization>>(tundraService.findByNameAndCity(name,city),HttpStatus.OK);
-		} catch (Throwable t) {
-			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 	}
 
 }

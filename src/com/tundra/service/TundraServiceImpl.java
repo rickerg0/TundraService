@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tundra.database.Organization;
-import com.tundra.interfaces.OrganizationDAO;
+import com.tundra.dao.OrganizationDAO;
+import com.tundra.entity.Organization;
 
 @Service
 public class TundraServiceImpl implements TundraService {

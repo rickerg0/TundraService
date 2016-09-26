@@ -1,4 +1,4 @@
-package com.tundra.interfaces;
+package com.tundra.dao;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tundra.database.Location;
-import com.tundra.database.Organization;
+import com.tundra.entity.Location;
+import com.tundra.entity.Organization;
 
 @Transactional("tundraTansactionManager")
 public interface LocationDAO extends JpaRepository<Location,Integer> {

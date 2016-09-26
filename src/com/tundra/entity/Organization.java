@@ -3,34 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tundra.database;
+package com.tundra.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 /**
  *
  * @author rickerg0
  */
 @Entity
-@Table(name = "exibittag")
-
-public class Exibittag implements Serializable {
+@Table(name = "organization")
+public class Organization implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,11 +36,22 @@ public class Exibittag implements Serializable {
     @Column(name = "Name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "Tag")
-    private String tag;
+    @Column(name = "Address1")
+    private String address1;
+    @Column(name = "Address2")
+    private String address2;
     @Basic(optional = false)
-    @Column(name = "Description")
-    private String description;
+    @Column(name = "City")
+    private String city;
+    @Basic(optional = false)
+    @Column(name = "State")
+    private String state;
+    @Basic(optional = false)
+    @Column(name = "Zip")
+    private String zip;
+    @Basic(optional = false)
+    @Column(name = "Phone")
+    private String phone;
     @Basic(optional = false)
     @Column(name = "Created")
     @Temporal(TemporalType.TIMESTAMP)
@@ -54,24 +60,24 @@ public class Exibittag implements Serializable {
     @Column(name = "Updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-    @JoinColumn(name = "Location_Id", referencedColumnName = "Id")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Location locationId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exibitId", fetch = FetchType.EAGER)
-    private Set<Exibittagmedia> exibittagmediaSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "organization", fetch = FetchType.EAGER)
+    private Set<Location> locationSet;
 
-    public Exibittag() {
+    public Organization() {
     }
 
-    public Exibittag(Integer id) {
+    public Organization(Integer id) {
         this.id = id;
     }
 
-    public Exibittag(Integer id, String name, String tag, String description, Date created, Date updated) {
+    public Organization(Integer id, String name, String address1, String city, String state, String zip, String phone, Date created, Date updated) {
         this.id = id;
         this.name = name;
-        this.tag = tag;
-        this.description = description;
+        this.address1 = address1;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phone = phone;
         this.created = created;
         this.updated = updated;
     }
@@ -92,20 +98,52 @@ public class Exibittag implements Serializable {
         this.name = name;
     }
 
-    public String getTag() {
-        return tag;
+    public String getAddress1() {
+        return address1;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAddress2() {
+        return address2;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Date getCreated() {
@@ -124,20 +162,12 @@ public class Exibittag implements Serializable {
         this.updated = updated;
     }
 
-    public Location getLocationId() {
-        return locationId;
+    public Set<Location> getLocationSet() {
+        return locationSet;
     }
 
-    public void setLocationId(Location locationId) {
-        this.locationId = locationId;
-    }
-
-    public Set<Exibittagmedia> getExibittagmediaSet() {
-        return exibittagmediaSet;
-    }
-
-    public void setExibittagmediaSet(Set<Exibittagmedia> exibittagmediaSet) {
-        this.exibittagmediaSet = exibittagmediaSet;
+    public void setLocationSet(Set<Location> locationSet) {
+        this.locationSet = locationSet;
     }
 
     @Override
@@ -150,10 +180,10 @@ public class Exibittag implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Exibittag)) {
+        if (!(object instanceof Organization)) {
             return false;
         }
-        Exibittag other = (Exibittag) object;
+        Organization other = (Organization) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -162,7 +192,7 @@ public class Exibittag implements Serializable {
 
     @Override
     public String toString() {
-        return "dbsucker.Exibittag[ id=" + id + " ]";
+        return "dbsucker.Organization[ id=" + id + " ]";
     }
     
 }

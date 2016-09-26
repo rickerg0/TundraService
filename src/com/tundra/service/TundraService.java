@@ -1,10 +1,8 @@
-package com.tundra.service;
+	package com.tundra.service;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-
-import com.tundra.database.Organization;
+import com.tundra.entity.Organization;
 
 public interface TundraService {
 

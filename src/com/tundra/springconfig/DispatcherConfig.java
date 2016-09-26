@@ -1,4 +1,4 @@
-package com.tundra.spring;
+package com.tundra.springconfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

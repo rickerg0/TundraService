@@ -1,11 +1,11 @@
-package com.tundra.interfaces;
+package com.tundra.dao;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tundra.database.Organization;
+import com.tundra.entity.Organization;
 
 @Transactional("tundraTransactionManager")
 public interface OrganizationDAO extends JpaRepository<Organization,Integer> {
