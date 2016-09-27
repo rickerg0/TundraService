@@ -17,7 +17,7 @@ id="WebApp_ID" version="3.1" >
     
 	<context-param>
       	<param-name>contextConfigLocation</param-name>
-      	<param-value>com.tundra.spring.ApplicationConfig</param-value>
+      	<param-value>com.tundra.springconfig.ApplicationConfig</param-value>
     </context-param>
 	
     <servlet> 
@@ -32,7 +32,7 @@ id="WebApp_ID" version="3.1" >
     	
     	<init-param>
       		<param-name>contextConfigLocation</param-name>
-      		<param-value>com.tundra.spring.DispatcherConfig</param-value>
+      		<param-value>com.tundra.springconfig.DispatcherConfig</param-value>
     	</init-param>
     	
     </servlet>

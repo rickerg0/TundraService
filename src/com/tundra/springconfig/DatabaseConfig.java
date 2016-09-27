@@ -24,14 +24,14 @@ import com.zaxxer.hikari.HikariDataSource;
 @ComponentScan("com.tundra")
 @EnableJpaRepositories(entityManagerFactoryRef="tundraEntityManagerFactory", 
                        transactionManagerRef="tundraTransactionManager",
-                       basePackages="com.tundra.interfaces")
+                       basePackages="com.tundra.dao")
 
 public class DatabaseConfig {
 	
-	private  final static String USERNAME="root";
-	private  final static String PASSWORD="new12345";
-//	private  final static String USERNAME="localapp";
-//	private  final static String PASSWORD="l0calapp";
+//	private  final static String USERNAME="root";
+//	private  final static String PASSWORD="new12345";
+	private  final static String USERNAME="localapp";
+	private  final static String PASSWORD="l0calapp";
    
    
    private String URL = "jdbc:mysql://127.0.0.1:3306/tundra";
@@ -60,7 +60,7 @@ public class DatabaseConfig {
 
     LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
     factory.setJpaVendorAdapter(vendorAdapter);
-    factory.setPackagesToScan("com.tundra.database");
+    factory.setPackagesToScan("com.tundra.entity");
     factory.setDataSource(tundraHikariDataSource());
 
     Properties properties = new Properties();
