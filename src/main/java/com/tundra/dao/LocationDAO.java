@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tundra.entity.Location;
 import com.tundra.entity.Organization;
 
-@Transactional("tundraTansactionManager")
+@Transactional("tundraTransactionManager")
 public interface LocationDAO extends JpaRepository<Location,Integer> {
 
 	@Query("select l from Location l where l.organization = :organization")
