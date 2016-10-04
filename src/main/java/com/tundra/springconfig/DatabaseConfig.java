@@ -5,9 +5,11 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaDialect;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -22,26 +24,24 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan("com.tundra")
+@PropertySource("classpath:tundra.properties")
 @EnableJpaRepositories(entityManagerFactoryRef="tundraEntityManagerFactory", 
                        transactionManagerRef="tundraTransactionManager",
                        basePackages="com.tundra.dao")
 
 public class DatabaseConfig {
 	
-	private  final static String USERNAME="root";
-	private  final static String PASSWORD="password";
-//	private  final static String USERNAME="localapp";
-//	private  final static String PASSWORD="l0calapp";
-   
-   
-   private String URL = "jdbc:mysql://127.0.0.1:3306/tundra";
+	@Value("${database.url}") private String url;
+	@Value("${database.username}") private String username;
+	@Value("${database.password}") private String password;
+	
    @Bean(name="tundraHakariCPDatSource")
    public HikariDataSource tundraHikariDataSource() {
     HikariDataSource ds = new HikariDataSource();;
     ds.setDriverClassName("com.mysql.jdbc.Driver");
-    ds.setJdbcUrl(URL);
-    ds.setUsername(USERNAME);
-    ds.setPassword(PASSWORD);
+    ds.setJdbcUrl(url);
+    ds.setUsername(username);
+    ds.setPassword(password);
     ds.setConnectionTestQuery("select 1");
     ds.setConnectionTimeout(1000);
     ds.setMaximumPoolSize(1);
