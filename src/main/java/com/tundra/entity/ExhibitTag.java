@@ -56,7 +56,7 @@ public class ExhibitTag implements Serializable {
     @JoinColumn(name = "Location_Id", referencedColumnName = "Id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Location location;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exibitId", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exhibitTag", fetch = FetchType.EAGER)
     private Set<ExhibitTagMedia> exhibitTagMediaSet;
 
     public Integer getId() {

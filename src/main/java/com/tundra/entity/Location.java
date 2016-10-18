@@ -51,7 +51,7 @@ public class Location implements Serializable {
     @Column(name = "Updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location", fetch = FetchType.EAGER)
     private Set<ExhibitTag> exhibitTagSet;
     @JoinColumn(name = "Organization_Id", referencedColumnName = "Id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
