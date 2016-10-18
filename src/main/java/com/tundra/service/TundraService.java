@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import com.tundra.entity.ExhibitTag;
 import com.tundra.entity.Organization;
 
 public interface TundraService {
@@ -14,4 +15,5 @@ public interface TundraService {
 
 	List<Organization> findByNameAndCity(String name,String city);
 
+	List<ExhibitTag> findByTag(String tag);	
 }

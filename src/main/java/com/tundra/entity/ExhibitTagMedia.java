@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "exibittagmedia")	
-public class Exibittagmedia implements Serializable {
+public class ExhibitTagMedia implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,22 +48,7 @@ public class Exibittagmedia implements Serializable {
     private Date updated;
     @JoinColumn(name = "Exibit_Id", referencedColumnName = "Id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Exibittag exibitId;
-
-    public Exibittagmedia() {
-    }
-
-    public Exibittagmedia(Integer id) {
-        this.id = id;
-    }
-
-    public Exibittagmedia(Integer id, String mimeType, byte[] content, Date created, Date updated) {
-        this.id = id;
-        this.mimeType = mimeType;
-        this.content = content;
-        this.created = created;
-        this.updated = updated;
-    }
+    private ExhibitTag exhibitTag;
 
     public Integer getId() {
         return id;
@@ -105,15 +90,15 @@ public class Exibittagmedia implements Serializable {
         this.updated = updated;
     }
 
-    public Exibittag getExibitId() {
-        return exibitId;
-    }
+    public ExhibitTag getExhibitTag() {
+		return exhibitTag;
+	}
 
-    public void setExibitId(Exibittag exibitId) {
-        this.exibitId = exibitId;
-    }
+	public void setExhibitTag(ExhibitTag exhibitTag) {
+		this.exhibitTag = exhibitTag;
+	}
 
-    @Override
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
@@ -122,11 +107,14 @@ public class Exibittagmedia implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Exibittagmedia)) {
+        if (!(object instanceof ExhibitTagMedia)) {
             return false;
         }
-        Exibittagmedia other = (Exibittagmedia) object;
+        ExhibitTagMedia other = (ExhibitTagMedia) object;
+        
+        if (this.id == null && other.id == null) {
+        	return super.equals(other);
+        }
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

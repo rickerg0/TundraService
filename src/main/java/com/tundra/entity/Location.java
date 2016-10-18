@@ -47,37 +47,15 @@ public class Location implements Serializable {
     @Column(name = "Created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    public Organization getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}
-
 	@Basic(optional = false)
     @Column(name = "Updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId", fetch = FetchType.EAGER)
-    private Set<Exibittag> exibittagSet;
+    private Set<ExhibitTag> exhibitTagSet;
     @JoinColumn(name = "Organization_Id", referencedColumnName = "Id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Organization organization;
-
-    public Location() {
-    }
-
-    public Location(Integer id) {
-        this.id = id;
-    }
-
-    public Location(Integer id, String name, Date created, Date updated) {
-        this.id = id;
-        this.name = name;
-        this.created = created;
-        this.updated = updated;
-    }
 
     public Integer getId() {
         return id;
@@ -127,15 +105,21 @@ public class Location implements Serializable {
         this.updated = updated;
     }
 
-    public Set<Exibittag> getExibittagSet() {
-        return exibittagSet;
-    }
+    public Set<ExhibitTag> getExhibitTagSet() {
+		return exhibitTagSet;
+	}
 
-    public void setExibittagSet(Set<Exibittag> exibittagSet) {
-        this.exibittagSet = exibittagSet;
-    }
+	public void setExhibitTagSet(Set<ExhibitTag> exhibitTagSet) {
+		this.exhibitTagSet = exhibitTagSet;
+	}
 
-    
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
 
     @Override
     public int hashCode() {
@@ -146,11 +130,13 @@ public class Location implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Location)) {
             return false;
         }
         Location other = (Location) object;
+        if (this.id == null && other.id == null) {
+        	return super.equals(other);
+        }
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

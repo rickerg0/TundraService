@@ -5,14 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tundra.dao.ExhibitTagDAO;
 import com.tundra.dao.OrganizationDAO;
+import com.tundra.entity.ExhibitTag;
 import com.tundra.entity.Organization;
 
 @Service
 public class TundraServiceImpl implements TundraService {
   
-//	@Autowired
-//	LocationDAO locationDAO;
+	@Autowired
+	ExhibitTagDAO exhibitTagDAO;
 	@Autowired
 	private OrganizationDAO organizationDAO;
 	
@@ -42,5 +44,8 @@ public class TundraServiceImpl implements TundraService {
 		return organizationDAO.findByNameAndCity(name, city);
 	}
 	
-	
+	@Override
+	public List<ExhibitTag> findByTag(String tag) {
+		return exhibitTagDAO.findByTag(tag);
+	}
 }

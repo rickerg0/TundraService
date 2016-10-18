@@ -63,25 +63,6 @@ public class Organization implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organization", fetch = FetchType.EAGER)
     private Set<Location> locationSet;
 
-    public Organization() {
-    }
-
-    public Organization(Integer id) {
-        this.id = id;
-    }
-
-    public Organization(Integer id, String name, String address1, String city, String state, String zip, String phone, Date created, Date updated) {
-        this.id = id;
-        this.name = name;
-        this.address1 = address1;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.phone = phone;
-        this.created = created;
-        this.updated = updated;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -179,11 +160,13 @@ public class Organization implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Organization)) {
             return false;
         }
         Organization other = (Organization) object;
+        if (this.id == null && other.id == null) {
+        	return super.equals(other);
+        }
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

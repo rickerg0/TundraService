@@ -29,7 +29,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "exibittag")
 
-public class Exibittag implements Serializable {
+public class ExhibitTag implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,25 +55,9 @@ public class Exibittag implements Serializable {
     private Date updated;
     @JoinColumn(name = "Location_Id", referencedColumnName = "Id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Location locationId;
+    private Location location;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "exibitId", fetch = FetchType.EAGER)
-    private Set<Exibittagmedia> exibittagmediaSet;
-
-    public Exibittag() {
-    }
-
-    public Exibittag(Integer id) {
-        this.id = id;
-    }
-
-    public Exibittag(Integer id, String name, String tag, String description, Date created, Date updated) {
-        this.id = id;
-        this.name = name;
-        this.tag = tag;
-        this.description = description;
-        this.created = created;
-        this.updated = updated;
-    }
+    private Set<ExhibitTagMedia> exhibitTagMediaSet;
 
     public Integer getId() {
         return id;
@@ -123,23 +107,23 @@ public class Exibittag implements Serializable {
         this.updated = updated;
     }
 
-    public Location getLocationId() {
-        return locationId;
-    }
+    public Location getLocation() {
+		return location;
+	}
 
-    public void setLocationId(Location locationId) {
-        this.locationId = locationId;
-    }
+	public void setLocation(Location location) {
+		this.location = location;
+	}
 
-    public Set<Exibittagmedia> getExibittagmediaSet() {
-        return exibittagmediaSet;
-    }
+	public Set<ExhibitTagMedia> getExhibitTagMediaSet() {
+		return exhibitTagMediaSet;
+	}
 
-    public void setExibittagmediaSet(Set<Exibittagmedia> exibittagmediaSet) {
-        this.exibittagmediaSet = exibittagmediaSet;
-    }
+	public void setExhibitTagMediaSet(Set<ExhibitTagMedia> exhibitTagMediaSet) {
+		this.exhibitTagMediaSet = exhibitTagMediaSet;
+	}
 
-    @Override
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
@@ -148,11 +132,13 @@ public class Exibittag implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Exibittag)) {
+        if (!(object instanceof ExhibitTag)) {
             return false;
         }
-        Exibittag other = (Exibittag) object;
+        ExhibitTag other = (ExhibitTag) object;
+        if (this.id == null && other.id == null) {
+        	return super.equals(other);
+        }
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
