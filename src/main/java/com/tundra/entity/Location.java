@@ -23,6 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author rickerg0
@@ -51,9 +53,12 @@ public class Location implements Serializable {
     @Column(name = "Updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
+	
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "location", fetch = FetchType.EAGER)
     private Set<ExhibitTag> exhibitTagSet;
     @JoinColumn(name = "Organization_Id", referencedColumnName = "Id")
+    
+    @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Organization organization;
 

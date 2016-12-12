@@ -45,7 +45,12 @@ public class TundraServiceImpl implements TundraService {
 	}
 	
 	@Override
-	public List<ExhibitTag> findByTag(String tag) {
-		return exhibitTagDAO.findByTag(tag);
+	public ExhibitTag findByTag(String tag) {
+		ExhibitTag et = null;
+		List<ExhibitTag> list = exhibitTagDAO.findByTag(tag);
+		if( list != null && list.size() ==1){
+			et = list.get(0);
+		}
+		return et;
 	}
 }

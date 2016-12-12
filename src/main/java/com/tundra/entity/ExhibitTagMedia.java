@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author rickerg0
@@ -46,6 +48,7 @@ public class ExhibitTagMedia implements Serializable {
     @Column(name = "Updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
+    @JsonIgnore
     @JoinColumn(name = "Exibit_Id", referencedColumnName = "Id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private ExhibitTag exhibitTag;
