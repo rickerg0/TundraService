@@ -15,5 +15,8 @@ public interface TundraService {
 
 	List<Organization> findByNameAndCity(String name,String city);
 
-	ExhibitTag findByTag(String tag);	
+	ExhibitTag findByTag(String tag);
+	
+	List<ExhibitTag> findAllTags();	
+	
 }
