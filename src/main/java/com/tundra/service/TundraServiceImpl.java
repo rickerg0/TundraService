@@ -53,4 +53,9 @@ public class TundraServiceImpl implements TundraService {
 		}
 		return et;
 	}
+
+	@Override
+	public List<ExhibitTag> findAllTags() {
+		return exhibitTagDAO.findAll();
+	}
 }
