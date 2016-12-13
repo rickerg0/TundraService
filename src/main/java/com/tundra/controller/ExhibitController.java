@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tundra.entity.ExhibitTag;
+import com.tundra.entity.Organization;
 import com.tundra.service.TundraService;
 
 @Controller 
@@ -43,5 +44,15 @@ public class ExhibitController implements  Serializable {
 		}
 			
 	}
+	
+	@RequestMapping(value="/list", method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> getExhibits(HttpServletResponse httpResponse) {
+		try {
+			return new ResponseEntity<List<ExhibitTag>>(tundraService.findAllTags(),HttpStatus.OK);
+		} catch (Throwable t) {
+			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 
 }
