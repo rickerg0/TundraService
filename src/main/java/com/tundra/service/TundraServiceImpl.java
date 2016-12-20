@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tundra.dao.ExhibitTagDAO;
+import com.tundra.dao.ExhibitTagMediaDAO;
 import com.tundra.dao.OrganizationDAO;
 import com.tundra.entity.ExhibitTag;
+import com.tundra.entity.ExhibitTagMedia;
 import com.tundra.entity.Organization;
 
 @Service
@@ -15,8 +17,12 @@ public class TundraServiceImpl implements TundraService {
   
 	@Autowired
 	ExhibitTagDAO exhibitTagDAO;
+	
 	@Autowired
 	private OrganizationDAO organizationDAO;
+	
+	@Autowired
+	ExhibitTagMediaDAO exhibitTagMediaDAO;
 	
 	/* (non-Javadoc)
 	 * @see com.tundra.service.TundraService#findAllOrganizations()
@@ -57,5 +63,11 @@ public class TundraServiceImpl implements TundraService {
 	@Override
 	public List<ExhibitTag> findAllTags() {
 		return exhibitTagDAO.findAll();
+	}
+
+	@Override
+	public List<ExhibitTagMedia> findMediaByTag(String tag) {
+		// TODO Auto-generated method stub
+		return exhibitTagMediaDAO.findByExhibitTag(tag);
 	}
 }

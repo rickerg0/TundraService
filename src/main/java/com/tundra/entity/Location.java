@@ -150,7 +150,7 @@ public class Location implements Serializable {
 
     @Override
     public String toString() {
-        return "dbsucker.Location[ id=" + id + " ]";
+        return "Location[ id=" + id + " ]";
     }
     
 }

@@ -175,7 +175,7 @@ public class Organization implements Serializable {
 
     @Override
     public String toString() {
-        return "dbsucker.Organization[ id=" + id + " ]";
+        return "Organization[ id=" + id + " ]";
     }
     
 }

@@ -151,7 +151,7 @@ public class ExhibitTag implements Serializable {
 
     @Override
     public String toString() {
-        return "dbsucker.Exibittag[ id=" + id + " ]";
+        return "Exibittag[ id=" + id + " ]";
     }
     
 }

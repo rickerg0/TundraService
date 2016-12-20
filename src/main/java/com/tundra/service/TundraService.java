@@ -3,6 +3,7 @@
 import java.util.List;
 
 import com.tundra.entity.ExhibitTag;
+import com.tundra.entity.ExhibitTagMedia;
 import com.tundra.entity.Organization;
 
 public interface TundraService {
@@ -16,6 +17,8 @@ public interface TundraService {
 	List<Organization> findByNameAndCity(String name,String city);
 
 	ExhibitTag findByTag(String tag);
+
+	List<ExhibitTagMedia> findMediaByTag(String tag);
 	
 	List<ExhibitTag> findAllTags();	
 	

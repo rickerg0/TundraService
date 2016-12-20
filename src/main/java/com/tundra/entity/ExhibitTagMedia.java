@@ -20,11 +20,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tundra.jackson.ExhibitMediaSerializer;
 
 /**
  *
  * @author rickerg0
  */
+@JsonSerialize(using = ExhibitMediaSerializer.class)
 @Entity
 @Table(name = "exibittagmedia")	
 public class ExhibitTagMedia implements Serializable {
@@ -126,7 +129,7 @@ public class ExhibitTagMedia implements Serializable {
 
     @Override
     public String toString() {
-        return "dbsucker.Exibittagmedia[ id=" + id + " ]";
+        return "Exibittagmedia[ id=" + id + " ]";
     }
     
 }
