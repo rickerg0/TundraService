@@ -56,10 +56,10 @@ public class Location implements Serializable {
 	
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "location", fetch = FetchType.EAGER)
     private Set<ExhibitTag> exhibitTagSet;
-    @JoinColumn(name = "Organization_Id", referencedColumnName = "Id")
     
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "Organization_Id", referencedColumnName = "Id")
     private Organization organization;
 
     public Integer getId() {

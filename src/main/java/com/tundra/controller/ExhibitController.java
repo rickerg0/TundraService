@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tundra.entity.ExhibitTag;
 import com.tundra.entity.ExhibitTagMedia;
+import com.tundra.response.ExhibitTagSummaryResponse;
 import com.tundra.service.TundraService;
 
 @Controller 
@@ -36,15 +37,23 @@ public class ExhibitController implements  Serializable {
 	
 	
 	@RequestMapping(value="/{tag}", method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> getExhibitMediaByTagId(HttpServletResponse httpResponse, @PathVariable(value="tag") String tag) {
+	public @ResponseBody ResponseEntity<?> getExhibitTagByTagId(HttpServletResponse httpResponse, @PathVariable(value="tag") String tag) {
 		try {
-			return new ResponseEntity<List<ExhibitTagMedia>>(tundraService.findMediaByTag(tag),HttpStatus.OK);
+			return new ResponseEntity<ExhibitTagSummaryResponse>(tundraService.findSummaryByExhibitTag(tag),HttpStatus.OK);
 		} catch (Throwable t) {
 			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-			
 	}
 	
+	@RequestMapping(value="/media/{tag}", method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> getExhibitMediaByTagId(HttpServletResponse httpResponse, @PathVariable(value="tag") String tag) {
+		try {
+			return new ResponseEntity<ExhibitTagMedia>(tundraService.findMediaByTag(tag),HttpStatus.OK);
+		} catch (Throwable t) {
+			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+		
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getExhibits(HttpServletResponse httpResponse) {
 		try {

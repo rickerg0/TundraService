@@ -27,11 +27,11 @@ public class ExhibitMediaSerializer extends StdSerializer<ExhibitTagMedia> {
         
         jgen.writeStringField("mimeType", value.getMimeType());
         // test the mime type to figure out what we should serialize
-        // note the same type of logic needs to be implemented by the client
+        // TODO: note the same type of logic needs to be implemented by the client
         if ("text/plain".equals(value.getMimeType())) {
         	jgen.writeStringField("content", new String(value.getContent()));
         } else {
-        	jgen.writeBinary(value.getContent());
+        	jgen.writeBinaryField("content", value.getContent());
         }
         jgen.writeEndObject();
     }

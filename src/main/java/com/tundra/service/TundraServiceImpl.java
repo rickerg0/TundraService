@@ -11,6 +11,7 @@ import com.tundra.dao.OrganizationDAO;
 import com.tundra.entity.ExhibitTag;
 import com.tundra.entity.ExhibitTagMedia;
 import com.tundra.entity.Organization;
+import com.tundra.response.ExhibitTagSummaryResponse;
 
 @Service
 public class TundraServiceImpl implements TundraService {
@@ -66,8 +67,22 @@ public class TundraServiceImpl implements TundraService {
 	}
 
 	@Override
-	public List<ExhibitTagMedia> findMediaByTag(String tag) {
-		// TODO Auto-generated method stub
-		return exhibitTagMediaDAO.findByExhibitTag(tag);
+	public ExhibitTagMedia findMediaByTag(String tag) {
+		ExhibitTagMedia media = null;
+		List<ExhibitTagMedia> list = exhibitTagMediaDAO.findByExhibitTag(tag);
+		if( list != null && list.size() ==1){
+			media = list.get(0);
+		}
+		return media;
+	}
+
+	@Override
+	public ExhibitTagSummaryResponse findSummaryByExhibitTag(String tag) {
+		ExhibitTagSummaryResponse summary = null;
+		List<ExhibitTagSummaryResponse> list = exhibitTagMediaDAO.findSummaryByExhibitTag(tag);
+		if( list != null && list.size() ==1){
+			summary = list.get(0);
+		}
+		return summary;
 	}
 }

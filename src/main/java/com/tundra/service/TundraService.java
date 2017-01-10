@@ -5,6 +5,7 @@ import java.util.List;
 import com.tundra.entity.ExhibitTag;
 import com.tundra.entity.ExhibitTagMedia;
 import com.tundra.entity.Organization;
+import com.tundra.response.ExhibitTagSummaryResponse;
 
 public interface TundraService {
 
@@ -18,8 +19,9 @@ public interface TundraService {
 
 	ExhibitTag findByTag(String tag);
 
-	List<ExhibitTagMedia> findMediaByTag(String tag);
+	ExhibitTagMedia findMediaByTag(String tag);
 	
 	List<ExhibitTag> findAllTags();	
 	
+	ExhibitTagSummaryResponse findSummaryByExhibitTag(String tag);
 }
