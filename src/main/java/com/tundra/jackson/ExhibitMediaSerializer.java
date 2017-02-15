@@ -1,6 +1,7 @@
 package com.tundra.jackson;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,7 +32,8 @@ public class ExhibitMediaSerializer extends StdSerializer<ExhibitTagMedia> {
         if ("text/plain".equals(value.getMimeType())) {
         	jgen.writeStringField("content", new String(value.getContent()));
         } else {
-        	jgen.writeBinaryField("content", value.getContent());
+ 
+        	jgen.writeStringField("content", new String(Base64.getEncoder().encode(value.getContent())));
         }
         jgen.writeEndObject();
     }

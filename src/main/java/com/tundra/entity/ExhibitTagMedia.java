@@ -41,7 +41,7 @@ public class ExhibitTagMedia implements Serializable {
     @Column(name = "MimeType")
     private String mimeType;
     @Basic(optional = false)
-    @Column(name = "Content",columnDefinition="blob")
+    @Column(name = "Content",columnDefinition="LONGBLOB")
     private byte[] content;
     @Basic(optional = false)
     @Column(name = "Created")

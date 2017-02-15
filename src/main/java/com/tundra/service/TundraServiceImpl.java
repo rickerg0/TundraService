@@ -1,5 +1,9 @@
 package com.tundra.service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +77,17 @@ public class TundraServiceImpl implements TundraService {
 		if( list != null && list.size() ==1){
 			media = list.get(0);
 		}
+//		FileOutputStream fos;
+//		try {
+//			fos = new FileOutputStream("myTest.mp4");
+//			fos.write(media.getContent(), 0, media.getContent().length);
+//			fos.flush();
+//			fos.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+				
 		return media;
 	}
 
