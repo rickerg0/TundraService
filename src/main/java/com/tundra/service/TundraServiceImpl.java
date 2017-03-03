@@ -1,9 +1,6 @@
 package com.tundra.service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,33 +68,29 @@ public class TundraServiceImpl implements TundraService {
 	}
 
 	@Override
-	public ExhibitTagMedia findMediaByTag(String tag) {
-		ExhibitTagMedia media = null;
-		List<ExhibitTagMedia> list = exhibitTagMediaDAO.findByExhibitTag(tag);
-		if( list != null && list.size() ==1){
-			media = list.get(0);
-		}
-//		FileOutputStream fos;
-//		try {
-//			fos = new FileOutputStream("myTest.mp4");
-//			fos.write(media.getContent(), 0, media.getContent().length);
-//			fos.flush();
-//			fos.close();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-				
+	public ExhibitTagMedia findMediaById(Integer id) {
+		ExhibitTagMedia media = exhibitTagMediaDAO.findOne(id);
 		return media;
 	}
 
 	@Override
 	public ExhibitTagSummaryResponse findSummaryByExhibitTag(String tag) {
 		ExhibitTagSummaryResponse summary = null;
-		List<ExhibitTagSummaryResponse> list = exhibitTagMediaDAO.findSummaryByExhibitTag(tag);
-		if( list != null && list.size() ==1){
+		List<ExhibitTagSummaryResponse> list = exhibitTagDAO.findSummariesByTag(tag);
+		if( list != null && list.size() == 1){
 			summary = list.get(0);
 		}
 		return summary;
+	}	
+	@Override
+	public List<ExhibitTagSummaryResponse> findSummaryList() {
+		List<ExhibitTagSummaryResponse> list = new ArrayList<>();
+		List<ExhibitTag> etList = exhibitTagDAO.findAll();
+		if (etList != null) {
+			for (ExhibitTag et: etList) {
+				list.add(new ExhibitTagSummaryResponse(et));
+			}
+		}
+		return list;
 	}
 }

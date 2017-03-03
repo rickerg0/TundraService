@@ -1,7 +1,5 @@
 package com.tundra.controller;
 
-
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tundra.entity.ExhibitTag;
 import com.tundra.entity.ExhibitTagMedia;
 import com.tundra.response.ExhibitTagSummaryResponse;
 import com.tundra.service.TundraService;
@@ -34,8 +31,6 @@ public class ExhibitController implements  Serializable {
 	@Autowired
 	private TundraService tundraService;
 	
-	
-	
 	@RequestMapping(value="/{tag}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getExhibitTagByTagId(HttpServletResponse httpResponse, @PathVariable(value="tag") String tag) {
 		try {
@@ -45,10 +40,10 @@ public class ExhibitController implements  Serializable {
 		}
 	}
 	
-	@RequestMapping(value="/media/{tag}", method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> getExhibitMediaByTagId(HttpServletResponse httpResponse, @PathVariable(value="tag") String tag) {
+	@RequestMapping(value="/media/{id}", method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> getExhibitMediaByTagId(HttpServletResponse httpResponse, @PathVariable(value="id") Integer id) {
 		try {
-			return new ResponseEntity<ExhibitTagMedia>(tundraService.findMediaByTag(tag),HttpStatus.OK);
+			return new ResponseEntity<ExhibitTagMedia>(tundraService.findMediaById(id),HttpStatus.OK);
 		} catch (Throwable t) {
 			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -57,11 +52,9 @@ public class ExhibitController implements  Serializable {
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getExhibits(HttpServletResponse httpResponse) {
 		try {
-			return new ResponseEntity<List<ExhibitTag>>(tundraService.findAllTags(),HttpStatus.OK);
+			return new ResponseEntity<List<ExhibitTagSummaryResponse>>(tundraService.findSummaryList(),HttpStatus.OK);
 		} catch (Throwable t) {
 			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-
 }

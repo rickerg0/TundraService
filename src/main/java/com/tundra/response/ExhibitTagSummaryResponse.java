@@ -1,5 +1,11 @@
 package com.tundra.response;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.tundra.entity.ExhibitTag;
+import com.tundra.entity.ExhibitTagMedia;
+
 public class ExhibitTagSummaryResponse {
 
 	private String organizationName;
@@ -7,18 +13,20 @@ public class ExhibitTagSummaryResponse {
 	private String exhibitTagName;
     private Integer exhibitTagId;
     private String exhibitTagTag;
-    private String exhibitTagMimeType;
+    private List<ExhibitTagMediaSummary> mediaSet = new ArrayList<>();
     
-    
-	public ExhibitTagSummaryResponse(String organizationName, String locationName, String exhibitTagName,
-			Integer exhibitTagId, String exhibitTagTag, String exhibitTagMimeType) {
+	public ExhibitTagSummaryResponse(ExhibitTag tag) {
 		super();
-		this.organizationName = organizationName;
-		this.locationName = locationName;
-		this.exhibitTagName = exhibitTagName;
-		this.exhibitTagId = exhibitTagId;
-		this.exhibitTagTag = exhibitTagTag;
-		this.exhibitTagMimeType = exhibitTagMimeType;
+		this.organizationName = tag.getLocation().getOrganization().getName();
+		this.locationName = tag.getLocation().getName();
+		this.exhibitTagName = tag.getName();
+		this.exhibitTagId = tag.getId();
+		this.exhibitTagTag = tag.getTag();
+		if (tag.getExhibitTagMediaSet() != null) {
+			for (ExhibitTagMedia m: tag.getExhibitTagMediaSet()) {
+				mediaSet.add(new ExhibitTagMediaSummary(m));
+			}
+		}
 	}
 	
 	public String getExhibitTagTag() {
@@ -53,11 +61,39 @@ public class ExhibitTagSummaryResponse {
 	public void setExhibitTagId(Integer exhibitTagId) {
 		this.exhibitTagId = exhibitTagId;
 	}
-	public String getExhibitTagMimeType() {
-		return exhibitTagMimeType;
+	
+	public List<ExhibitTagMediaSummary> getMediaSet() {
+		return mediaSet;
 	}
-	public void setExhibitTagMimeType(String exhibitTagMimeType) {
-		this.exhibitTagMimeType = exhibitTagMimeType;
+
+	public void setMediaSet(List<ExhibitTagMediaSummary> mediaSet) {
+		this.mediaSet = mediaSet;
 	}
-    
+
+	public class ExhibitTagMediaSummary {
+		
+		private String exhibitTagMimeType;
+	    private Integer exhibitTagMediaId;
+
+	    public ExhibitTagMediaSummary(ExhibitTagMedia media) {
+			exhibitTagMimeType = media.getMimeType();
+			exhibitTagMediaId = media.getId();
+		}
+
+		public String getExhibitTagMimeType() {
+			return exhibitTagMimeType;
+		}
+
+		public void setExhibitTagMimeType(String exhibitTagMimeType) {
+			this.exhibitTagMimeType = exhibitTagMimeType;
+		}
+
+		public Integer getExhibitTagMediaId() {
+			return exhibitTagMediaId;
+		}
+
+		public void setExhibitTagMediaId(Integer exhibitTagMediaId) {
+			this.exhibitTagMediaId = exhibitTagMediaId;
+		}
+	}
 }

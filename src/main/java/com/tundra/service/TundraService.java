@@ -19,9 +19,11 @@ public interface TundraService {
 
 	ExhibitTag findByTag(String tag);
 
-	ExhibitTagMedia findMediaByTag(String tag);
+	ExhibitTagMedia findMediaById(Integer id);
 	
 	List<ExhibitTag> findAllTags();	
 	
 	ExhibitTagSummaryResponse findSummaryByExhibitTag(String tag);
+	
+	List<ExhibitTagSummaryResponse> findSummaryList();
 }
