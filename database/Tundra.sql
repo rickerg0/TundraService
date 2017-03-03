@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `tundra`.`ExibitTag` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `Tag` VARCHAR(45) NOT NULL,
-  `Description` VARCHAR(45) NOT NULL,
+  `Description` VARCHAR(255) NOT NULL,
   `Created` DATETIME NOT NULL,
   `Updated` DATETIME NOT NULL,
   `Location_Id` INT NOT NULL,
@@ -92,7 +92,7 @@ DROP TABLE IF EXISTS `tundra`.`ExibitTagMedia` ;
 CREATE TABLE IF NOT EXISTS `tundra`.`ExibitTagMedia` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `MimeType` VARCHAR(45) NOT NULL,
-  `Content` BLOB NOT NULL,
+  `Content` LONGBLOB NOT NULL,
   `Created` DATETIME NOT NULL,
   `Updated` DATETIME NOT NULL,
   `Exibit_Id` INT NOT NULL,

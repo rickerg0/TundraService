@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.tundra.entity.ExhibitTagMedia;
 
+import antlr.StringUtils;
+
 public class ExhibitMediaSerializer extends StdSerializer<ExhibitTagMedia> {
 
     public ExhibitMediaSerializer() {
@@ -27,12 +29,19 @@ public class ExhibitMediaSerializer extends StdSerializer<ExhibitTagMedia> {
         jgen.writeNumberField("id", value.getId());
         
         jgen.writeStringField("mimeType", value.getMimeType());
+        
+        // send along the description
+        if (value.getExhibitTag() != null && value.getExhibitTag().getDescription() != null) {
+        	jgen.writeStringField("description", value.getExhibitTag().getDescription());
+        } else {
+        	jgen.writeStringField("description", "");
+        }
+        
         // test the mime type to figure out what we should serialize
         // TODO: note the same type of logic needs to be implemented by the client
         if ("text/plain".equals(value.getMimeType())) {
         	jgen.writeStringField("content", new String(value.getContent()));
         } else {
- 
         	jgen.writeStringField("content", new String(Base64.getEncoder().encode(value.getContent())));
         }
         jgen.writeEndObject();
