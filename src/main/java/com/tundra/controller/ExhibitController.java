@@ -32,6 +32,7 @@ public class ExhibitController extends AbstractController {
 	public @ResponseBody ResponseEntity<?> getExhibitTagByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="tag") String tag) {
 		try {
+			getSecurityService().validate(token);
 			return new ResponseEntity<ExhibitTagSummaryResponse>(tundraService.findSummaryByExhibitTag(tag),HttpStatus.OK);
 		} catch (Throwable t) {
 			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
@@ -42,6 +43,7 @@ public class ExhibitController extends AbstractController {
 	public @ResponseBody ResponseEntity<?> getExhibitMediaByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
 		try {
+			getSecurityService().validate(token);
 			return new ResponseEntity<ExhibitTagMedia>(tundraService.findMediaById(id),HttpStatus.OK);
 		} catch (Throwable t) {
 			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
@@ -51,6 +53,7 @@ public class ExhibitController extends AbstractController {
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getExhibits(HttpServletResponse httpResponse, @RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 		try {
+			getSecurityService().validate(token);
 			return new ResponseEntity<List<ExhibitTagSummaryResponse>>(tundraService.findSummaryList(),HttpStatus.OK);
 		} catch (Throwable t) {
 			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);

@@ -3,6 +3,7 @@ package com.tundra.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class SecurityServiceImpl implements SecurityService {
 	private static final String DELIMITER = "^^";
 	private static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	
-	private static final long EXPIRE_MILIS = 10000;
+	private static final long EXPIRE_MILIS = TimeUnit.DAYS.toMillis(1);
 
 	@Override
 	public String getToken(String firstName, String lastName, String email) throws Exception {
@@ -33,10 +34,17 @@ public class SecurityServiceImpl implements SecurityService {
 	@Override
 	public boolean isValid(String token) throws Exception {
 		// decrypt it
-		String[] sourceElements = SecurityUtil.decode(token).split(DELIMITER);
+		String source = SecurityUtil.decode(token);
+		String[] sourceElements = StringUtils.split(source, DELIMITER);
 		Date tokenDate = new SimpleDateFormat(DATETIME_FORMAT).parse(sourceElements[1]);
 		
-		return (new Date().getTime() - tokenDate.getTime() < EXPIRE_MILIS);
+		return ((tokenDate.getTime() + EXPIRE_MILIS) > new Date().getTime());
 	}
 
+	@Override
+	public void validate(String token) throws Exception {
+		if (!isValid(token)) {
+			throw new Exception("Expired token");
+		}
+	}
 }
