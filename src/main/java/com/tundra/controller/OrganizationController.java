@@ -1,6 +1,5 @@
 package com.tundra.controller;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,13 +19,10 @@ import com.tundra.service.TundraService;
 @Controller 
 
 @RequestMapping("/org")
-public class OrganizationController implements  Serializable {
+public class OrganizationController extends AbstractController {
 
-	private static final String ERROR_PREFIX = "Whoops : ";
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
 	@Autowired
 	private TundraService tundraService;
 	
