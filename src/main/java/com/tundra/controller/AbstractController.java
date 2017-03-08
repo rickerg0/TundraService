@@ -3,7 +3,8 @@ package com.tundra.controller;
 import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.tundra.service.SecurityService;
 
@@ -30,5 +31,35 @@ public abstract class AbstractController implements Serializable {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	HttpStatus getStatusCode(Throwable t) {
+		HttpStatus code = HttpStatus.INTERNAL_SERVER_ERROR;
+		if (t instanceof SecurityException) {
+			code = HttpStatus.FORBIDDEN;
+		}
+		return code;
+	}
+	
+	ResponseEntity<?> getErrorResponseEntity(Throwable t) {
+		return new ResponseEntity<ErrorResonse>(new ErrorResonse(ERROR_PREFIX + t.getMessage()) ,getStatusCode(t));
+	}
+	
+	public class ErrorResonse {
+
+		private String errorMessage;
+
+		public ErrorResonse(String errorMessage) {
+			this.errorMessage = errorMessage;
+		}
+
+		public String getErrorMessage() {
+			return errorMessage;
+		}
+
+		public void setErrorMessage(String errorMessage) {
+			this.errorMessage = errorMessage;
+		}
+		
 	}
 }

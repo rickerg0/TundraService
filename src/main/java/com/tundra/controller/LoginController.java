@@ -25,7 +25,7 @@ public class LoginController extends AbstractController {
 		try {
 			return new ResponseEntity<String>("{\"token\":\"" + getSecurityService().getToken(firstName, lastName, email) + "\"}",HttpStatus.OK);
 		} catch (Throwable t) {
-			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
+			return getErrorResponseEntity(t);
 		}
 	}
 }

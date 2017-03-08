@@ -17,6 +17,7 @@ public class SecurityServiceImpl implements SecurityService {
 	private static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	
 	private static final long EXPIRE_MILIS = TimeUnit.DAYS.toMillis(1);
+//	private static final long EXPIRE_MILIS = TimeUnit.SECONDS.toMillis(10);
 
 	@Override
 	public String getToken(String firstName, String lastName, String email) throws Exception {
@@ -42,9 +43,13 @@ public class SecurityServiceImpl implements SecurityService {
 	}
 
 	@Override
-	public void validate(String token) throws Exception {
-		if (!isValid(token)) {
-			throw new Exception("Expired token");
+	public void validate(String token) throws SecurityException {
+		try {
+			if (!isValid(token)) {
+				throw new SecurityException("Expired token");
+			}
+		} catch (Exception e) {
+			throw new SecurityException("Invalid token");
 		}
 	}
 }

@@ -34,7 +34,7 @@ public class OrganizationController extends AbstractController {
 			getSecurityService().validate(token);
 			return new ResponseEntity<Organization>(tundraService.findOrganization(id),HttpStatus.OK);
 		} catch (Throwable t) {
-			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
+			return getErrorResponseEntity(t);
 		}
 	}
 	
@@ -45,7 +45,7 @@ public class OrganizationController extends AbstractController {
 			getSecurityService().validate(token);
 			return new ResponseEntity<List<Organization>>(tundraService.findAllOrganizations(),HttpStatus.OK);
 		} catch (Throwable t) {
-			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
+			return getErrorResponseEntity(t);
 		}
 	}
 	
@@ -56,8 +56,7 @@ public class OrganizationController extends AbstractController {
 			getSecurityService().validate(token);
 			return new ResponseEntity<List<Organization>>(tundraService.findByName(name),HttpStatus.OK);
 		} catch (Throwable t) {
-			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
+			return getErrorResponseEntity(t);
 		}
-			
 	}
 }

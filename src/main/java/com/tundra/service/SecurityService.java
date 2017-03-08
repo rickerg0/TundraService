@@ -18,5 +18,5 @@ public interface SecurityService {
 
 	String getToken(String firstName, String lastName, String email) throws Exception;
 	boolean isValid(String token) throws Exception;
-	void validate(String token) throws Exception;
+	void validate(String token) throws SecurityException;
 }

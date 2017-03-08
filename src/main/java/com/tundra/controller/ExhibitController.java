@@ -35,7 +35,7 @@ public class ExhibitController extends AbstractController {
 			getSecurityService().validate(token);
 			return new ResponseEntity<ExhibitTagSummaryResponse>(tundraService.findSummaryByExhibitTag(tag),HttpStatus.OK);
 		} catch (Throwable t) {
-			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
+			return getErrorResponseEntity(t);
 		}
 	}
 	
@@ -46,7 +46,7 @@ public class ExhibitController extends AbstractController {
 			getSecurityService().validate(token);
 			return new ResponseEntity<ExhibitTagMedia>(tundraService.findMediaById(id),HttpStatus.OK);
 		} catch (Throwable t) {
-			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
+			return getErrorResponseEntity(t);
 		}
 	}
 		
@@ -56,7 +56,7 @@ public class ExhibitController extends AbstractController {
 			getSecurityService().validate(token);
 			return new ResponseEntity<List<ExhibitTagSummaryResponse>>(tundraService.findSummaryList(),HttpStatus.OK);
 		} catch (Throwable t) {
-			return new ResponseEntity<String>(ERROR_PREFIX + t.getMessage() ,HttpStatus.INTERNAL_SERVER_ERROR);
+			return getErrorResponseEntity(t);
 		}
 	}
 }
