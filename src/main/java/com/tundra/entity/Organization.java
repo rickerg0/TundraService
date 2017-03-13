@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tundra.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -14,24 +8,18 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 /**
  *
  * @author rickerg0
  */
 @Entity
 @Table(name = "organization")
-public class Organization implements Serializable {
+public class Organization extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "Id")
-    private Integer id;
+    
     @Basic(optional = false)
     @Column(name = "Name")
     private String name;
@@ -52,24 +40,9 @@ public class Organization implements Serializable {
     @Basic(optional = false)
     @Column(name = "Phone")
     private String phone;
-    @Basic(optional = false)
-    @Column(name = "Created")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-    @Basic(optional = false)
-    @Column(name = "Updated")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organization", fetch = FetchType.EAGER)
     private Set<Location> locationSet;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -127,22 +100,6 @@ public class Organization implements Serializable {
         this.phone = phone;
     }
 
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
     public Set<Location> getLocationSet() {
         return locationSet;
     }
@@ -150,32 +107,4 @@ public class Organization implements Serializable {
     public void setLocationSet(Set<Location> locationSet) {
         this.locationSet = locationSet;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Organization)) {
-            return false;
-        }
-        Organization other = (Organization) object;
-        if (this.id == null && other.id == null) {
-        	return super.equals(other);
-        }
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Organization[ id=" + id + " ]";
-    }
-    
 }

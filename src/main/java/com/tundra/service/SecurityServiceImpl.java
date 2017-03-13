@@ -16,8 +16,8 @@ public class SecurityServiceImpl implements SecurityService {
 	private static final String DELIMITER = "^^";
 	private static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	
-	private static final long EXPIRE_MILIS = TimeUnit.DAYS.toMillis(1);
-//	private static final long EXPIRE_MILIS = TimeUnit.SECONDS.toMillis(10);
+//	private static final long EXPIRE_MILIS = TimeUnit.HOURS.toMillis(1);
+	private static final long EXPIRE_MILIS = TimeUnit.SECONDS.toMillis(10);
 
 	@Override
 	public String getToken(String firstName, String lastName, String email) throws Exception {

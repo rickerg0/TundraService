@@ -105,6 +105,20 @@ CREATE TABLE IF NOT EXISTS `tundra`.`ExibitTagMedia` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `tundra`.`registereddevice`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tundra`.`registereddevice` ;
+
+CREATE TABLE `tundra`.`registereddevice` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `FirstName` VARCHAR(255) NOT NULL,
+  `LastName` VARCHAR(255) NOT NULL,
+  `Email` VARCHAR(255) NOT NULL,
+  `Platform` VARCHAR(255) NOT NULL,
+  `Created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Id`));
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
