@@ -18,14 +18,28 @@ public class LoginController extends AbstractController {
 	private static final long serialVersionUID = 1L;
 
 	@RequestMapping(value="login", method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> login(HttpServletResponse httpResponse, 
-																	@RequestParam(value="firstName") String firstName,
-																	@RequestParam(value="lastName") String lastName,
-																	@RequestParam(value="email") String email) {
+	public @ResponseBody ResponseEntity<?> login(HttpServletResponse httpResponse, @RequestParam(value="email") String email) {
 		try {
-			return new ResponseEntity<String>("{\"token\":\"" + getSecurityService().getToken(firstName, lastName, email) + "\"}",HttpStatus.OK);
+			return new ResponseEntity<String>("{\"token\":\"" + getSecurityService().getToken(email) + "\"}",HttpStatus.OK);
 		} catch (Throwable t) {
 			return getErrorResponseEntity(t);
 		}
 	}
+
+	@RequestMapping(value="register", method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> register(HttpServletResponse httpResponse, 
+			@RequestParam(value="email") String email,
+			@RequestParam(value="firstName") String firstName,
+			@RequestParam(value="lastName") String lastName,
+			@RequestParam(value="deviceId") String deviceId,
+			@RequestParam(value="platform") String platform) {
+		
+		try {
+			getSecurityService().register(email, firstName, lastName, deviceId, platform);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch (Throwable t) {
+			return getErrorResponseEntity(t);
+		}
+	}
+
 }

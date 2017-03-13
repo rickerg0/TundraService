@@ -116,6 +116,7 @@ CREATE TABLE `tundra`.`registereddevice` (
   `LastName` VARCHAR(255) NOT NULL,
   `Email` VARCHAR(255) NOT NULL,
   `Platform` VARCHAR(255) NOT NULL,
+  `DeviceId` VARCHAR(255) NOT NULL,
   `Created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`));

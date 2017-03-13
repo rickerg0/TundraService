@@ -2,17 +2,24 @@ package com.tundra.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tundra.dao.RegisteredDeviceDAO;
+import com.tundra.entity.RegisteredDevice;
 import com.tundra.util.SecurityUtil;
 
 @Service
 public class SecurityServiceImpl implements SecurityService {
 
+	@Autowired
+	RegisteredDeviceDAO registeredDeviceDAO;
+	
 	private static final String DELIMITER = "^^";
 	private static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	
@@ -20,7 +27,22 @@ public class SecurityServiceImpl implements SecurityService {
 	private static final long EXPIRE_MILIS = TimeUnit.SECONDS.toMillis(10);
 
 	@Override
-	public String getToken(String firstName, String lastName, String email) throws Exception {
+	public String getToken(String email) throws Exception {
+		
+		String firstName = "";
+		String lastName = "";
+		
+		List<RegisteredDevice> devices = registeredDeviceDAO.findByEmail(email);
+		
+		// TODO: limit this to only registered devices
+		// there should be only one of these
+		if (devices != null && !devices.isEmpty()) {
+			RegisteredDevice device = devices.get(0);
+			if (device != null) {
+				firstName = device.getFirstName();
+				lastName = device.getLastName();
+			}
+		}
 		
 		// remove nulls and add delimiters
 		String source = UUID.randomUUID().toString() + DELIMITER + // just push the date over one place so we always know where it is 
@@ -51,5 +73,33 @@ public class SecurityServiceImpl implements SecurityService {
 		} catch (Exception e) {
 			throw new SecurityException("Invalid token");
 		}
+	}
+
+	@Override
+	public RegisteredDevice register(String email, String firstName, String lastName, String deviceId, String platform) {
+		List<RegisteredDevice> devices = registeredDeviceDAO.findByEmail(email);
+		
+		RegisteredDevice device = null;
+		
+		if (devices != null && !devices.isEmpty()) {
+			device = devices.get(0);
+		}
+
+		if (device == null) {
+			
+			device = new RegisteredDevice();
+			device.setCreated(new Date());
+		}
+
+		device.setFirstName(firstName);
+		device.setLastName(lastName);
+		device.setPlatform(platform);
+		device.setEmail(email);
+		device.setDeviceId(deviceId);
+		device.setUpdated(new Date());
+		
+		registeredDeviceDAO.save(device);
+		
+		return device;
 	}
 }

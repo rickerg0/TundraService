@@ -28,6 +28,9 @@ public class RegisteredDevice extends AbstractEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "Platform")
     private String platform;
+    @Basic(optional = false)
+    @Column(name = "DeviceId")
+    private String deviceId;
     
 	public String getFirstName() {
 		return firstName;
@@ -53,4 +56,11 @@ public class RegisteredDevice extends AbstractEntity implements Serializable {
 	public void setPlatform(String platform) {
 		this.platform = platform;
 	}
+	public String getDeviceId() {
+		return deviceId;
+	}
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
+	
 }

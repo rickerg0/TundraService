@@ -1,5 +1,7 @@
 package com.tundra.service;
 
+import com.tundra.entity.RegisteredDevice;
+
 /**
  * Security service that manages tokens and such
  * 
@@ -16,7 +18,12 @@ package com.tundra.service;
  */
 public interface SecurityService {
 
-	String getToken(String firstName, String lastName, String email) throws Exception;
+	String getToken(String email) throws Exception;
+	
 	boolean isValid(String token) throws Exception;
+	
 	void validate(String token) throws SecurityException;
+	
+	RegisteredDevice register(String email, String firstName, String lastName, String deviceId, String platform);
+	
 }
