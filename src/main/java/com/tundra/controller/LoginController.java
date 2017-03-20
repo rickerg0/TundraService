@@ -26,6 +26,7 @@ public class LoginController extends AbstractController {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="register", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> register(HttpServletResponse httpResponse, 
 			@RequestParam(value="email") String email,

@@ -25,14 +25,6 @@ public abstract class AbstractController implements Serializable {
 		this.securityService = securityService;
 	}
 
-	boolean validateRequest(String token) {
-		try {
-			return securityService.isValid(token);
-		} catch (Exception e) {
-			return false;
-		}
-	}
-	
 	HttpStatus getStatusCode(Throwable t) {
 		HttpStatus code = HttpStatus.INTERNAL_SERVER_ERROR;
 		if (t instanceof SecurityException) {
