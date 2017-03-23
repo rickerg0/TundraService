@@ -30,33 +30,24 @@ public class OrganizationController extends AbstractController {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET) 
 	public @ResponseBody ResponseEntity<?> getOrg(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
-		try { 
-			getSecurityService().validate(token);
-			return new ResponseEntity<Organization>(tundraService.findOrganization(id),HttpStatus.OK);
-		} catch (Throwable t) {
-			return getErrorResponseEntity(t);
-		}
+
+		getSecurityService().validate(token);
+		return new ResponseEntity<Organization>(tundraService.findOrganization(id),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getOrgs(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
-		try {
-			getSecurityService().validate(token);
-			return new ResponseEntity<List<Organization>>(tundraService.findAllOrganizations(),HttpStatus.OK);
-		} catch (Throwable t) {
-			return getErrorResponseEntity(t);
-		}
+
+		getSecurityService().validate(token);
+		return new ResponseEntity<List<Organization>>(tundraService.findAllOrganizations(),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/name/{name}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getOrgByName(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="name") String name) {
-		try {
-			getSecurityService().validate(token);
-			return new ResponseEntity<List<Organization>>(tundraService.findByName(name),HttpStatus.OK);
-		} catch (Throwable t) {
-			return getErrorResponseEntity(t);
-		}
+
+		getSecurityService().validate(token);
+		return new ResponseEntity<List<Organization>>(tundraService.findByName(name),HttpStatus.OK);
 	}
 }

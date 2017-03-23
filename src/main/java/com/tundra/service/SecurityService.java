@@ -18,11 +18,11 @@ import com.tundra.entity.RegisteredDevice;
  */
 public interface SecurityService {
 
-	String getToken(String email) throws Exception;
+	String getToken(String email);
 	
-	boolean isValid(String token) throws Exception;
+	boolean isValid(String token);
 	
-	void validate(String token) throws SecurityException;
+	void validate(String token);
 	
 	RegisteredDevice register(String email, String firstName, String lastName, String deviceId, String platform);
 	

@@ -19,11 +19,7 @@ public class LoginController extends AbstractController {
 
 	@RequestMapping(value="login", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> login(HttpServletResponse httpResponse, @RequestParam(value="email") String email) {
-		try {
-			return new ResponseEntity<String>("{\"token\":\"" + getSecurityService().getToken(email) + "\"}",HttpStatus.OK);
-		} catch (Throwable t) {
-			return getErrorResponseEntity(t);
-		}
+		return new ResponseEntity<String>("{\"token\":\"" + getSecurityService().getToken(email) + "\"}",HttpStatus.OK);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -35,12 +31,7 @@ public class LoginController extends AbstractController {
 			@RequestParam(value="deviceId") String deviceId,
 			@RequestParam(value="platform") String platform) {
 		
-		try {
-			getSecurityService().register(email, firstName, lastName, deviceId, platform);
-			return new ResponseEntity(HttpStatus.OK);
-		} catch (Throwable t) {
-			return getErrorResponseEntity(t);
-		}
+		getSecurityService().register(email, firstName, lastName, deviceId, platform);
+		return new ResponseEntity(HttpStatus.OK);
 	}
-
 }

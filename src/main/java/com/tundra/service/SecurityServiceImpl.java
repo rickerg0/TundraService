@@ -1,5 +1,6 @@
 package com.tundra.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ public class SecurityServiceImpl implements SecurityService {
 	private static final long EXPIRE_MILIS = TimeUnit.SECONDS.toMillis(10);
 
 	@Override
-	public String getToken(String email) throws Exception {
+	public String getToken(String email) {
 		
 		String firstName = "";
 		String lastName = "";
@@ -55,11 +56,17 @@ public class SecurityServiceImpl implements SecurityService {
 	}
 
 	@Override
-	public boolean isValid(String token) throws Exception {
+	public boolean isValid(String token) {
 		// decrypt it
 		String source = SecurityUtil.decode(token);
 		String[] sourceElements = StringUtils.split(source, DELIMITER);
-		Date tokenDate = new SimpleDateFormat(DATETIME_FORMAT).parse(sourceElements[1]);
+		Date tokenDate;
+		try {
+			tokenDate = new SimpleDateFormat(DATETIME_FORMAT).parse(sourceElements[1]);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e.getMessage());
+		}
 		
 		return ((tokenDate.getTime() + EXPIRE_MILIS) > new Date().getTime());
 	}
