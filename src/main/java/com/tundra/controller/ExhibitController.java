@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import com.tundra.service.TundraService;
 public class ExhibitController extends AbstractController {
 
 	private static final long serialVersionUID = 1L;
+	private final static Logger logger = Logger.getLogger(ExhibitController.class);
 
 	@Autowired
 	private TundraService tundraService;
@@ -46,7 +48,7 @@ public class ExhibitController extends AbstractController {
 		
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getExhibits(HttpServletResponse httpResponse, @RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
-
+		logger.info("********************* list of exhibits ***********************");
 		getSecurityService().validate(token);
 		return new ResponseEntity<List<ExhibitTagSummaryResponse>>(tundraService.findSummaryList(),HttpStatus.OK);
 	}
