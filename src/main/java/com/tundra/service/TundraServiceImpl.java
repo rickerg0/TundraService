@@ -76,9 +76,9 @@ public class TundraServiceImpl implements TundraService {
 	@Override
 	public ExhibitTagSummaryResponse findSummaryByExhibitTag(String tag) {
 		ExhibitTagSummaryResponse summary = null;
-		List<ExhibitTagSummaryResponse> list = exhibitTagDAO.findSummariesByTag(tag);
+		List<ExhibitTag> list = exhibitTagDAO.findByTag(tag);
 		if( list != null && list.size() == 1){
-			summary = list.get(0);
+			summary = new ExhibitTagSummaryResponse(list.get(0));
 		}
 		return summary;
 	}	
