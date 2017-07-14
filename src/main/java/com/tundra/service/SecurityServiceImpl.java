@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.tundra.dao.RegisteredDeviceDAO;
 import com.tundra.entity.RegisteredDevice;
+import com.tundra.exception.ExpiredTokenException;
+import com.tundra.exception.InvalidTokenException;
 import com.tundra.util.SecurityUtil;
 
 @Service
@@ -75,10 +77,10 @@ public class SecurityServiceImpl implements SecurityService {
 	public void validate(String token) throws SecurityException {
 		try {
 			if (!isValid(token)) {
-				throw new SecurityException("Expired token");
+				throw new ExpiredTokenException("Expired token: " + token);
 			}
 		} catch (Exception e) {
-			throw new SecurityException("Invalid token");
+			throw new InvalidTokenException("Invalid token: " + token);
 		}
 	}
 
