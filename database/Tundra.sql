@@ -19,88 +19,88 @@ CREATE SCHEMA IF NOT EXISTS `tundra` DEFAULT CHARACTER SET utf8 ;
 USE `tundra` ;
 
 -- -----------------------------------------------------
--- Table `tundra`.`Organization`
+-- Table `tundra`.`organization`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tundra`.`Organization` ;
+DROP TABLE IF EXISTS `tundra`.`organization` ;
 
-CREATE TABLE IF NOT EXISTS `tundra`.`Organization` (
-  `Id` INT NOT NULL AUTO_INCREMENT,
-  `Name` VARCHAR(45) NOT NULL,
-  `Address1` VARCHAR(45) NOT NULL,
-  `Address2` VARCHAR(45) NULL,
-  `City` VARCHAR(45) NOT NULL,
-  `State` VARCHAR(45) NOT NULL,
-  `Zip` VARCHAR(10) NOT NULL,
-  `Phone` VARCHAR(20) NOT NULL,
-  `Created` DATETIME NOT NULL,
-  `Updated` DATETIME NOT NULL,
-  PRIMARY KEY (`Id`))
+CREATE TABLE IF NOT EXISTS `tundra`.`organization` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `address1` VARCHAR(45) NOT NULL,
+  `address2` VARCHAR(45) NULL,
+  `city` VARCHAR(45) NOT NULL,
+  `state` VARCHAR(45) NOT NULL,
+  `zip` VARCHAR(10) NOT NULL,
+  `phone` VARCHAR(20) NOT NULL,
+  `created` DATETIME NOT NULL,
+  `updated` DATETIME NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `tundra`.`Location`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tundra`.`Location` ;
+DROP TABLE IF EXISTS `tundra`.`location` ;
 
-CREATE TABLE IF NOT EXISTS `tundra`.`Location` (
-  `Id` INT NOT NULL AUTO_INCREMENT,
-  `Name` VARCHAR(45) NOT NULL,
-  `Latitude` DECIMAL NULL,
-  `Longitude` DECIMAL NULL,
-  `Organization_Id` INT NOT NULL,
-  `Created` DATETIME NOT NULL,
-  `Updated` DATETIME NOT NULL,
+CREATE TABLE IF NOT EXISTS `tundra`.`location` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `latitude` DECIMAL NULL,
+  `longitude` DECIMAL NULL,
+  `organization_id` INT NOT NULL,
+  `created` DATETIME NOT NULL,
+  `updated` DATETIME NOT NULL,
   PRIMARY KEY (`Id`),
-  INDEX `fk_Location_Organization_idx` (`Organization_Id` ASC),
-  CONSTRAINT `fk_Location_Organization`
-    FOREIGN KEY (`Organization_Id`)
-    REFERENCES `tundra`.`Organization` (`Id`)
+  INDEX `fk_location_organization_idx` (`organization_id` ASC),
+  CONSTRAINT `fk_location_organization`
+    FOREIGN KEY (`organization_id`)
+    REFERENCES `tundra`.`organization` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tundra`.`ExibitTag`
+-- Table `tundra`.`itemtag`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tundra`.`ExibitTag` ;
+DROP TABLE IF EXISTS `tundra`.`itemtag` ;
 
-CREATE TABLE IF NOT EXISTS `tundra`.`ExibitTag` (
-  `Id` INT NOT NULL AUTO_INCREMENT,
-  `Name` VARCHAR(45) NOT NULL,
-  `Tag` VARCHAR(45) NOT NULL,
-  `Description` VARCHAR(255) NOT NULL,
-  `Created` DATETIME NOT NULL,
-  `Updated` DATETIME NOT NULL,
-  `Location_Id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `tundra`.`itemtag` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `tag` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(255) NOT NULL,
+  `created` DATETIME NOT NULL,
+  `updated` DATETIME NOT NULL,
+  `location_id` INT NOT NULL,
   PRIMARY KEY (`Id`),
-  INDEX `fk_Exibit_Location1_idx` (`Location_Id` ASC),
-  CONSTRAINT `fk_Exibit_Location1`
-    FOREIGN KEY (`Location_Id`)
-    REFERENCES `tundra`.`Location` (`Id`)
+  INDEX `fk_item_location1_idx` (`location_id` ASC),
+  CONSTRAINT `fk_item_location1`
+    FOREIGN KEY (`location_id`)
+    REFERENCES `tundra`.`location` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tundra`.`ExibitTagMedia`
+-- Table `tundra`.`itemtagmedia`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tundra`.`ExibitTagMedia` ;
+DROP TABLE IF EXISTS `tundra`.`itemtagmedia` ;
 
-CREATE TABLE IF NOT EXISTS `tundra`.`ExibitTagMedia` (
-  `Id` INT NOT NULL AUTO_INCREMENT,
-  `MimeType` VARCHAR(45) NOT NULL,
-  `Content` LONGBLOB NOT NULL,
-  `Created` DATETIME NOT NULL,
-  `Updated` DATETIME NOT NULL,
-  `Exibit_Id` INT NOT NULL,
-  PRIMARY KEY (`Id`),
-  INDEX `fk_ExibitMedia_Exibit1_idx` (`Exibit_Id` ASC),
-  CONSTRAINT `fk_ExibitMedia_Exibit1`
-    FOREIGN KEY (`Exibit_Id`)
-    REFERENCES `tundra`.`ExibitTag` (`Id`)
+CREATE TABLE IF NOT EXISTS `tundra`.`itemtagmedia` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `mimetype` VARCHAR(45) NOT NULL,
+  `content` LONGBLOB NOT NULL,
+  `created` DATETIME NOT NULL,
+  `updated` DATETIME NOT NULL,
+  `item_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_itemmedia_item1_idx` (`item_id` ASC),
+  CONSTRAINT `fk_itemmedia_item1`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `tundra`.`itemtag` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -111,14 +111,14 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tundra`.`registereddevice` ;
 
 CREATE TABLE `tundra`.`registereddevice` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` VARCHAR(255) NOT NULL,
-  `LastName` VARCHAR(255) NOT NULL,
-  `Email` VARCHAR(255) NOT NULL,
-  `Platform` VARCHAR(255) NOT NULL,
-  `DeviceId` VARCHAR(255) NOT NULL,
-  `Created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` VARCHAR(255) NOT NULL,
+  `lastname` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `platform` VARCHAR(255) NOT NULL,
+  `deviceid` VARCHAR(255) NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`));
 
 SET SQL_MODE=@OLD_SQL_MODE;
