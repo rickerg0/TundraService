@@ -12,8 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.tundra.entity.ExhibitTag;
-import com.tundra.entity.ExhibitTagMedia;
+import com.tundra.entity.ItemTag;
+import com.tundra.entity.ItemTagMedia;
 import com.tundra.entity.Location;
 import com.tundra.entity.Organization;
 import com.tundra.springconfig.ApplicationConfig;
@@ -21,16 +21,16 @@ import com.tundra.springconfig.ApplicationConfig;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ApplicationConfig.class })
 @WebAppConfiguration
-public class ExhibitTagDAOTest {
+public class ItemTagDAOTest {
 
 	@Autowired 
-	private ExhibitTagDAO exhibitTagDAO;
+	private ItemTagDAO exhibitTagDAO;
 	
 	@Autowired 
 	private OrganizationDAO organizationDAO;
 	
 	@Test
-	public void saveExhibitTagTest() {
+	public void saveItemTagTest() {
 		
 		List<Organization> orgs = organizationDAO.findAll();
 		assertThat(orgs, notNullValue());
@@ -51,19 +51,19 @@ public class ExhibitTagDAOTest {
 		}
 		
 		assertThat(loc, notNullValue());
-		assertThat(loc.getExhibitTagSet(), notNullValue());
+		assertThat(loc.getItemTagSet(), notNullValue());
 		
-		ExhibitTag et = null;
+		ItemTag et = null;
 		
-		if (!loc.getExhibitTagSet().isEmpty()) {
-			et = loc.getExhibitTagSet().iterator().next();
+		if (!loc.getItemTagSet().isEmpty()) {
+			et = loc.getItemTagSet().iterator().next();
 		}
 		
 		assertThat(et, notNullValue());
 		
-		ExhibitTagMedia media = new ExhibitTagMedia();
-		et.getExhibitTagMediaSet().add(media);
-		media.setExhibitTag(et);
+		ItemTagMedia media = new ItemTagMedia();
+		et.getItemTagMediaSet().add(media);
+		media.setItemTag(et);
 
 		// set content here
 		

@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "itemtag")
 
-public class ExhibitTag extends AbstractEntity implements Serializable {
+public class ItemTag extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,8 +41,8 @@ public class ExhibitTag extends AbstractEntity implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Location location;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exhibitTag", fetch = FetchType.EAGER)
-    private Set<ExhibitTagMedia> exhibitTagMediaSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemTag", fetch = FetchType.EAGER)
+    private Set<ItemTagMedia> itemTagMediaSet;
 
     public String getName() {
         return name;
@@ -76,11 +76,11 @@ public class ExhibitTag extends AbstractEntity implements Serializable {
 		this.location = location;
 	}
 
-	public Set<ExhibitTagMedia> getExhibitTagMediaSet() {
-		return exhibitTagMediaSet;
+	public Set<ItemTagMedia> getItemTagMediaSet() {
+		return itemTagMediaSet;
 	}
 
-	public void setExhibitTagMediaSet(Set<ExhibitTagMedia> exhibitTagMediaSet) {
-		this.exhibitTagMediaSet = exhibitTagMediaSet;
+	public void setItemTagMediaSet(Set<ItemTagMedia> itemTagMediaSet) {
+		this.itemTagMediaSet = itemTagMediaSet;
 	}
 }

@@ -35,7 +35,7 @@ public class Location extends AbstractEntity implements Serializable {
     private BigDecimal longitude;
 	
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "location", fetch = FetchType.EAGER)
-    private Set<ExhibitTag> exhibitTagSet;
+    private Set<ItemTag> itemTagSet;
     
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -66,12 +66,12 @@ public class Location extends AbstractEntity implements Serializable {
         this.longitude = longitude;
     }
 
-    public Set<ExhibitTag> getExhibitTagSet() {
-		return exhibitTagSet;
+    public Set<ItemTag> getItemTagSet() {
+		return itemTagSet;
 	}
 
-	public void setExhibitTagSet(Set<ExhibitTag> exhibitTagSet) {
-		this.exhibitTagSet = exhibitTagSet;
+	public void setItemTagSet(Set<ItemTag> itemTagSet) {
+		this.itemTagSet = itemTagSet;
 	}
 
 	public Organization getOrganization() {

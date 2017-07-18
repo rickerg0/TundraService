@@ -2,10 +2,10 @@
 
 import java.util.List;
 
-import com.tundra.entity.ExhibitTag;
-import com.tundra.entity.ExhibitTagMedia;
+import com.tundra.entity.ItemTag;
+import com.tundra.entity.ItemTagMedia;
 import com.tundra.entity.Organization;
-import com.tundra.response.ExhibitTagSummaryResponse;
+import com.tundra.response.ItemTagSummaryResponse;
 
 public interface TundraService {
 
@@ -17,13 +17,13 @@ public interface TundraService {
 
 	List<Organization> findByNameAndCity(String name,String city);
 
-	ExhibitTag findByTag(String tag);
+	ItemTag findByTag(String tag);
 
-	ExhibitTagMedia findMediaById(Integer id);
+	ItemTagMedia findMediaById(Integer id);
 	
-	List<ExhibitTag> findAllTags();	
+	List<ItemTag> findAllTags();	
 	
-	ExhibitTagSummaryResponse findSummaryByExhibitTag(String tag);
+	ItemTagSummaryResponse findSummaryByItemTag(String tag);
 	
-	List<ExhibitTagSummaryResponse> findSummaryList();
+	List<ItemTagSummaryResponse> findSummaryList();
 }

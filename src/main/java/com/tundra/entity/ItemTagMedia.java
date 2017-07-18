@@ -12,16 +12,16 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.tundra.jackson.ExhibitMediaSerializer;
+import com.tundra.jackson.ItemMediaSerializer;
 
 /**
  *
  * @author rickerg0
  */
-@JsonSerialize(using = ExhibitMediaSerializer.class)
+@JsonSerialize(using = ItemMediaSerializer.class)
 @Entity
 @Table(name = "itemtagmedia")	
-public class ExhibitTagMedia extends AbstractEntity implements Serializable {
+public class ItemTagMedia extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,7 +35,7 @@ public class ExhibitTagMedia extends AbstractEntity implements Serializable {
     @JsonIgnore
     @JoinColumn(name = "item_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private ExhibitTag exhibitTag;
+    private ItemTag itemTag;
 
     public String getMimeType() {
         return mimeType;
@@ -53,11 +53,11 @@ public class ExhibitTagMedia extends AbstractEntity implements Serializable {
         this.content = content;
     }
 
-    public ExhibitTag getExhibitTag() {
-		return exhibitTag;
+    public ItemTag getItemTag() {
+		return itemTag;
 	}
 
-	public void setExhibitTag(ExhibitTag exhibitTag) {
-		this.exhibitTag = exhibitTag;
+	public void setItemTag(ItemTag itemTag) {
+		this.itemTag = itemTag;
 	}
 }

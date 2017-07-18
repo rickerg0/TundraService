@@ -10,7 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.tundra.response.ExhibitTagSummaryResponse;
+import com.tundra.response.ItemTagSummaryResponse;
 import com.tundra.springconfig.ApplicationConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,14 +18,14 @@ import com.tundra.springconfig.ApplicationConfig;
 @WebAppConfiguration
 public class TundraServiceImplTest {
 
-	private static final String EXHIBIT_TAG = "7c:ec:79:fc:ed:34-90";
+	private static final String TAG = "7c:ec:79:fc:ed:34-90";
 	
 	@Autowired 
 	private TundraService tundraService;
 	
 	@Test
 	public void getExhibitTagTest() {
-		ExhibitTagSummaryResponse response = tundraService.findSummaryByExhibitTag(EXHIBIT_TAG);
+		ItemTagSummaryResponse response = tundraService.findSummaryByItemTag(TAG);
 		assertThat(response, notNullValue());
 		
 	}

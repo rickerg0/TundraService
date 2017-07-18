@@ -7,22 +7,22 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.tundra.entity.ExhibitTagMedia;
+import com.tundra.entity.ItemTagMedia;
 
 import antlr.StringUtils;
 
-public class ExhibitMediaSerializer extends StdSerializer<ExhibitTagMedia> {
+public class ItemMediaSerializer extends StdSerializer<ItemTagMedia> {
 
-    public ExhibitMediaSerializer() {
+    public ItemMediaSerializer() {
         this(null);
     }
    
-    public ExhibitMediaSerializer(Class<ExhibitTagMedia> t) {
+    public ItemMediaSerializer(Class<ItemTagMedia> t) {
         super(t);
     }
  
     @Override
-    public void serialize(ExhibitTagMedia value, JsonGenerator jgen, SerializerProvider provider) 
+    public void serialize(ItemTagMedia value, JsonGenerator jgen, SerializerProvider provider) 
       throws IOException, JsonProcessingException {
     	
         jgen.writeStartObject();
@@ -31,8 +31,8 @@ public class ExhibitMediaSerializer extends StdSerializer<ExhibitTagMedia> {
         jgen.writeStringField("mimeType", value.getMimeType());
         
         // send along the description
-        if (value.getExhibitTag() != null && value.getExhibitTag().getDescription() != null) {
-        	jgen.writeStringField("description", value.getExhibitTag().getDescription());
+        if (value.getItemTag() != null && value.getItemTag().getDescription() != null) {
+        	jgen.writeStringField("description", value.getItemTag().getDescription());
         } else {
         	jgen.writeStringField("description", "");
         }

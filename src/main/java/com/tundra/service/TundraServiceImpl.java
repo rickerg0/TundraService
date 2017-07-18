@@ -6,25 +6,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tundra.dao.ExhibitTagDAO;
-import com.tundra.dao.ExhibitTagMediaDAO;
+import com.tundra.dao.ItemTagDAO;
+import com.tundra.dao.ItemTagMediaDAO;
 import com.tundra.dao.OrganizationDAO;
-import com.tundra.entity.ExhibitTag;
-import com.tundra.entity.ExhibitTagMedia;
+import com.tundra.entity.ItemTag;
+import com.tundra.entity.ItemTagMedia;
 import com.tundra.entity.Organization;
-import com.tundra.response.ExhibitTagSummaryResponse;
+import com.tundra.response.ItemTagSummaryResponse;
 
 @Service
 public class TundraServiceImpl implements TundraService {
   
 	@Autowired
-	ExhibitTagDAO exhibitTagDAO;
+	ItemTagDAO itemTagDAO;
 	
 	@Autowired
 	private OrganizationDAO organizationDAO;
 	
 	@Autowired
-	ExhibitTagMediaDAO exhibitTagMediaDAO;
+	ItemTagMediaDAO itemTagMediaDAO;
 	
 	/* (non-Javadoc)
 	 * @see com.tundra.service.TundraService#findAllOrganizations()
@@ -53,9 +53,9 @@ public class TundraServiceImpl implements TundraService {
 	}
 	
 	@Override
-	public ExhibitTag findByTag(String tag) {
-		ExhibitTag et = null;
-		List<ExhibitTag> list = exhibitTagDAO.findByTag(tag);
+	public ItemTag findByTag(String tag) {
+		ItemTag et = null;
+		List<ItemTag> list = itemTagDAO.findByTag(tag);
 		if( list != null && list.size() ==1){
 			et = list.get(0);
 		}
@@ -63,32 +63,32 @@ public class TundraServiceImpl implements TundraService {
 	}
 
 	@Override
-	public List<ExhibitTag> findAllTags() {
-		return exhibitTagDAO.findAll();
+	public List<ItemTag> findAllTags() {
+		return itemTagDAO.findAll();
 	}
 
 	@Override
-	public ExhibitTagMedia findMediaById(Integer id) {
-		ExhibitTagMedia media = exhibitTagMediaDAO.findOne(id);
+	public ItemTagMedia findMediaById(Integer id) {
+		ItemTagMedia media = itemTagMediaDAO.findOne(id);
 		return media;
 	}
 
 	@Override
-	public ExhibitTagSummaryResponse findSummaryByExhibitTag(String tag) {
-		ExhibitTagSummaryResponse summary = null;
-		List<ExhibitTag> list = exhibitTagDAO.findByTag(tag);
+	public ItemTagSummaryResponse findSummaryByItemTag(String tag) {
+		ItemTagSummaryResponse summary = null;
+		List<ItemTag> list = itemTagDAO.findByTag(tag);
 		if( list != null && list.size() == 1){
-			summary = new ExhibitTagSummaryResponse(list.get(0));
+			summary = new ItemTagSummaryResponse(list.get(0));
 		}
 		return summary;
 	}	
 	@Override
-	public List<ExhibitTagSummaryResponse> findSummaryList() {
-		List<ExhibitTagSummaryResponse> list = new ArrayList<>();
-		List<ExhibitTag> etList = exhibitTagDAO.findAll();
+	public List<ItemTagSummaryResponse> findSummaryList() {
+		List<ItemTagSummaryResponse> list = new ArrayList<>();
+		List<ItemTag> etList = itemTagDAO.findAll();
 		if (etList != null) {
-			for (ExhibitTag et: etList) {
-				list.add(new ExhibitTagSummaryResponse(et));
+			for (ItemTag et: etList) {
+				list.add(new ItemTagSummaryResponse(et));
 			}
 		}
 		return list;
