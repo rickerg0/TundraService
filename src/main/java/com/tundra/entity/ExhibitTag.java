@@ -41,7 +41,7 @@ public class ExhibitTag extends AbstractEntity implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Location location;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemtag", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exhibitTag", fetch = FetchType.EAGER)
     private Set<ExhibitTagMedia> exhibitTagMediaSet;
 
     public String getName() {
