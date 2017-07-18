@@ -16,16 +16,16 @@ public class AbstractEntity {
 	
     @Id
     @Basic(optional = false)
-    @Column(name = "Id")
+    @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     @Basic(optional = false)
-    @Column(name = "Created")
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     @Basic(optional = false)
-    @Column(name = "Updated")
+    @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 

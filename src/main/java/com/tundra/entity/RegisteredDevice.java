@@ -17,19 +17,19 @@ public class RegisteredDevice extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Basic(optional = false)
-    @Column(name = "FirstName")
+    @Column(name = "firstname")
     private String firstName;
     @Basic(optional = false)
-    @Column(name = "LastName")
+    @Column(name = "lastname")
     private String lastName;
     @Basic(optional = false)
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
     @Basic(optional = false)
-    @Column(name = "Platform")
+    @Column(name = "platform")
     private String platform;
     @Basic(optional = false)
-    @Column(name = "DeviceId")
+    @Column(name = "deviceid")
     private String deviceId;
     
 	public String getFirstName() {

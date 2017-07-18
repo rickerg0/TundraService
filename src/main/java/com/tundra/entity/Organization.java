@@ -21,24 +21,24 @@ public class Organization extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Basic(optional = false)
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "Address1")
+    @Column(name = "address1")
     private String address1;
-    @Column(name = "Address2")
+    @Column(name = "address2")
     private String address2;
     @Basic(optional = false)
-    @Column(name = "City")
+    @Column(name = "city")
     private String city;
     @Basic(optional = false)
-    @Column(name = "State")
+    @Column(name = "state")
     private String state;
     @Basic(optional = false)
-    @Column(name = "Zip")
+    @Column(name = "zip")
     private String zip;
     @Basic(optional = false)
-    @Column(name = "Phone")
+    @Column(name = "phone")
     private String phone;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organization", fetch = FetchType.EAGER)

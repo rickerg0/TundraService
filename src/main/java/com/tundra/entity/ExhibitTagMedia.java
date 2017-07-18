@@ -20,20 +20,20 @@ import com.tundra.jackson.ExhibitMediaSerializer;
  */
 @JsonSerialize(using = ExhibitMediaSerializer.class)
 @Entity
-@Table(name = "exibittagmedia")	
+@Table(name = "itemtagmedia")	
 public class ExhibitTagMedia extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Basic(optional = false)
-    @Column(name = "MimeType")
+    @Column(name = "mimetype")
     private String mimeType;
     @Basic(optional = false)
-    @Column(name = "Content",columnDefinition="LONGBLOB")
+    @Column(name = "content",columnDefinition="LONGBLOB")
     private byte[] content;
 
     @JsonIgnore
-    @JoinColumn(name = "Exibit_Id", referencedColumnName = "Id")
+    @JoinColumn(name = "item_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private ExhibitTag exhibitTag;
 

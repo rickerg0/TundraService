@@ -20,28 +20,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author rickerg0
  */
 @Entity
-@Table(name = "exibittag")
+@Table(name = "itemtag")
 
 public class ExhibitTag extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Basic(optional = false)
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "Tag")
+    @Column(name = "tag")
     private String tag;
     @Basic(optional = false)
-    @Column(name = "Description")
+    @Column(name = "description")
     private String description;
 
     @JsonIgnore
-    @JoinColumn(name = "Location_Id", referencedColumnName = "Id")
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Location location;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exhibitTag", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemtag", fetch = FetchType.EAGER)
     private Set<ExhibitTagMedia> exhibitTagMediaSet;
 
     public String getName() {

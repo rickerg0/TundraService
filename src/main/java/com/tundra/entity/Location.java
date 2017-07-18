@@ -27,11 +27,11 @@ public class Location extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Basic(optional = false)
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
-    @Column(name = "Latitude")
+    @Column(name = "latitude")
     private BigDecimal latitude;
-    @Column(name = "Longitude")
+    @Column(name = "longitude")
     private BigDecimal longitude;
 	
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "location", fetch = FetchType.EAGER)
@@ -39,7 +39,7 @@ public class Location extends AbstractEntity implements Serializable {
     
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "Organization_Id", referencedColumnName = "Id")
+    @JoinColumn(name = "organization_Id", referencedColumnName = "id")
     private Organization organization;
 
     public String getName() {
