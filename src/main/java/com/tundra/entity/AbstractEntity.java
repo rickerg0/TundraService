@@ -24,12 +24,20 @@ public class AbstractEntity {
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
+    
     @Basic(optional = false)
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
-    
+    @Basic(optional = false)
+    @Column(name = "updated_user")
+    private String updatedUser;
+
+    @Basic(optional = false)
+    @Column(name = "created_user")
+    private String createdUser;
+
 	public Integer getId() {
 		return id;
 	}
@@ -52,6 +60,22 @@ public class AbstractEntity {
 
 	public void setUpdated(Date updated) {
 		this.updated = updated;
+	}
+
+	public String getUpdatedUser() {
+		return updatedUser;
+	}
+
+	public void setUpdatedUser(String updatedUser) {
+		this.updatedUser = updatedUser;
+	}
+
+	public String getCreatedUser() {
+		return createdUser;
+	}
+
+	public void setCreatedUser(String createdUser) {
+		this.createdUser = createdUser;
 	}
 
 	@Override

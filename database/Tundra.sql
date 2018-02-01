@@ -32,8 +32,11 @@ CREATE TABLE IF NOT EXISTS `tundra`.`organization` (
   `state` VARCHAR(45) NOT NULL,
   `zip` VARCHAR(10) NOT NULL,
   `phone` VARCHAR(20) NOT NULL,
+  `active` BOOLEAN NOT NULL DEFAULT 1,
   `created` DATETIME NOT NULL,
   `updated` DATETIME NOT NULL,
+  `created_user` VARCHAR(45) NOT NULL DEFAULT 'admin',
+  `updated_user` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -51,6 +54,8 @@ CREATE TABLE IF NOT EXISTS `tundra`.`location` (
   `organization_id` INT NOT NULL,
   `created` DATETIME NOT NULL,
   `updated` DATETIME NOT NULL,
+  `created_user` VARCHAR(45) NOT NULL DEFAULT 'admin',
+  `updated_user` VARCHAR(45) NULL,
   PRIMARY KEY (`Id`),
   INDEX `fk_location_organization_idx` (`organization_id` ASC),
   CONSTRAINT `fk_location_organization`
@@ -71,9 +76,12 @@ CREATE TABLE IF NOT EXISTS `tundra`.`itemtag` (
   `name` VARCHAR(45) NOT NULL,
   `tag` VARCHAR(45) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
+  `location_id` INT NOT NULL,
+  `active` BOOLEAN NOT NULL DEFAULT 0,
   `created` DATETIME NOT NULL,
   `updated` DATETIME NOT NULL,
-  `location_id` INT NOT NULL,
+  `created_user` VARCHAR(45) NOT NULL DEFAULT 'admin',
+  `updated_user` VARCHAR(45) NULL,
   PRIMARY KEY (`Id`),
   INDEX `fk_item_location1_idx` (`location_id` ASC),
   CONSTRAINT `fk_item_location1`
@@ -93,9 +101,11 @@ CREATE TABLE IF NOT EXISTS `tundra`.`itemtagmedia` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `mimetype` VARCHAR(45) NOT NULL,
   `content` LONGBLOB NOT NULL,
+  `item_id` INT NOT NULL,
   `created` DATETIME NOT NULL,
   `updated` DATETIME NOT NULL,
-  `item_id` INT NOT NULL,
+  `created_user` VARCHAR(45) NOT NULL DEFAULT 'admin',
+  `updated_user` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_itemmedia_item1_idx` (`item_id` ASC),
   CONSTRAINT `fk_itemmedia_item1`
@@ -119,7 +129,34 @@ CREATE TABLE `tundra`.`registereddevice` (
   `deviceid` VARCHAR(255) NOT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_user` VARCHAR(45) NOT NULL DEFAULT 'admin',
+  `updated_user` VARCHAR(45) NULL,
   PRIMARY KEY (`Id`));
+  
+-- -----------------------------------------------------
+-- Table `tundra`.`users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tundra`.`users` ;
+
+CREATE TABLE `tundra`.`users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` VARCHAR(255) NOT NULL,
+  `lastname` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `user_name` VARCHAR(255) NOT NULL,
+  `organization_id` INT NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_user` VARCHAR(45) NOT NULL DEFAULT 'admin',
+  `updated_user` VARCHAR(45) NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `fk_users_organization_idx` (`organization_id` ASC),
+  CONSTRAINT `fk_users_organization`
+    FOREIGN KEY (`organization_id`)
+    REFERENCES `tundra`.`organization` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;  
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

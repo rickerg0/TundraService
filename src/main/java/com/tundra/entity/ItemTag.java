@@ -35,6 +35,9 @@ public class ItemTag extends AbstractEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "description")
     private String description;
+    @Basic(optional = false)
+    @Column(name = "active")
+    private Boolean active;
 
     @JsonIgnore
     @JoinColumn(name = "location_id", referencedColumnName = "id")
@@ -67,6 +70,14 @@ public class ItemTag extends AbstractEntity implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
     public Location getLocation() {
 		return location;

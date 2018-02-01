@@ -85,7 +85,7 @@ public class SecurityServiceImpl implements SecurityService {
 	}
 
 	@Override
-	public RegisteredDevice register(String email, String firstName, String lastName, String deviceId, String platform) {
+	public RegisteredDevice register(String email, String firstName, String lastName, String deviceId, String platform, String userName) {
 		List<RegisteredDevice> devices = registeredDeviceDAO.findByEmail(email);
 		
 		RegisteredDevice device = null;
@@ -98,6 +98,7 @@ public class SecurityServiceImpl implements SecurityService {
 			
 			device = new RegisteredDevice();
 			device.setCreated(new Date());
+			device.setCreatedUser(userName);
 		}
 
 		device.setFirstName(firstName);
@@ -106,6 +107,7 @@ public class SecurityServiceImpl implements SecurityService {
 		device.setEmail(email);
 		device.setDeviceId(deviceId);
 		device.setUpdated(new Date());
+		device.setUpdatedUser(userName);
 		
 		registeredDeviceDAO.save(device);
 		

@@ -40,6 +40,9 @@ public class Organization extends AbstractEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "phone")
     private String phone;
+    @Basic(optional = false)
+    @Column(name = "active")
+    private Boolean active;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organization", fetch = FetchType.EAGER)
     private Set<Location> locationSet;
@@ -100,7 +103,15 @@ public class Organization extends AbstractEntity implements Serializable {
         this.phone = phone;
     }
 
-    public Set<Location> getLocationSet() {
+    public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public Set<Location> getLocationSet() {
         return locationSet;
     }
 

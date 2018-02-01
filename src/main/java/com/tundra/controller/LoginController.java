@@ -31,7 +31,7 @@ public class LoginController extends AbstractController {
 			@RequestParam(value="deviceId") String deviceId,
 			@RequestParam(value="platform") String platform) {
 		
-		getSecurityService().register(email, firstName, lastName, deviceId, platform);
+		getSecurityService().register(email, firstName, lastName, deviceId, platform, "registrationProcess");
 		return new ResponseEntity(HttpStatus.OK);
 	}
 }

@@ -24,6 +24,6 @@ public interface SecurityService {
 	
 	void validate(String token);
 	
-	RegisteredDevice register(String email, String firstName, String lastName, String deviceId, String platform);
+	RegisteredDevice register(String email, String firstName, String lastName, String deviceId, String platform, String userName);
 	
 }
