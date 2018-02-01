@@ -36,6 +36,9 @@ public class User extends AbstractEntity implements Serializable {
 	@Column(name = "user_name")
 	private String userName;
 
+	@Column(name = "password")
+	private String password;
+
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "organization_Id", referencedColumnName = "id")
 	private Organization organization;
@@ -70,6 +73,14 @@ public class User extends AbstractEntity implements Serializable {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Organization getOrganization() {
