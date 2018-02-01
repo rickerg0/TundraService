@@ -41,29 +41,29 @@ public class SecurityServiceImplTest {
 	@Autowired
 	private OrganizationDAO organizationDAO;
 	
-	private static final User adminUser = new User();
+	private static final User ADMIN_USER = new User();
 	
 	@Before
 	public void doBefore() {
-		adminUser.setFirstName(FIRST_NAME);
-		adminUser.setLastName(LAST_NAME);
-		adminUser.setEmail(EMAIL);
-		adminUser.setUserName(USER_NAME);
-		adminUser.setPassword(SecurityUtil.encode(PASSWORD));
-		adminUser.setCreatedUser(CREATE_USER);
-		adminUser.setUpdatedUser(CREATE_USER);
-		adminUser.setCreated(new Date());
-		adminUser.setUpdated(new Date());
+		ADMIN_USER.setFirstName(FIRST_NAME);
+		ADMIN_USER.setLastName(LAST_NAME);
+		ADMIN_USER.setEmail(EMAIL);
+		ADMIN_USER.setUserName(USER_NAME);
+		ADMIN_USER.setPassword(SecurityUtil.encode(PASSWORD));
+		ADMIN_USER.setCreatedUser(CREATE_USER);
+		ADMIN_USER.setUpdatedUser(CREATE_USER);
+		ADMIN_USER.setCreated(new Date());
+		ADMIN_USER.setUpdated(new Date());
 		
 		List<Organization>orgs = organizationDAO.findAll();
-		adminUser.setOrganization(orgs.get(0));
+		ADMIN_USER.setOrganization(orgs.get(0));
 		
 	}
 	
 	@Test(expected = SecurityException.class)
 	public void adminTest() {
 		
-		userDAO.save(adminUser);
+		userDAO.save(ADMIN_USER);
 		String token = securityService.adminLogin(USER_NAME, PASSWORD);
 		
 		securityService.validateAdmin(token);
