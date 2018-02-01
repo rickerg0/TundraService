@@ -70,7 +70,6 @@ public class SecurityServiceImplTest {
 		
 		// test invalid login
 		securityService.adminLogin(USER_NAME, "whatever");
-		//assertThat(response, notNullValue());
 		
 	}
 	

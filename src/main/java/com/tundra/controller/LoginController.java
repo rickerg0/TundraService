@@ -34,4 +34,12 @@ public class LoginController extends AbstractController {
 		getSecurityService().register(email, firstName, lastName, deviceId, platform, "registrationProcess");
 		return new ResponseEntity(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="adminLogin", method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> adminLogin(HttpServletResponse httpResponse, 
+			@RequestParam(value="userName") String userName, @RequestParam(value="password") String password) {
+		return new ResponseEntity<String>("{\"token\":\"" + getSecurityService().adminLogin(userName, password) + "\"}",HttpStatus.OK);
+	}
+
+	
 }
