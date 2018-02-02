@@ -11,10 +11,9 @@ import com.tundra.dao.RegisteredDeviceDAO;
 import com.tundra.entity.RegisteredDevice;
 import com.tundra.exception.ExpiredTokenException;
 import com.tundra.exception.InvalidTokenException;
-import com.tundra.util.SecurityUtil;
 
 @Service
-public class SecurityServiceImpl implements SecurityService {
+public class SecurityServiceImpl extends AbstractSecurityService implements SecurityService {
 
 	@Autowired
 	RegisteredDeviceDAO registeredDeviceDAO;
@@ -40,13 +39,13 @@ public class SecurityServiceImpl implements SecurityService {
 			}
 		}
 		
-		return SecurityUtil.encode(SecurityUtil.createToken(firstName,lastName,email));
+		return encode(createToken(firstName,lastName,email));
 	}
 
 	@Override
 	public void validate(String token) throws SecurityException {
 		try {
-			if (!SecurityUtil.isValid(token, EXPIRE_MILIS)) {
+			if (!isValid(token, EXPIRE_MILIS)) {
 				throw new ExpiredTokenException("Expired token: " + token);
 			}
 		} catch (Exception e) {

@@ -31,5 +31,12 @@ public interface AdminSecurityService {
 	 * @return
 	 */
 	String login(String userName, String password) throws SecurityException;
+
+	/**
+	 * Encodes a string.
+	 * @param payload
+	 * @return
+	 */
+	String encode(String payload);
 	
 }

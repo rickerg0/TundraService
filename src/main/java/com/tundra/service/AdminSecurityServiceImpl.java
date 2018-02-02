@@ -11,10 +11,9 @@ import com.tundra.dao.UserDAO;
 import com.tundra.entity.User;
 import com.tundra.exception.ExpiredTokenException;
 import com.tundra.exception.InvalidTokenException;
-import com.tundra.util.SecurityUtil;
 
 @Service
-public class AdminSecurityServiceImpl implements AdminSecurityService {
+public class AdminSecurityServiceImpl extends AbstractSecurityService implements AdminSecurityService {
 
 	private static final String INVALID_LOGIN = "Invalid login";
 
@@ -27,8 +26,8 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
 	public void validate(String token) {
 		// check the date... it's always in the first position
 		try {
-			token = SecurityUtil.getPayload(token);
-			if (!SecurityUtil.isValid(token, EXPIRE_MILIS)) {
+			token = getPayload(token);
+			if (!isValid(token, EXPIRE_MILIS)) {
 				throw new ExpiredTokenException("Expired token: " + token);
 			}
 		} catch (Exception e) {
@@ -38,8 +37,8 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
 		// now make sure the user is valid
 		// decrypt it - token ends up as UUID^^DATE_TIME^^FIRST_NAME^^LAST_NAME^^EMAIL^^USER_NAME
 
-		String source = SecurityUtil.decode(token);
-		String[] sourceElements = StringUtils.split(source, SecurityUtil.DELIMITER);
+		String source = decode(token);
+		String[] sourceElements = StringUtils.split(source, DELIMITER);
 
 		// TODO: finish this... needs to be thought out a bit more
 		String firstName = sourceElements[2];
@@ -62,15 +61,14 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
 			throw new SecurityException(INVALID_LOGIN);
 		}
 		
-		String encryptedPassword = SecurityUtil.encode(password);
+		String encryptedPassword = encode(password);
 		List<User> users = userDAO.findByUserNameAndPassword(userName, encryptedPassword);
 		if (users == null || users.isEmpty() || users.size() > 1) {
 			throw new SecurityException(INVALID_LOGIN);
 		}
 		
 		// return the encrypted payload inside the signed token
-		return SecurityUtil.createSignedToken(
-				SecurityUtil.encode(SecurityUtil.createAdminToken(users.get(0))));
+		return createSignedToken(encode(createAdminToken(users.get(0))));
 		
 	}
 

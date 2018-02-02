@@ -1,4 +1,4 @@
-package com.tundra.util;
+package com.tundra.service;
 
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -26,9 +26,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 
-public class SecurityUtil {
-
-	public static final String DELIMITER = "^^";
+public class AbstractSecurityService {
+	
+	static final String DELIMITER = "^^";
 	private static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	private static final byte[] KEY = new byte[16];
 	private static final SecureRandom random = new SecureRandom();
@@ -40,7 +40,7 @@ public class SecurityUtil {
 		AES_KEY = new SecretKeySpec(KEY, "AES");
 	}
 	
-	public static String encode(String payload) {
+	public String encode(String payload) {
 		
 		try {
 			Cipher cipher = Cipher.getInstance("AES");
@@ -55,7 +55,7 @@ public class SecurityUtil {
 		}
 	}
 	
-	public static  String decode(String payload) {
+	public String decode(String payload) {
 		try {
 			Cipher cipher = Cipher.getInstance("AES");
 			cipher.init(Cipher.DECRYPT_MODE, AES_KEY);
@@ -68,16 +68,16 @@ public class SecurityUtil {
 		}
 	}
 	
-	public static final String createSignedToken(String payload) {
+	public final String createSignedToken(String payload) {
 		return Jwts.builder().setSubject(payload).signWith(SignatureAlgorithm.HS512, TOKEN_KEY).compact();
 	}
 	
-	public static final String getPayload(String signedToken) {
+	public final String getPayload(String signedToken) {
 		// this should blow an exception if the key is invalid
 		return Jwts.parser().setSigningKey(TOKEN_KEY).parseClaimsJws(signedToken).getBody().getSubject();
 	}
 	
-	public static String createAdminToken(User user) {
+	public String createAdminToken(User user) {
 		// remove nulls and add delimiters
 		// payload ends up as UUID^^DATE_TIME^^FIRST_NAME^^LAST_NAME^^EMAIL^^USER_NAME
 		String payload = UUID.randomUUID().toString() + DELIMITER + // just push the date over one place so we always know where it is 
@@ -91,7 +91,7 @@ public class SecurityUtil {
 		
 	}
 	
-	public static String createToken(String firstName, String lastName, String email) {
+	public String createToken(String firstName, String lastName, String email) {
 		// remove nulls and add delimiters
 		// token ends up as UUID^^DATE_TIME^^FIRST_NAME^^LAST_NAME^^EMAIL
 		String source = UUID.randomUUID().toString() + DELIMITER + // just push the date over one place so we always know where it is 
@@ -103,9 +103,9 @@ public class SecurityUtil {
 		return source;
 	}
 
-	public static boolean isValid(String token, long expireMillis) {
+	public boolean isValid(String token, long expireMillis) {
 		// decrypt it
-		String source = SecurityUtil.decode(token);
+		String source = decode(token);
 		String[] sourceElements = StringUtils.split(source, DELIMITER);
 		Date tokenDate;
 		try {
@@ -117,5 +117,4 @@ public class SecurityUtil {
 		
 		return ((tokenDate.getTime() + expireMillis) > new Date().getTime());
 	}	
-	
 }

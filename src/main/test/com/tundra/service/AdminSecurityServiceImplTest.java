@@ -17,7 +17,6 @@ import com.tundra.dao.UserDAO;
 import com.tundra.entity.Organization;
 import com.tundra.entity.User;
 import com.tundra.springconfig.ApplicationConfig;
-import com.tundra.util.SecurityUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ApplicationConfig.class })
@@ -49,7 +48,7 @@ public class AdminSecurityServiceImplTest {
 		ADMIN_USER.setLastName(LAST_NAME);
 		ADMIN_USER.setEmail(EMAIL);
 		ADMIN_USER.setUserName(USER_NAME);
-		ADMIN_USER.setPassword(SecurityUtil.encode(PASSWORD));
+		ADMIN_USER.setPassword(adminSecurityService.encode(PASSWORD));
 		ADMIN_USER.setCreatedUser(CREATE_USER);
 		ADMIN_USER.setUpdatedUser(CREATE_USER);
 		ADMIN_USER.setCreated(new Date());
