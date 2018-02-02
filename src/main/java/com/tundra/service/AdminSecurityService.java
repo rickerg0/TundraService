@@ -5,11 +5,11 @@ package com.tundra.service;
  * 
  * Token contains the following information:
  * 
- *     user first name, user last name, user email address, date token was issued
+ *     user id, date/time token was issued
  * 
  * and is in the following format:
  * 
- *     RANDOM UUID^^DATE^^FIRST_NAME^^LAST_NAME^^EMAIL
+ *     RANDOM UUID^^DATE_TIME^^ID
  * 
  * @author G
  *

@@ -80,12 +80,19 @@ public class AbstractSecurityService {
 	public String createAdminToken(User user) {
 		// remove nulls and add delimiters
 		// payload ends up as UUID^^DATE_TIME^^FIRST_NAME^^LAST_NAME^^EMAIL^^USER_NAME
-		String payload = UUID.randomUUID().toString() + DELIMITER + // just push the date over one place so we always know where it is 
-				new SimpleDateFormat(DATETIME_FORMAT).format(new Date()) + DELIMITER +
-				StringUtils.defaultString(user.getFirstName()) + DELIMITER + 
-				StringUtils.defaultString(user.getLastName()) + DELIMITER + 
-				StringUtils.defaultString(user.getEmail()) + DELIMITER + 
-				StringUtils.defaultString(user.getUserName()) ;
+//		String payload = UUID.randomUUID().toString() + DELIMITER + // just push the date over one place so we always know where it is 
+//				new SimpleDateFormat(DATETIME_FORMAT).format(new Date()) + DELIMITER +
+//				StringUtils.defaultString(user.getFirstName()) + DELIMITER + 
+//				StringUtils.defaultString(user.getLastName()) + DELIMITER + 
+//				StringUtils.defaultString(user.getEmail()) + DELIMITER + 
+//				StringUtils.defaultString(user.getUserName()) ;
+		
+		// just use the user id in the payload... dave sartory's idea
+		String payload = null;
+		if (user != null && user.getId() != null) {
+			payload = UUID.randomUUID().toString() + DELIMITER + // just push the date over one place so we always know where it is 
+					new SimpleDateFormat(DATETIME_FORMAT).format(new Date()) + DELIMITER + user.getId();
+		}
 		
 		return payload;
 		

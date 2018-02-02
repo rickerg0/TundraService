@@ -35,19 +35,24 @@ public class AdminSecurityServiceImpl extends AbstractSecurityService implements
 		}
 		
 		// now make sure the user is valid
-		// decrypt it - token ends up as UUID^^DATE_TIME^^FIRST_NAME^^LAST_NAME^^EMAIL^^USER_NAME
+		// decrypt it - token ends up as UUID^^DATE_TIME^^ID
+		User user = null;
 
-		String source = decode(token);
-		String[] sourceElements = StringUtils.split(source, DELIMITER);
-
-		// TODO: finish this... needs to be thought out a bit more
-		String firstName = sourceElements[2];
-		String lastName = sourceElements[3];
-		String email = sourceElements[4];
-		String userName = sourceElements[5];
+		try {
+			String source = decode(token);
+			String[] sourceElements = StringUtils.split(source, DELIMITER);
+	
+			// TODO: finish this... needs to be thought out a bit more
+			String id = sourceElements[2];
+			if (StringUtils.isNoneBlank(id)) {
+				user = userDAO.findOne(Integer.parseInt(id));
+			}
+		} catch (Exception e) {
+			// just set the user to null and fall through to an invalid login 
+			user = null;
+		}
 		
-		List<User> users = userDAO.findByFirstNameAndLastNameAndEmailAndUserName(firstName, lastName, email, userName);
-		if (users == null || users.isEmpty() || users.size() > 1) {
+		if (user == null) {
 			throw new SecurityException(INVALID_LOGIN);
 		}
 		

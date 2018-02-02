@@ -9,10 +9,7 @@ import com.tundra.entity.User;
 
 @Transactional("tundraTransactionManager")
 public interface UserDAO extends JpaRepository<User,Integer> {
-
 	
 	List<User> findByUserNameAndPassword(String userName, String password);
 
-	List<User> findByFirstNameAndLastNameAndEmailAndUserName(String firstName, String lastName, String email, String userName);
-	
 }
