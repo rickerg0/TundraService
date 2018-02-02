@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.tundra.service.AdminSecurityService;
 import com.tundra.service.SecurityService;
 
 @SuppressWarnings("serial")
@@ -15,6 +16,9 @@ public abstract class AbstractController implements Serializable {
 	@Autowired
 	private SecurityService securityService;
 
+	@Autowired
+	private AdminSecurityService adminSecurityService;
+
 	public SecurityService getSecurityService() {
 		return securityService;
 	}
@@ -22,4 +26,9 @@ public abstract class AbstractController implements Serializable {
 	public void setSecurityService(SecurityService securityService) {
 		this.securityService = securityService;
 	}
+	
+	public AdminSecurityService getAdminSecurityService() {
+		return adminSecurityService;
+	}
+	
 }

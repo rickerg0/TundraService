@@ -23,7 +23,7 @@ import com.tundra.util.SecurityUtil;
 @ContextConfiguration(classes = { ApplicationConfig.class })
 @WebAppConfiguration
 @Transactional // so tests roll back
-public class SecurityServiceImplTest {
+public class AdminSecurityServiceImplTest {
 
 	private static final String CREATE_USER = "testAdmin";
 	private static final String PASSWORD = "password";
@@ -33,7 +33,7 @@ public class SecurityServiceImplTest {
 	private static final String FIRST_NAME = "test";
 
 	@Autowired 
-	private SecurityService securityService;
+	private AdminSecurityService adminSecurityService;
 	
 	@Autowired 
 	private UserDAO userDAO;
@@ -64,12 +64,12 @@ public class SecurityServiceImplTest {
 	public void adminTest() {
 		
 		userDAO.save(ADMIN_USER);
-		String token = securityService.adminLogin(USER_NAME, PASSWORD);
+		String token = adminSecurityService.login(USER_NAME, PASSWORD);
 		
-		securityService.validateAdmin(token);
+		adminSecurityService.validate(token);
 		
 		// test invalid login
-		securityService.adminLogin(USER_NAME, "whatever");
+		adminSecurityService.login(USER_NAME, "whatever");
 		
 	}
 	
