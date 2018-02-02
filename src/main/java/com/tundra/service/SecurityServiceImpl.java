@@ -73,6 +73,7 @@ public class SecurityServiceImpl implements SecurityService {
 	public void validateAdmin(String token) throws SecurityException {
 		// check the date... it's always in the first position
 		try {
+			token = SecurityUtil.getPayload(token);
 			if (!isValid(token, ADMIN_EXPIRE_MILIS)) {
 				throw new ExpiredTokenException("Expired token: " + token);
 			}
@@ -144,21 +145,23 @@ public class SecurityServiceImpl implements SecurityService {
 			throw new SecurityException(INVALID_LOGIN);
 		}
 		
-		return SecurityUtil.encode(createAdminToken(users.get(0)));
+		// return the encrypted payload inside the signed token
+		return SecurityUtil.createSignedToken(
+				SecurityUtil.encode(createAdminToken(users.get(0))));
 		
 	}
 	
 	private String createAdminToken(User user) {
 		// remove nulls and add delimiters
-		// token ends up as UUID^^DATE_TIME^^FIRST_NAME^^LAST_NAME^^EMAIL^^USER_NAME
-		String source = UUID.randomUUID().toString() + DELIMITER + // just push the date over one place so we always know where it is 
+		// payload ends up as UUID^^DATE_TIME^^FIRST_NAME^^LAST_NAME^^EMAIL^^USER_NAME
+		String payload = UUID.randomUUID().toString() + DELIMITER + // just push the date over one place so we always know where it is 
 				new SimpleDateFormat(DATETIME_FORMAT).format(new Date()) + DELIMITER +
 				StringUtils.defaultString(user.getFirstName()) + DELIMITER + 
 				StringUtils.defaultString(user.getLastName()) + DELIMITER + 
 				StringUtils.defaultString(user.getEmail()) + DELIMITER + 
 				StringUtils.defaultString(user.getUserName()) ;
 		
-		return source;
+		return payload;
 		
 	}
 	
