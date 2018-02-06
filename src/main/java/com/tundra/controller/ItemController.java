@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tundra.entity.ItemTagMedia;
 import com.tundra.response.ItemTagSummaryResponse;
-import com.tundra.service.TundraService;
+import com.tundra.service.ItemTagService;
 
 @Controller 
 
@@ -28,7 +28,7 @@ public class ItemController extends AbstractController {
 	private final static Logger logger = Logger.getLogger(ItemController.class);
 
 	@Autowired
-	private TundraService tundraService;
+	private ItemTagService tundraService;
 	
 	@RequestMapping(value="/{tag}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemTagByTagId(HttpServletResponse httpResponse, 

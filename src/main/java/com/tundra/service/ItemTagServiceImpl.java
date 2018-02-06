@@ -1,6 +1,7 @@
 package com.tundra.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,49 +9,18 @@ import org.springframework.stereotype.Service;
 
 import com.tundra.dao.ItemTagDAO;
 import com.tundra.dao.ItemTagMediaDAO;
-import com.tundra.dao.OrganizationDAO;
 import com.tundra.entity.ItemTag;
 import com.tundra.entity.ItemTagMedia;
-import com.tundra.entity.Organization;
 import com.tundra.response.ItemTagSummaryResponse;
 
 @Service
-public class TundraServiceImpl implements TundraService {
+public class ItemTagServiceImpl implements ItemTagService {
   
 	@Autowired
 	ItemTagDAO itemTagDAO;
 	
 	@Autowired
-	private OrganizationDAO organizationDAO;
-	
-	@Autowired
 	ItemTagMediaDAO itemTagMediaDAO;
-	
-	/* (non-Javadoc)
-	 * @see com.tundra.service.TundraService#findAllOrganizations()
-	 */
-	@Override
-	public List<Organization> findAllOrganizations() {
-		return organizationDAO.findAll();
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.tundra.service.TundraService#findOrganization(int)
-	 */
-	@Override
-	public Organization findOrganization(int id) {
-		return organizationDAO.findOne(id);
-	}
-	
-	@Override
-	public List<Organization> findByName(String name) {
-		return organizationDAO.findByName(name);
-	}
-	
-	@Override
-	public List<Organization> findByNameAndCity(String name, String city) {
-		return organizationDAO.findByNameAndCity(name, city);
-	}
 	
 	@Override
 	public ItemTag findByTag(String tag) {
@@ -92,5 +62,22 @@ public class TundraServiceImpl implements TundraService {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public void save(ItemTag tag, String user) {
+		
+		if (tag != null) {
+			
+			if (tag.getCreated() == null) {
+				tag.setCreated(new Date());
+				tag.setCreatedUser(user);
+			}
+			
+			tag.setUpdated(new Date());
+			tag.setUpdatedUser(user);
+			itemTagDAO.save(tag);
+		}
+		
 	}
 }
