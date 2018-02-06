@@ -1,9 +1,12 @@
 package com.tundra.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,6 +84,18 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		registeredDeviceDAO.save(device);
 		
 		return device;
+	}
+
+	private String createToken(String firstName, String lastName, String email) {
+		// remove nulls and add delimiters
+		// token ends up as UUID^^DATE_TIME^^FIRST_NAME^^LAST_NAME^^EMAIL
+		String source = UUID.randomUUID().toString() + DELIMITER + // just push the date over one place so we always know where it is 
+				new SimpleDateFormat(DATETIME_FORMAT).format(new Date()) + DELIMITER +
+				StringUtils.defaultString(firstName) + DELIMITER + 
+				StringUtils.defaultString(lastName) + DELIMITER + 
+				StringUtils.defaultString(email) + DELIMITER;
+		
+		return source;
 	}
 
 }

@@ -67,6 +67,8 @@ public class AdminSecurityServiceImplTest {
 		
 		adminSecurityService.validate(token);
 		
+		token = adminSecurityService.renew(token);
+		
 		// test invalid login
 		adminSecurityService.login(USER_NAME, "whatever");
 		

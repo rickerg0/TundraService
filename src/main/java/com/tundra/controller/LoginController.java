@@ -41,5 +41,10 @@ public class LoginController extends AbstractController {
 		return new ResponseEntity<String>("{\"token\":\"" + getAdminSecurityService().login(userName, password) + "\"}",HttpStatus.OK);
 	}
 
-	
+	@RequestMapping(value="renewAdminToken", method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> renewAdminToken(HttpServletResponse httpResponse, 
+			@RequestParam(value="token") String token) {
+		return new ResponseEntity<String>("{\"token\":\"" + getAdminSecurityService().renew(token) + "\"}",HttpStatus.OK);
+	}
+
 }

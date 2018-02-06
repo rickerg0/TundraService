@@ -25,6 +25,14 @@ public interface AdminSecurityService {
 	void validate(String token);
 	
 	/**
+	 * Checks a token for validity and returns a renewed one, throws an exception if invalid
+	 * 
+	 * @param token
+	 * @return
+	 */
+	String renew(String token);
+	
+	/**
 	 * Checks creds and returns token if valid
 	 * @param userName
 	 * @param password
