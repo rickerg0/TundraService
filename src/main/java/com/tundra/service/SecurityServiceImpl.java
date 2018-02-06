@@ -42,7 +42,7 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 			}
 		}
 		
-		return encode(createToken(firstName,lastName,email));
+		return encode(createTokenPayload(firstName,lastName,email));
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		return device;
 	}
 
-	private String createToken(String firstName, String lastName, String email) {
+	private String createTokenPayload(String firstName, String lastName, String email) {
 		// remove nulls and add delimiters
 		// token ends up as UUID^^DATE_TIME^^FIRST_NAME^^LAST_NAME^^EMAIL
 		String source = UUID.randomUUID().toString() + DELIMITER + // just push the date over one place so we always know where it is 

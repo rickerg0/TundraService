@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  *
@@ -39,11 +39,12 @@ public class ItemTag extends AbstractEntity implements Serializable {
     @Column(name = "active")
     private Boolean active;
 
-    @JsonIgnore
+//    @JsonBackReference
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Location location;
     
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemTag", fetch = FetchType.EAGER)
     private Set<ItemTagMedia> itemTagMediaSet;
 

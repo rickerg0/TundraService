@@ -25,7 +25,7 @@ import com.tundra.springconfig.ApplicationConfig;
 @ContextConfiguration(classes = { ApplicationConfig.class })
 @WebAppConfiguration
 @Transactional // so tests roll back
-public class ExhibitTagServiceImplTest {
+public class ItemTagServiceImplTest {
 
 	private static final String TAG = "7c:ec:79:fc:ed:34-90";
 	
@@ -33,17 +33,17 @@ public class ExhibitTagServiceImplTest {
 	private ItemTagService itemTagService;
 
 	@Autowired
-	LocationDAO locationDAO;
+	private LocationDAO locationDAO;
 	
 	@Test
-	public void getExhibitTagTest() {
+	public void getItemTagTest() {
 		ItemTagSummaryResponse response = itemTagService.findSummaryByItemTag(TAG);
 		assertThat(response, notNullValue());
 		
 	}
 	
 	@Test
-	public void saveExhibitTagTest() {
+	public void saveItemTagTest() {
 		
 		List<ItemTag> before = itemTagService.findAllTags();
 		

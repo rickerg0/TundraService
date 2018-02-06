@@ -1,6 +1,7 @@
 package com.tundra.service;
 
 import com.tundra.entity.User;
+import com.tundra.response.AdminValidationResponse;
 
 /**
  * Security service that manages tokens and such for a user
@@ -32,7 +33,7 @@ public interface AdminSecurityService {
 	 * @param token
 	 * @return user
 	 */
-	User validate(String token);
+	AdminValidationResponse validate(String token);
 	
 	/**
 	 * Checks a token for validity and returns a renewed one, throws an exception if invalid
@@ -40,7 +41,7 @@ public interface AdminSecurityService {
 	 * @param token
 	 * @return
 	 */
-	String renew(String token);
+	AdminValidationResponse renew(String token);
 	
 	/**
 	 * Checks creds and returns token if valid
@@ -48,7 +49,7 @@ public interface AdminSecurityService {
 	 * @param password
 	 * @return
 	 */
-	String login(String userName, String password) throws SecurityException;
+	AdminValidationResponse login(String userName, String password) throws SecurityException;
 
 	/**
 	 * Encodes a string.

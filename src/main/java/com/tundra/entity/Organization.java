@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 /**
  *
  * @author rickerg0
@@ -44,6 +46,7 @@ public class Organization extends AbstractEntity implements Serializable {
     @Column(name = "active")
     private Boolean active;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organization", fetch = FetchType.EAGER)
     private Set<Location> locationSet;
 

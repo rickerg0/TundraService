@@ -2,19 +2,16 @@ package com.tundra.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Set;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -34,10 +31,11 @@ public class Location extends AbstractEntity implements Serializable {
     @Column(name = "longitude")
     private BigDecimal longitude;
 	
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location", fetch = FetchType.EAGER)
-    private Set<ItemTag> itemTagSet;
+//    @JsonManagedReference
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location", fetch = FetchType.EAGER)
+//    private Set<ItemTag> itemTagSet;
     
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "organization_Id", referencedColumnName = "id")
     private Organization organization;
@@ -66,13 +64,13 @@ public class Location extends AbstractEntity implements Serializable {
         this.longitude = longitude;
     }
 
-    public Set<ItemTag> getItemTagSet() {
-		return itemTagSet;
-	}
-
-	public void setItemTagSet(Set<ItemTag> itemTagSet) {
-		this.itemTagSet = itemTagSet;
-	}
+//    public Set<ItemTag> getItemTagSet() {
+//		return itemTagSet;
+//	}
+//
+//	public void setItemTagSet(Set<ItemTag> itemTagSet) {
+//		this.itemTagSet = itemTagSet;
+//	}
 
 	public Organization getOrganization() {
 		return organization;

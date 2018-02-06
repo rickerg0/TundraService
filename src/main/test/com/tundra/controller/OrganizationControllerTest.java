@@ -47,8 +47,12 @@ public class OrganizationControllerTest extends AbstractControllerTest {
 
 		String content = getAdminResponseContent(mockMvc, URL);
 
+		JsonNode response = (JsonNode)mapper.readTree(content);
+
+		assertThat(response.get("payload"), notNullValue());
+
 		// object mapper that handles the json parsing
-		ArrayNode root = (ArrayNode)mapper.readTree(content);
+		ArrayNode root = (ArrayNode)response.get("payload");
 
 		// or a list of stuff like
 		assertThat(root, notNullValue());

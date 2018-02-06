@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tundra.response.AdminValidationResponse;
+import com.tundra.response.ValidationResponse;
+
 @Controller 
 
 @RequestMapping("/")
@@ -19,7 +22,9 @@ public class LoginController extends AbstractController {
 
 	@RequestMapping(value="login", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> login(HttpServletResponse httpResponse, @RequestParam(value="email") String email) {
-		return new ResponseEntity<String>("{\"token\":\"" + getSecurityService().getToken(email) + "\"}",HttpStatus.OK);
+		
+		return new ResponseEntity<ValidationResponse>(new ValidationResponse(getSecurityService().getToken(email)),HttpStatus.OK);		
+
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -38,13 +43,15 @@ public class LoginController extends AbstractController {
 	@RequestMapping(value="adminLogin", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> adminLogin(HttpServletResponse httpResponse, 
 			@RequestParam(value="userName") String userName, @RequestParam(value="password") String password) {
-		return new ResponseEntity<String>("{\"token\":\"" + getAdminSecurityService().login(userName, password) + "\"}",HttpStatus.OK);
+
+		return new ResponseEntity<AdminValidationResponse>(getAdminSecurityService().login(userName, password),HttpStatus.OK);		
 	}
 
 	@RequestMapping(value="renewAdminToken", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> renewAdminToken(HttpServletResponse httpResponse, 
 			@RequestParam(value="token") String token) {
-		return new ResponseEntity<String>("{\"token\":\"" + getAdminSecurityService().renew(token) + "\"}",HttpStatus.OK);
+
+		return new ResponseEntity<AdminValidationResponse>(getAdminSecurityService().renew(token),HttpStatus.OK);		
 	}
 
 }

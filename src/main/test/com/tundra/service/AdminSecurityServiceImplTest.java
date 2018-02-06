@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tundra.dao.UserDAO;
 import com.tundra.entity.User;
+import com.tundra.response.AdminValidationResponse;
 import com.tundra.springconfig.ApplicationConfig;
 import com.tundra.test.AbstractTest;
 
@@ -41,11 +42,13 @@ public class AdminSecurityServiceImplTest extends AbstractTest {
 	public void adminTest() {
 		
 		userDAO.save(adminUser);
-		String token = adminSecurityService.login(USER_NAME, PASSWORD);
+		AdminValidationResponse response = adminSecurityService.login(USER_NAME, PASSWORD); 
+		String token = response.getToken();
 		
 		adminSecurityService.validate(token);
 		
-		token = adminSecurityService.renew(token);
+		response = adminSecurityService.renew(token);
+		token = response.getToken();
 		
 		// test invalid login
 		adminSecurityService.login(USER_NAME, "whatever");
