@@ -16,7 +16,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.tundra.springconfig.ApplicationConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,7 +24,7 @@ import com.tundra.springconfig.ApplicationConfig;
 public class ExhibitControllerTest extends AbstractControllerTest {
 
 	private MockMvc mockMvc;
-	private static final String URL = "/tag/sw372";
+	private static final String URL = "/tag/7c:ec:79:fc:ed:34-80";
 
 
 	@Autowired
@@ -46,16 +45,13 @@ public class ExhibitControllerTest extends AbstractControllerTest {
 		String content = getResponseContent(mockMvc, URL);
 
 		// object mapper that handles the json parsing
-		ArrayNode root = (ArrayNode)mapper.readTree(content);
+		JsonNode org = (JsonNode)mapper.readTree(content);
 
-		// or a list of stuff like
-		assertThat(root, notNullValue());
-		for (JsonNode org : root) {
-			assertThat(org.get("name"), notNullValue());
-			assertThat(org.get("tag"), notNullValue());
-			assertThat(org.get("description"), notNullValue());
-			assertThat(org.get("created"), notNullValue());
-			assertThat(org.get("updated"), notNullValue());
-		}
+		assertThat(org.get("organizationName"), notNullValue());
+		assertThat(org.get("locationName"), notNullValue());
+		assertThat(org.get("itemTagName"), notNullValue());
+		assertThat(org.get("itemTagId"), notNullValue());
+		assertThat(org.get("itemTagTag"), notNullValue());
+
 	}
 }

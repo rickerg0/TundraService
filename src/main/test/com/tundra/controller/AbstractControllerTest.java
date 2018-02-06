@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.tundra.dao.RegisteredDeviceDAO;
 import com.tundra.dao.UserDAO;
 import com.tundra.entity.RegisteredDevice;
-import com.tundra.entity.User;
 import com.tundra.service.AdminSecurityService;
 import com.tundra.service.SecurityService;
 import com.tundra.test.AbstractTest;
