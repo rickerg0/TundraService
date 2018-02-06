@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,6 +23,7 @@ import com.tundra.springconfig.ApplicationConfig;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ApplicationConfig.class })
 @WebAppConfiguration
+@Transactional
 public class OrganizationControllerTest extends AbstractControllerTest {
 
 	private MockMvc mockMvc;
@@ -43,7 +45,7 @@ public class OrganizationControllerTest extends AbstractControllerTest {
 		// object mapper that handles the json parsing
 		ObjectMapper mapper = new ObjectMapper();
 
-		String content = getResponseContent(mockMvc, URL);
+		String content = getAdminResponseContent(mockMvc, URL);
 
 		// object mapper that handles the json parsing
 		ArrayNode root = (ArrayNode)mapper.readTree(content);

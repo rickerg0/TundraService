@@ -6,20 +6,66 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-public class AbstractControllerTest {
+import com.tundra.dao.RegisteredDeviceDAO;
+import com.tundra.dao.UserDAO;
+import com.tundra.entity.RegisteredDevice;
+import com.tundra.entity.User;
+import com.tundra.service.AdminSecurityService;
+import com.tundra.service.SecurityService;
+import com.tundra.test.AbstractTest;
+
+public class AbstractControllerTest extends AbstractTest {
 	
 	static final MediaType CONTENT_TYPE = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
 	
+	@Autowired
+	private SecurityService securityService;
+
+	@Autowired
+	private AdminSecurityService adminSecurityService;
+	
+	@Autowired
+	RegisteredDeviceDAO registeredDeviceDAO;
+	
+	@Autowired
+	UserDAO userDAO;
+	
 	String getResponseContent(MockMvc mockMvc, String url) throws Exception {
 
-		MvcResult result = mockMvc.perform(get(url).contentType(CONTENT_TYPE)).andExpect(status().isOk()).andReturn();
+		List<RegisteredDevice> devices = registeredDeviceDAO.findAll();
+		
+		String token = securityService.getToken(devices.get(0).getEmail());
+		
+		MvcResult result = mockMvc.perform(get(url).contentType(CONTENT_TYPE)
+				.header(AbstractController.HEADER_SECURITY_TOKEN, token))
+				.andExpect(status().isOk()).andReturn();
+		
+
+		// the request should successfully complete
+		String content = result.getResponse().getContentAsString();
+		assertThat(content, notNullValue());
+
+		return content;
+	}
+
+	String getAdminResponseContent(MockMvc mockMvc, String url) throws Exception {
+
+		// create a user and test auth
+		userDAO.save(getUser());
+		String token = adminSecurityService.login(USER_NAME, PASSWORD);
+		
+		MvcResult result = mockMvc.perform(get(url).contentType(CONTENT_TYPE)
+				.header(AbstractController.HEADER_SECURITY_TOKEN, token)).andExpect(status().isOk()).andReturn();
+		
 
 		// the request should successfully complete
 		String content = result.getResponse().getContentAsString();

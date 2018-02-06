@@ -11,7 +11,7 @@ import com.tundra.service.SecurityService;
 public abstract class AbstractController implements Serializable {
 	
 	static final String ERROR_PREFIX = "Whoops : ";
-	static final String HEADER_SECURITY_TOKEN = "X-Token";
+	public static final String HEADER_SECURITY_TOKEN = "X-Token";
 	
 	@Autowired
 	private SecurityService securityService;

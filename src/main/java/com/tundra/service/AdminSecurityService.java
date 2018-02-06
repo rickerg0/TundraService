@@ -1,5 +1,7 @@
 package com.tundra.service;
 
+import com.tundra.entity.User;
+
 /**
  * Security service that manages tokens and such for a user
  * 
@@ -16,6 +18,14 @@ package com.tundra.service;
  */
 public interface AdminSecurityService {
 
+	/**
+	 * Gets a token for a user
+	 * 
+	 * @param user
+	 * @return
+	 */
+	String getToken(User user);
+	
 	/**
 	 * Checks a token for validity and throws an exception if invalid
 	 * 

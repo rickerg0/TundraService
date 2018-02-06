@@ -51,11 +51,12 @@ public class AdminSecurityServiceImpl extends AbstractSecurityService implements
 		}
 		
 		// return the encrypted payload inside the signed token
-		return createSignedToken(encode(createToken(users.get(0))));
+		return createSignedToken(encode(getToken(users.get(0))));
 		
 	}
 
-	private String createToken(User user) {
+	@Override
+	public String getToken(User user) {
 		// remove nulls and add delimiters
 		// just use the user id in the payload... dave sartory's idea
 		String payload = null;
@@ -76,7 +77,7 @@ public class AdminSecurityServiceImpl extends AbstractSecurityService implements
 			throw new SecurityException(INVALID_LOGIN);
 		}
 		
-		return createToken(user);
+		return getToken(user);
 	}
 	
 	private User doValidate(String token) {
