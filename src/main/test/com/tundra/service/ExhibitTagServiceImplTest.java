@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tundra.dao.LocationDAO;
 import com.tundra.entity.ItemTag;
 import com.tundra.entity.Location;
+import com.tundra.entity.User;
 import com.tundra.response.ItemTagSummaryResponse;
 import com.tundra.springconfig.ApplicationConfig;
 
@@ -56,7 +57,9 @@ public class ExhibitTagServiceImplTest {
 		List<Location> locations = locationDAO.findAll();
 		tag.setLocation(locations.get(0));
 		
-		itemTagService.save(tag, "me");
+		User user = new User();
+		user.setUserName("me");
+		itemTagService.save(tag, user);
 		
 		List<ItemTag> after = itemTagService.findAllTags();
 		

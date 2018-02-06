@@ -11,6 +11,7 @@ import com.tundra.dao.ItemTagDAO;
 import com.tundra.dao.ItemTagMediaDAO;
 import com.tundra.entity.ItemTag;
 import com.tundra.entity.ItemTagMedia;
+import com.tundra.entity.User;
 import com.tundra.response.ItemTagSummaryResponse;
 
 @Service
@@ -24,8 +25,10 @@ public class ItemTagServiceImpl implements ItemTagService {
 	
 	@Override
 	public ItemTag findByTag(String tag) {
+		
 		ItemTag et = null;
 		List<ItemTag> list = itemTagDAO.findByTag(tag);
+		
 		if( list != null && list.size() ==1){
 			et = list.get(0);
 		}
@@ -45,17 +48,22 @@ public class ItemTagServiceImpl implements ItemTagService {
 
 	@Override
 	public ItemTagSummaryResponse findSummaryByItemTag(String tag) {
+		
 		ItemTagSummaryResponse summary = null;
 		List<ItemTag> list = itemTagDAO.findByTag(tag);
+		
 		if( list != null && list.size() == 1){
 			summary = new ItemTagSummaryResponse(list.get(0));
 		}
 		return summary;
-	}	
+	}
+	
 	@Override
 	public List<ItemTagSummaryResponse> findSummaryList() {
+		
 		List<ItemTagSummaryResponse> list = new ArrayList<>();
 		List<ItemTag> etList = itemTagDAO.findAll();
+		
 		if (etList != null) {
 			for (ItemTag et: etList) {
 				list.add(new ItemTagSummaryResponse(et));
@@ -65,17 +73,17 @@ public class ItemTagServiceImpl implements ItemTagService {
 	}
 
 	@Override
-	public void save(ItemTag tag, String user) {
+	public void save(ItemTag tag, User user) {
 		
 		if (tag != null) {
 			
 			if (tag.getCreated() == null) {
 				tag.setCreated(new Date());
-				tag.setCreatedUser(user);
+				tag.setCreatedUser(user.getUserName());
 			}
 			
 			tag.setUpdated(new Date());
-			tag.setUpdatedUser(user);
+			tag.setUpdatedUser(user.getUserName());
 			itemTagDAO.save(tag);
 		}
 		

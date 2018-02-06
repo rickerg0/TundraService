@@ -30,9 +30,9 @@ public interface AdminSecurityService {
 	 * Checks a token for validity and throws an exception if invalid
 	 * 
 	 * @param token
-	 * @return
+	 * @return user
 	 */
-	void validate(String token);
+	User validate(String token);
 	
 	/**
 	 * Checks a token for validity and returns a renewed one, throws an exception if invalid

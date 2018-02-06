@@ -26,7 +26,7 @@ public class AdminSecurityServiceImpl extends AbstractSecurityService implements
 	UserDAO userDAO;
 
 	@Override
-	public void validate(String token) {
+	public User validate(String token) {
 
 		User user = doValidate(token);
 		
@@ -34,6 +34,7 @@ public class AdminSecurityServiceImpl extends AbstractSecurityService implements
 			throw new SecurityException(INVALID_LOGIN);
 		}
 		
+		return user;
 	}
 
 	@Override
