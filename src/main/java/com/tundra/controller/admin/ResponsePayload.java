@@ -1,4 +1,4 @@
-package com.tundra.controller;
+package com.tundra.controller.admin;
 
 import java.io.Serializable;
 

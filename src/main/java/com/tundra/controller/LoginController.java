@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tundra.response.AdminValidationResponse;
 import com.tundra.response.ValidationResponse;
 
 @Controller 
 
 @RequestMapping("/")
-public class LoginController extends AbstractController {
+public class LoginController extends AbstractPublicController {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,18 +39,4 @@ public class LoginController extends AbstractController {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="adminLogin", method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> adminLogin(HttpServletResponse httpResponse, 
-			@RequestParam(value="userName") String userName, @RequestParam(value="password") String password) {
-
-		return new ResponseEntity<AdminValidationResponse>(getAdminSecurityService().login(userName, password),HttpStatus.OK);		
-	}
-
-	@RequestMapping(value="renewAdminToken", method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> renewAdminToken(HttpServletResponse httpResponse, 
-			@RequestParam(value="token") String token) {
-
-		return new ResponseEntity<AdminValidationResponse>(getAdminSecurityService().renew(token),HttpStatus.OK);		
-	}
-
 }

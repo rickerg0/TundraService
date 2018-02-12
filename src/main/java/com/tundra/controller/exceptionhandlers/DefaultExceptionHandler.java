@@ -1,4 +1,4 @@
-package com.tundra.controller;
+package com.tundra.controller.exceptionhandlers;
 
 import org.apache.log4j.Logger;
 import org.springframework.core.Ordered;

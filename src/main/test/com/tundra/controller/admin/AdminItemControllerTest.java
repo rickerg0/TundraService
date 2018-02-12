@@ -1,7 +1,9 @@
-package com.tundra.controller;
+package com.tundra.controller.admin;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,21 +19,28 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tundra.dao.LocationDAO;
+import com.tundra.entity.ItemTag;
+import com.tundra.entity.Location;
 import com.tundra.springconfig.ApplicationConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ApplicationConfig.class })
 @WebAppConfiguration
 @Transactional
-public class ItemControllerTest extends AbstractPublicControllerTest {
+public class AdminItemControllerTest extends AbstractAdminControllerTest {
 
 	private MockMvc mockMvc;
-	private static final String GET_TAG_URL = "/tag/7c:ec:79:fc:ed:34-80";
+	private static final String GET_TAG_URL = "/admin/tag/7c:ec:79:fc:ed:34-80";
+	private static final String SAVE_TAG_URL = "/admin/tag/save";
 
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 
+	@Autowired
+	private LocationDAO locationDAO;
+	
 	@Before
 	public void setUp() throws Exception {
 
@@ -55,6 +64,24 @@ public class ItemControllerTest extends AbstractPublicControllerTest {
 		assertThat(org.get("itemTagId"), notNullValue());
 		assertThat(org.get("itemTagTag"), notNullValue());
 
+	}
+	
+	@Test
+	public void saveItemTag() throws Exception {
+		
+		ItemTag tag = new ItemTag();
+		tag.setTag("abcd-1234");
+		tag.setName("test");
+		tag.setDescription("test description");
+		tag.setActive(true);
+		
+		// grab a location
+		List<Location> locations = locationDAO.findAll();
+		tag.setLocation(locations.get(0));
+
+		String content = postResponseContent(mockMvc, SAVE_TAG_URL, tag);
+		
+		assertThat(content, notNullValue());
 	}
 	
 

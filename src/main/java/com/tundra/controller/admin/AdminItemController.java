@@ -1,4 +1,4 @@
-package com.tundra.controller;
+package com.tundra.controller.admin;
 
 import java.util.List;
 
@@ -10,22 +10,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tundra.entity.ItemTag;
 import com.tundra.entity.ItemTagMedia;
+import com.tundra.response.AdminValidationResponse;
 import com.tundra.response.ItemTagSummaryResponse;
 import com.tundra.service.ItemTagService;
 
 @Controller 
 
-@RequestMapping("/tag/")
-public class ItemController extends AbstractPublicController {
+@RequestMapping("/admin/tag/")
+public class AdminItemController extends AbstractAdminController {
 
 	private static final long serialVersionUID = 1L;
-	private final static Logger logger = Logger.getLogger(ItemController.class);
+	private final static Logger logger = Logger.getLogger(AdminItemController.class);
 
 	@Autowired
 	private ItemTagService itemTagService;
@@ -34,7 +37,6 @@ public class ItemController extends AbstractPublicController {
 	public @ResponseBody ResponseEntity<?> getItemTagByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="tag") String tag) {
 
-		getSecurityService().validate(token);
 		return new ResponseEntity<ItemTagSummaryResponse>(itemTagService.findSummaryByItemTag(tag),HttpStatus.OK);
 	}
 	
@@ -51,6 +53,18 @@ public class ItemController extends AbstractPublicController {
 
 		getSecurityService().validate(token);
 		return new ResponseEntity<List<ItemTagSummaryResponse>>(itemTagService.findSummaryList(),HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="save", method=RequestMethod.POST)
+	public @ResponseBody ResponseEntity<?> save(HttpServletResponse httpResponse, 
+			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @RequestBody ItemTag tag) {
+
+		AdminValidationResponse response = getSecurityService().validate(token);
+		itemTagService.save(tag, response.getUser());
+		
+		return new ResponseEntity<ResponsePayload<String>>(
+				new ResponsePayload<String>(response.getToken()),HttpStatus.OK);
+		
 	}
 	
 }

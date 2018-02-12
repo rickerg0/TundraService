@@ -1,4 +1,4 @@
-package com.tundra.controller;
+package com.tundra.controller.admin;
 
 import java.util.List;
 
@@ -20,40 +20,40 @@ import com.tundra.service.OrganizationService;
 
 @Controller 
 
-@RequestMapping("/org")
-public class OrganizationController extends AbstractController {
+@RequestMapping("/admin/org/")
+public class AdminOrganizationController extends AbstractAdminController {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
 	private OrganizationService organizationService;
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET) 
+	@RequestMapping(value="{id}", method=RequestMethod.GET) 
 	public @ResponseBody ResponseEntity<?> getOrg(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
 
-		AdminValidationResponse validationResponse = getAdminSecurityService().validate(token);
+		AdminValidationResponse validationResponse = getSecurityService().validate(token);
 		
 		return new ResponseEntity<ResponsePayload<Organization>>(
 				new ResponsePayload<Organization>(validationResponse.getToken(), organizationService.findOrganization(id)),HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/list", method=RequestMethod.GET)
+	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getOrgs(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 
-		AdminValidationResponse validationResponse = getAdminSecurityService().validate(token);
+		AdminValidationResponse validationResponse = getSecurityService().validate(token);
 
 		return new ResponseEntity<ResponsePayload<List<Organization>>>(
 				new ResponsePayload<List<Organization>>(validationResponse.getToken(), organizationService.findAllOrganizations()),HttpStatus.OK);
 		
 	}
 	
-	@RequestMapping(value="/name/{name}", method=RequestMethod.GET)
+	@RequestMapping(value="name/{name}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getOrgByName(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="name") String name) {
 
-		AdminValidationResponse validationResponse = getAdminSecurityService().validate(token);
+		AdminValidationResponse validationResponse = getSecurityService().validate(token);
 
 		return new ResponseEntity<ResponsePayload<List<Organization>>>(
 				new ResponsePayload<List<Organization>>(validationResponse.getToken(), organizationService.findByName(name)),HttpStatus.OK);

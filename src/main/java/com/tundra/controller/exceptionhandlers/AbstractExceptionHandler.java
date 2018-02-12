@@ -1,4 +1,4 @@
-package com.tundra.controller;
+package com.tundra.controller.exceptionhandlers;
 
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 

@@ -1,4 +1,4 @@
-package com.tundra.controller;
+package com.tundra.controller.admin;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,10 +24,10 @@ import com.tundra.springconfig.ApplicationConfig;
 @ContextConfiguration(classes = { ApplicationConfig.class })
 @WebAppConfiguration
 @Transactional
-public class OrganizationControllerTest extends AbstractControllerTest {
+public class AdminOrganizationControllerTest extends AbstractAdminControllerTest {
 
 	private MockMvc mockMvc;
-	private static final String URL = "/org/list";
+	private static final String URL = "/admin/org/list";
 
 
 	@Autowired
@@ -45,7 +45,7 @@ public class OrganizationControllerTest extends AbstractControllerTest {
 		// object mapper that handles the json parsing
 		ObjectMapper mapper = new ObjectMapper();
 
-		String content = getAdminResponseContent(mockMvc, URL);
+		String content = getResponseContent(mockMvc, URL);
 
 		JsonNode response = (JsonNode)mapper.readTree(content);
 

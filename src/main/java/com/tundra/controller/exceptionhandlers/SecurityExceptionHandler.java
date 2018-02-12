@@ -1,4 +1,4 @@
-package com.tundra.controller;
+package com.tundra.controller.exceptionhandlers;
 
 import org.apache.log4j.Logger;
 import org.springframework.core.Ordered;
@@ -9,18 +9,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
-import com.tundra.exception.InvalidTokenException;
-
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class InvalidTokenExceptionHandler extends AbstractExceptionHandler {
-
-	private final static Logger logger = Logger.getLogger(InvalidTokenException.class);
+public class SecurityExceptionHandler extends AbstractExceptionHandler {
+ 
+	private final static Logger logger = Logger.getLogger(DefaultExceptionHandler.class);
 	
-    @ExceptionHandler(value = { InvalidTokenException.class })
+    @ExceptionHandler(value = { SecurityException.class })
     protected ResponseEntity<?> handleConflict(Exception ex, WebRequest request) {
-    	logger.error(ex.getMessage());
+    	logger.error("Security error", ex);
 		return new ResponseEntity<ErrorResonse>(new ErrorResonse(ERROR_PREFIX + ex.getMessage()) ,HttpStatus.FORBIDDEN);
     }
-
-}
+}	
