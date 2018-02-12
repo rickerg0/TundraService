@@ -1,7 +1,6 @@
 package com.tundra.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,13 +76,7 @@ public class ItemTagServiceImpl implements ItemTagService {
 		
 		if (tag != null) {
 			
-			if (tag.getCreated() == null) {
-				tag.setCreated(new Date());
-				tag.setCreatedUser(user.getUserName());
-			}
-			
-			tag.setUpdated(new Date());
-			tag.setUpdatedUser(user.getUserName());
+			tag.setAuditUser(user.getUserName());
 			itemTagDAO.save(tag);
 		}
 		

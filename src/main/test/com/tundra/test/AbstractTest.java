@@ -1,6 +1,5 @@
 package com.tundra.test;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +32,7 @@ public class AbstractTest {
 		user.setEmail(EMAIL);
 		user.setUserName(USER_NAME);
 		user.setPassword(adminSecurityService.encode(PASSWORD));
-		user.setCreatedUser(CREATE_USER);
-		user.setUpdatedUser(CREATE_USER);
-		user.setCreated(new Date());
-		user.setUpdated(new Date());
+		user.setAuditUser(CREATE_USER);
 		
 		List<Organization>orgs = organizationDAO.findAll();
 		user.setOrganization(orgs.get(0));

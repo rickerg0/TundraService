@@ -69,8 +69,6 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		if (device == null) {
 			
 			device = new RegisteredDevice();
-			device.setCreated(new Date());
-			device.setCreatedUser(userName);
 		}
 
 		device.setFirstName(firstName);
@@ -78,8 +76,8 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		device.setPlatform(platform);
 		device.setEmail(email);
 		device.setDeviceId(deviceId);
-		device.setUpdated(new Date());
-		device.setUpdatedUser(userName);
+		
+		device.setAuditUser(userName);
 		
 		registeredDeviceDAO.save(device);
 		

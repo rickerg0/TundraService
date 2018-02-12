@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tundra.dao.UserDAO;
 import com.tundra.entity.User;
+import com.tundra.exception.AuditException;
 import com.tundra.response.AdminValidationResponse;
 import com.tundra.springconfig.ApplicationConfig;
 import com.tundra.test.AbstractTest;
@@ -52,6 +53,13 @@ public class AdminSecurityServiceImplTest extends AbstractTest {
 		
 		// test invalid login
 		adminSecurityService.login(USER_NAME, "whatever");
+		
+	}
+	
+	@Test(expected = AuditException.class)
+	public void auditExceptionTest() {
+		adminUser.setAuditUser(null);
+		userDAO.save(adminUser);
 		
 	}
 	

@@ -8,8 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.tundra.exception.AuditException;
 
 @MappedSuperclass
 public class AbstractEntity {
@@ -38,6 +45,9 @@ public class AbstractEntity {
     @Column(name = "created_user")
     private String createdUser;
 
+    @Transient
+    private String auditUser;
+    
 	public Integer getId() {
 		return id;
 	}
@@ -77,6 +87,32 @@ public class AbstractEntity {
 	public void setCreatedUser(String createdUser) {
 		this.createdUser = createdUser;
 	}
+	
+	public void setAuditUser(String auditUser) {
+		this.auditUser = auditUser;
+	}
+
+	@PrePersist
+    public void onPrePersist() {
+		checkAuditInfo();
+		setCreated(new Date());
+		setCreatedUser(auditUser);
+		setUpdated(new Date());
+		setUpdatedUser(auditUser);
+    }
+      
+    @PreUpdate
+    public void onPreUpdate() {
+    	checkAuditInfo();
+		setUpdated(new Date());
+		setUpdatedUser(auditUser);
+    }
+
+    private void checkAuditInfo() {
+		if (StringUtils.isBlank(auditUser)) {
+			throw new AuditException("Audit user must exist");
+		}
+    }
 
 	@Override
     public int hashCode() {
