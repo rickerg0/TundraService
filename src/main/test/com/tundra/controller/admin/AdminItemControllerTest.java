@@ -5,17 +5,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,23 +26,13 @@ import com.tundra.springconfig.ApplicationConfig;
 @Transactional
 public class AdminItemControllerTest extends AbstractAdminControllerTest {
 
-	private MockMvc mockMvc;
 	private static final String GET_TAG_URL = "/admin/tag/7c:ec:79:fc:ed:34-80";
 	private static final String SAVE_TAG_URL = "/admin/tag/save";
 
 
 	@Autowired
-	private WebApplicationContext webApplicationContext;
-
-	@Autowired
 	private LocationDAO locationDAO;
 	
-	@Before
-	public void setUp() throws Exception {
-
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-	}
-
 	@Test
 	public void getItemTag() throws Exception {
 

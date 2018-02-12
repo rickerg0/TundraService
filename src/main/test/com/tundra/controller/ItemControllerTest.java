@@ -3,17 +3,12 @@ package com.tundra.controller;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,18 +20,8 @@ import com.tundra.springconfig.ApplicationConfig;
 @Transactional
 public class ItemControllerTest extends AbstractPublicControllerTest {
 
-	private MockMvc mockMvc;
 	private static final String GET_TAG_URL = "/tag/7c:ec:79:fc:ed:34-80";
 
-
-	@Autowired
-	private WebApplicationContext webApplicationContext;
-
-	@Before
-	public void setUp() throws Exception {
-
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-	}
 
 	@Test
 	public void getItemTag() throws Exception {
