@@ -27,7 +27,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public Organization findOrganization(int id) {
-		return organizationDAO.findOne(id);
+		return organizationDAO.findById(id).get();
 	}
 	
 	/* (non-Javadoc)

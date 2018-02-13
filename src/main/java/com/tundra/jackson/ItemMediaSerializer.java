@@ -9,11 +9,11 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.tundra.entity.ItemTagMedia;
 
-import antlr.StringUtils;
-
 public class ItemMediaSerializer extends StdSerializer<ItemTagMedia> {
 
-    public ItemMediaSerializer() {
+	private static final long serialVersionUID = 1L;
+
+	public ItemMediaSerializer() {
         this(null);
     }
    

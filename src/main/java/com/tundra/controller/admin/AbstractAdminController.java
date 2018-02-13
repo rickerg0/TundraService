@@ -8,7 +8,7 @@ import com.tundra.service.AdminSecurityService;
 @SuppressWarnings("serial")
 public class AbstractAdminController extends AbstractController{
 
-	public static final String HEADER_SECURITY_TOKEN = "X-Token";
+	public static final String HEADER_SECURITY_TOKEN = "X-AUTH-TOKEN";
 	
 	@Autowired
 	private AdminSecurityService securityService;

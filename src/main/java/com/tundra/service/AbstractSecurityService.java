@@ -22,7 +22,6 @@ import com.tundra.exception.EncryptionException;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.crypto.MacProvider;
 
 public class AbstractSecurityService {
 	
@@ -31,11 +30,13 @@ public class AbstractSecurityService {
 	private static final byte[] KEY = new byte[16];
 	private static final SecureRandom random = new SecureRandom();
 	private static final Key AES_KEY;
-	private static final Key TOKEN_KEY = MacProvider.generateKey();
+	private static final Key TOKEN_KEY;
 	
 	static {
 		random.nextBytes(KEY);
 		AES_KEY = new SecretKeySpec(KEY, "AES");
+		random.nextBytes(KEY);
+		TOKEN_KEY = new SecretKeySpec(KEY, "AES");
 	}
 	
 	public String encode(String payload) {

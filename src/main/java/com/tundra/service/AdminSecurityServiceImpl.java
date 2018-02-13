@@ -3,6 +3,7 @@ package com.tundra.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -94,7 +95,9 @@ public class AdminSecurityServiceImpl extends AbstractSecurityService implements
 			// TODO: finish this... needs to be thought out a bit more
 			String id = sourceElements[2];
 			if (StringUtils.isNoneBlank(id)) {
-				user = userDAO.findOne(Integer.parseInt(id));
+				// sorry guys... hibernate bought into the optional paradigm
+				Optional<User> o = userDAO.findById(Integer.parseInt(id));
+				user = o.get();
 			}
 		} catch (Exception e) {
 			// just set the user to null and fall through to an invalid login 

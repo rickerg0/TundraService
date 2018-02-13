@@ -19,8 +19,8 @@ import com.tundra.entity.ItemTagMedia;
 import com.tundra.response.ItemTagSummaryResponse;
 import com.tundra.service.ItemTagService;
 
-@Controller 
 
+@Controller 
 @RequestMapping("/tag/")
 public class ItemController extends AbstractPublicController {
 

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tundra.response.ValidationResponse;
 
 @Controller 
-
 @RequestMapping("/")
 public class LoginController extends AbstractPublicController {
 

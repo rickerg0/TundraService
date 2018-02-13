@@ -41,8 +41,8 @@ public class ItemTagServiceImpl implements ItemTagService {
 
 	@Override
 	public ItemTagMedia findMediaById(Integer id) {
-		ItemTagMedia media = itemTagMediaDAO.findOne(id);
-		return media;
+		// sorry guys... hibernate bought into the optional paradigm
+		return itemTagMediaDAO.findById(id).get();
 	}
 
 	@Override
