@@ -37,9 +37,6 @@ public class AdminItemController extends AbstractAdminController {
 	public @ResponseBody ResponseEntity<?> getItemTagByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="tag") String tag) {
 
-		// validate and add new token to response
-		validateAndAddToken(httpResponse, token);
-		
 		return new ResponseEntity<ItemTagSummaryResponse>(itemTagService.findSummaryByItemTag(tag),HttpStatus.OK);
 	}
 	
@@ -47,18 +44,12 @@ public class AdminItemController extends AbstractAdminController {
 	public @ResponseBody ResponseEntity<?> getItemMediaByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
 
-		// validate and add new token to response
-		validateAndAddToken(httpResponse, token);
-		
 		return new ResponseEntity<ItemTagMedia>(itemTagService.findMediaById(id),HttpStatus.OK);
 	}
 		
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItems(HttpServletResponse httpResponse, @RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 
-		// validate and add new token to response
-		validateAndAddToken(httpResponse, token);
-				
 		return new ResponseEntity<List<ItemTagSummaryResponse>>(itemTagService.findSummaryList(),HttpStatus.OK);
 	}
 	
@@ -67,7 +58,8 @@ public class AdminItemController extends AbstractAdminController {
 	public @ResponseBody ResponseEntity<?> save(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @RequestBody ItemTag tag) {
 
-		// validate and add new token to response
+		// validate and add new token to response as right now we need the user for the save
+		// TODO: this may go away once we have a security context
 		AdminValidationResponse response = validateAndAddToken(httpResponse, token);
 		itemTagService.save(tag, response.getUser());
 
