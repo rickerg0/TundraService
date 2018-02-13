@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tundra.entity.Organization;
-import com.tundra.response.AdminValidationResponse;
 import com.tundra.service.OrganizationService;
 
 @Controller 
@@ -32,20 +31,18 @@ public class AdminOrganizationController extends AbstractAdminController {
 	public @ResponseBody ResponseEntity<?> getOrg(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
 
-		AdminValidationResponse validationResponse = getSecurityService().validate(token);
+		validateAndAddToken(httpResponse, token);
 		
-		return new ResponseEntity<ResponsePayload<Organization>>(
-				new ResponsePayload<Organization>(validationResponse.getToken(), organizationService.findOrganization(id)),HttpStatus.OK);
+		return new ResponseEntity<Organization>(organizationService.findOrganization(id),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getOrgs(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 
-		AdminValidationResponse validationResponse = getSecurityService().validate(token);
+		validateAndAddToken(httpResponse, token);
 
-		return new ResponseEntity<ResponsePayload<List<Organization>>>(
-				new ResponsePayload<List<Organization>>(validationResponse.getToken(), organizationService.findAllOrganizations()),HttpStatus.OK);
+		return new ResponseEntity<List<Organization>>(organizationService.findAllOrganizations(),HttpStatus.OK);
 		
 	}
 	
@@ -53,9 +50,8 @@ public class AdminOrganizationController extends AbstractAdminController {
 	public @ResponseBody ResponseEntity<?> getOrgByName(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="name") String name) {
 
-		AdminValidationResponse validationResponse = getSecurityService().validate(token);
+		validateAndAddToken(httpResponse, token);
 
-		return new ResponseEntity<ResponsePayload<List<Organization>>>(
-				new ResponsePayload<List<Organization>>(validationResponse.getToken(), organizationService.findByName(name)),HttpStatus.OK);
+		return new ResponseEntity<List<Organization>>(organizationService.findByName(name),HttpStatus.OK);
 	}
 }

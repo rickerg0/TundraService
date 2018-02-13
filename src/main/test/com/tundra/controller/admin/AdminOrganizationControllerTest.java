@@ -31,12 +31,8 @@ public class AdminOrganizationControllerTest extends AbstractAdminControllerTest
 
 		String content = getResponseContent(mockMvc, URL);
 
-		JsonNode response = (JsonNode)mapper.readTree(content);
-
-		assertThat(response.get("payload"), notNullValue());
-
 		// object mapper that handles the json parsing
-		ArrayNode root = (ArrayNode)response.get("payload");
+		ArrayNode root = (ArrayNode)mapper.readTree(content);
 
 		// or a list of stuff like
 		assertThat(root, notNullValue());

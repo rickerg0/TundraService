@@ -96,4 +96,12 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		return source;
 	}
 
+	@Override
+	public String getEmail(String token) {
+		// decrypt it
+		String source = decode(token);
+		String[] sourceElements = StringUtils.split(source, DELIMITER);
+		return sourceElements[4];
+	}
+
 }

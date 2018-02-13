@@ -27,6 +27,14 @@ public interface SecurityService {
 	String getToken(String email);
 	
 	/**
+	 * Gets an email for a token
+	 * 
+	 * @param token
+	 * @return
+	 */
+	String getEmail(String token);
+	
+	/**
 	 * Checks a token for validity and throws an exception if invalid
 	 * 
 	 * @param token

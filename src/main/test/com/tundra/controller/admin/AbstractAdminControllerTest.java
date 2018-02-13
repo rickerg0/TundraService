@@ -1,6 +1,7 @@
 package com.tundra.controller.admin;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -46,7 +47,11 @@ public class AbstractAdminControllerTest extends AbstractControllerTest {
 
 		// the request should successfully complete
 		String content = result.getResponse().getContentAsString();
+		String newToken = result.getResponse().getHeader(AbstractAdminController.HEADER_SECURITY_TOKEN);
+		
 		assertThat(content, notNullValue());
+		assertThat(newToken, notNullValue());
+		assertThat(newToken, not(token));
 
 		return content;
 	}
@@ -64,7 +69,11 @@ public class AbstractAdminControllerTest extends AbstractControllerTest {
 
 		// the request should successfully complete
 		String content = result.getResponse().getContentAsString();
+		String newToken = result.getResponse().getHeader(AbstractAdminController.HEADER_SECURITY_TOKEN);
+		
 		assertThat(content, notNullValue());
+		assertThat(newToken, notNullValue());
+		assertThat(newToken, not(token));
 
 		return content;
 	}	

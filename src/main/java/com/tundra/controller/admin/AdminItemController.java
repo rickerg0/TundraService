@@ -33,45 +33,41 @@ public class AdminItemController extends AbstractAdminController {
 	@Autowired
 	private ItemTagService itemTagService;
 
-	//TODO; move new token to response header
 	@RequestMapping(value="{tag}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemTagByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="tag") String tag) {
 
-		AdminValidationResponse response = getSecurityService().validate(token);
-		ResponsePayload<ItemTagSummaryResponse> payload = new ResponsePayload<ItemTagSummaryResponse>(response.getToken(), itemTagService.findSummaryByItemTag(tag));
+		validateAndAddToken(httpResponse, token);
 		
-		return new ResponseEntity<ResponsePayload<ItemTagSummaryResponse>>(payload,HttpStatus.OK);
+		return new ResponseEntity<ItemTagSummaryResponse>(itemTagService.findSummaryByItemTag(tag),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="media/{id}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemMediaByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
 
-		AdminValidationResponse response = getSecurityService().validate(token);
-		ResponsePayload<ItemTagMedia> payload = new ResponsePayload<ItemTagMedia>(response.getToken(), itemTagService.findMediaById(id));
+		validateAndAddToken(httpResponse, token);
 		
-		return new ResponseEntity<ResponsePayload<ItemTagMedia>>(payload,HttpStatus.OK);
+		return new ResponseEntity<ItemTagMedia>(itemTagService.findMediaById(id),HttpStatus.OK);
 	}
 		
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItems(HttpServletResponse httpResponse, @RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 
-		AdminValidationResponse response = getSecurityService().validate(token);
-		ResponsePayload<List<ItemTagSummaryResponse>> payload = new ResponsePayload<List<ItemTagSummaryResponse>>(response.getToken(), itemTagService.findSummaryList());
+		validateAndAddToken(httpResponse, token);
 				
-		return new ResponseEntity<ResponsePayload<List<ItemTagSummaryResponse>>>(payload,HttpStatus.OK);
+		return new ResponseEntity<List<ItemTagSummaryResponse>>(itemTagService.findSummaryList(),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="save", method=RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> save(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @RequestBody ItemTag tag) {
 
-		AdminValidationResponse response = getSecurityService().validate(token);
+		AdminValidationResponse response = validateAndAddToken(httpResponse, token);
 		itemTagService.save(tag, response.getUser());
-		
-		return new ResponseEntity<ResponsePayload<String>>(
-				new ResponsePayload<String>(response.getToken()),HttpStatus.OK);
+
+		// nothing to return here
+		return new ResponseEntity<String>((String)null,HttpStatus.OK);
 		
 	}
 	

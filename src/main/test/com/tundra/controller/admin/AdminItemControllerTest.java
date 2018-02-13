@@ -41,9 +41,10 @@ public class AdminItemControllerTest extends AbstractAdminControllerTest {
 
 		String content = getResponseContent(mockMvc, GET_TAG_URL);
 
-		// object mapper that handles the json parsing
 		JsonNode org = (JsonNode)mapper.readTree(content);
 
+		assertThat(org, notNullValue());
+		
 		assertThat(org.get("organizationName"), notNullValue());
 		assertThat(org.get("locationName"), notNullValue());
 		assertThat(org.get("itemTagName"), notNullValue());
