@@ -1,9 +1,9 @@
 package com.tundra.controller;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
@@ -18,8 +18,6 @@ import com.tundra.controller.admin.AbstractAdminController;
 import com.tundra.dao.RegisteredDeviceDAO;
 import com.tundra.dao.UserDAO;
 import com.tundra.entity.RegisteredDevice;
-import com.tundra.response.AdminValidationResponse;
-import com.tundra.service.AdminSecurityService;
 import com.tundra.service.SecurityService;
 
 public class AbstractPublicControllerTest extends AbstractControllerTest {
@@ -31,9 +29,6 @@ public class AbstractPublicControllerTest extends AbstractControllerTest {
 	@Autowired
 	private SecurityService securityService;
 
-	@Autowired
-	private AdminSecurityService adminSecurityService;
-	
 	@Autowired
 	RegisteredDeviceDAO registeredDeviceDAO;
 	
@@ -53,44 +48,12 @@ public class AbstractPublicControllerTest extends AbstractControllerTest {
 
 		// the request should successfully complete
 		String content = result.getResponse().getContentAsString();
+		String newToken = result.getResponse().getHeader(AbstractAdminController.HEADER_SECURITY_TOKEN);
+
 		assertThat(content, notNullValue());
+		assertThat(newToken, notNullValue());
+		assertThat(newToken, not(token));
 
 		return content;
 	}
-
-	String getAdminResponseContent(MockMvc mockMvc, String url) throws Exception {
-
-		// create a user and test auth
-		userDAO.save(getUser());
-		AdminValidationResponse response = adminSecurityService.login(USER_NAME, PASSWORD); 
-		String token = response.getToken();
-		MvcResult result = mockMvc.perform(get(url).contentType(CONTENT_TYPE)
-				.header(AbstractAdminController.HEADER_SECURITY_TOKEN, token)).andExpect(status().isOk()).andReturn();
-		
-
-		// the request should successfully complete
-		String content = result.getResponse().getContentAsString();
-		assertThat(content, notNullValue());
-
-		return content;
-	}
-	
-	String postAdminResponseContent(MockMvc mockMvc, String url, Object payload) throws Exception {
-
-		// create a user and test auth
-		userDAO.save(getUser());
-		AdminValidationResponse response = adminSecurityService.login(USER_NAME, PASSWORD); 
-		String token = response.getToken();
-		MvcResult result = mockMvc.perform(post(url).contentType(CONTENT_TYPE)
-				.content(convertObjectToJsonBytes(payload))
-				.header(AbstractAdminController.HEADER_SECURITY_TOKEN, token)).andExpect(status().isOk()).andReturn();
-		
-
-		// the request should successfully complete
-		String content = result.getResponse().getContentAsString();
-		assertThat(content, notNullValue());
-
-		return content;
-	}	
-
 }

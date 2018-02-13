@@ -27,6 +27,10 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 	@Override
 	public String getToken(String email) {
 		
+		if (StringUtils.isBlank(email)) {
+			throw new SecurityException("Invalid authentication");
+		}
+		
 		String firstName = "";
 		String lastName = "";
 		
@@ -34,12 +38,14 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		
 		// TODO: limit this to only registered devices
 		// there should be only one of these
-		if (devices != null && !devices.isEmpty()) {
-			RegisteredDevice device = devices.get(0);
-			if (device != null) {
-				firstName = device.getFirstName();
-				lastName = device.getLastName();
-			}
+		if (devices == null || devices.isEmpty()) {
+			throw new SecurityException("Invalid authentication");
+		}
+		
+		RegisteredDevice device = devices.get(0);
+		if (device != null) {
+			firstName = device.getFirstName();
+			lastName = device.getLastName();
 		}
 		
 		return encode(createTokenPayload(firstName,lastName,email));
@@ -57,7 +63,7 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 	}
 
 	@Override
-	public RegisteredDevice register(String email, String firstName, String lastName, String deviceId, String platform, String userName) {
+	public RegisteredDevice register(String email, String firstName, String lastName, String deviceId, String platform) {
 		List<RegisteredDevice> devices = registeredDeviceDAO.findByEmail(email);
 		
 		RegisteredDevice device = null;
@@ -77,7 +83,7 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		device.setEmail(email);
 		device.setDeviceId(deviceId);
 		
-		device.setAuditUser(userName);
+		device.setAuditUser(email);
 		
 		registeredDeviceDAO.save(device);
 		

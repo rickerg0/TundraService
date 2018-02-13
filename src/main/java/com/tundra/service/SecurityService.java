@@ -50,9 +50,8 @@ public interface SecurityService {
 	 * @param lastName
 	 * @param deviceId
 	 * @param platform
-	 * @param userName
 	 * @return
 	 */
-	RegisteredDevice register(String email, String firstName, String lastName, String deviceId, String platform, String userName);
+	RegisteredDevice register(String email, String firstName, String lastName, String deviceId, String platform);
 	
 }

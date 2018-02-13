@@ -59,6 +59,7 @@ public class AdminItemController extends AbstractAdminController {
 		return new ResponseEntity<List<ItemTagSummaryResponse>>(itemTagService.findSummaryList(),HttpStatus.OK);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="save", method=RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> save(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @RequestBody ItemTag tag) {
@@ -66,8 +67,7 @@ public class AdminItemController extends AbstractAdminController {
 		AdminValidationResponse response = validateAndAddToken(httpResponse, token);
 		itemTagService.save(tag, response.getUser());
 
-		// nothing to return here
-		return new ResponseEntity<String>((String)null,HttpStatus.OK);
+		return new ResponseEntity(HttpStatus.OK);
 		
 	}
 	
