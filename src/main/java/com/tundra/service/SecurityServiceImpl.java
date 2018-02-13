@@ -52,11 +52,19 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 	}
 
 	@Override
-	public void validate(String token) throws SecurityException {
+	public String validate(String token) throws SecurityException {
 		try {
-			if (!isValid(token, EXPIRE_MILIS)) {
+			
+			String source = decode(token);
+			String[] sourceElements = StringUtils.split(source, DELIMITER);
+			
+			if (!isValid(sourceElements, EXPIRE_MILIS)) {
 				throw new ExpiredTokenException("Expired token: " + token);
 			}
+			
+			String email = sourceElements[4];
+			return getToken(email);
+			
 		} catch (Exception e) {
 			throw new InvalidTokenException("Invalid token: " + token);
 		}

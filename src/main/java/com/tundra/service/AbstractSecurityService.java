@@ -15,8 +15,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.tundra.exception.DecryptionException;
 import com.tundra.exception.EncryptionException;
 
@@ -76,10 +74,8 @@ public class AbstractSecurityService {
 		return Jwts.parser().setSigningKey(TOKEN_KEY).parseClaimsJws(signedToken).getBody().getSubject();
 	}
 	
-	public boolean isValid(String token, long expireMillis) {
+	protected boolean isValid(String[] sourceElements, long expireMillis) {
 		// decrypt it
-		String source = decode(token);
-		String[] sourceElements = StringUtils.split(source, DELIMITER);
 		Date tokenDate;
 		try {
 			tokenDate = new SimpleDateFormat(DATETIME_FORMAT).parse(sourceElements[1]);
@@ -89,5 +85,6 @@ public class AbstractSecurityService {
 		}
 		
 		return ((tokenDate.getTime() + expireMillis) > new Date().getTime());
-	}	
+	}
+	
 }

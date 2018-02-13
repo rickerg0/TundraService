@@ -20,8 +20,10 @@ public class LoginController extends AbstractPublicController {
 
 	@RequestMapping(value="login", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> login(HttpServletResponse httpResponse, @RequestParam(value="email") String email) {
+		
 		String token = getSecurityService().getToken(email);
 		addTokenToResponseHeader(httpResponse, token);
+		
 		return new ResponseEntity<ValidationResponse>(new ValidationResponse(token),HttpStatus.OK);		
 
 	}
@@ -36,6 +38,9 @@ public class LoginController extends AbstractPublicController {
 			@RequestParam(value="platform") String platform) {
 		
 		getSecurityService().register(email, firstName, lastName, deviceId, platform);
+
+		addTokenToResponseHeader(httpResponse, getSecurityService().getToken(email));
+		
 		return new ResponseEntity(HttpStatus.OK);
 	}
 	

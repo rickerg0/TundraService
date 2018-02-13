@@ -74,10 +74,20 @@ public class AdminSecurityServiceImpl extends AbstractSecurityService implements
 	}
 	
 	private User doValidate(String token) {
-		// check the date... it's always in the first position
+		
+		// check the date... it's always in the second position
+		User user = null;
+		String id = null;
+		
 		try {
 			token = getPayload(token);
-			if (!isValid(token, EXPIRE_MILIS)) {
+
+			// decrypt it - token ends up as UUID^^DATE_TIME^^ID
+			String source = decode(token);
+			String[] sourceElements = StringUtils.split(source, DELIMITER);
+			
+			id = sourceElements[2];
+			if (!isValid(sourceElements, EXPIRE_MILIS)) {
 				throw new ExpiredTokenException("Expired token: " + token);
 			}
 		} catch (Exception e) {
@@ -85,23 +95,20 @@ public class AdminSecurityServiceImpl extends AbstractSecurityService implements
 		}
 		
 		// now make sure the user is valid
-		// decrypt it - token ends up as UUID^^DATE_TIME^^ID
-		User user = null;
-
-		try {
-			String source = decode(token);
-			String[] sourceElements = StringUtils.split(source, DELIMITER);
-	
-			// TODO: finish this... needs to be thought out a bit more
-			String id = sourceElements[2];
-			if (StringUtils.isNoneBlank(id)) {
-				// sorry guys... hibernate bought into the optional paradigm
-				Optional<User> o = userDAO.findById(Integer.parseInt(id));
-				user = o.get();
+		if (id != null) {
+			try {
+		
+				// TODO: finish this... needs to be thought out a bit more
+				
+				if (StringUtils.isNoneBlank(id)) {
+					// sorry guys... hibernate bought into the optional paradigm
+					Optional<User> o = userDAO.findById(Integer.parseInt(id));
+					user = o.get();
+				}
+			} catch (Exception e) {
+				// just set the user to null and fall through to an invalid login 
+				user = null;
 			}
-		} catch (Exception e) {
-			// just set the user to null and fall through to an invalid login 
-			user = null;
 		}
 		
 		return user;

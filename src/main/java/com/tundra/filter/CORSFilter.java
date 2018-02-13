@@ -23,6 +23,7 @@ public class CORSFilter implements Filter{
 			throws IOException, ServletException {
 		((HttpServletResponse)response).setHeader( "Access-Control-Allow-Origin", "*" ); 
 		((HttpServletResponse)response).setHeader( "Access-Control-Allow-Headers", "X-Token" ); 
+		((HttpServletResponse)response).setHeader( "Access-Control-Expose-Headers", "X-Token" ); 
 		((HttpServletResponse)response).setHeader( "Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE" ); 
 		((HttpServletResponse)response).setHeader( "Cache-Control", "no-cache"); 
 		chain.doFilter( request, response );

@@ -9,7 +9,7 @@ public abstract class AbstractController implements Serializable {
 	
 	static final String ERROR_PREFIX = "Whoops : ";
 
-	public static final String HEADER_SECURITY_TOKEN = "X-AUTH-TOKEN";
+	public static final String HEADER_SECURITY_TOKEN = "X-Token";
 	
 	protected void addTokenToResponseHeader(HttpServletResponse httpResponse, String token) {
 		httpResponse.addHeader(HEADER_SECURITY_TOKEN, token);

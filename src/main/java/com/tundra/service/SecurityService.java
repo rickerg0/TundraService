@@ -38,9 +38,9 @@ public interface SecurityService {
 	 * Checks a token for validity and throws an exception if invalid
 	 * 
 	 * @param token
-	 * @return
+	 * @return a new token with an updated date/time
 	 */
-	void validate(String token);
+	String validate(String token);
 	
 	/**
 	 * Register a device

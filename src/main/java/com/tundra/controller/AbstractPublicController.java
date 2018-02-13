@@ -1,5 +1,7 @@
 package com.tundra.controller;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tundra.service.SecurityService;
@@ -7,8 +9,6 @@ import com.tundra.service.SecurityService;
 @SuppressWarnings("serial")
 public class AbstractPublicController extends AbstractController {
 
-	public static final String HEADER_SECURITY_TOKEN = "X-Token";
-	
 	@Autowired
 	private SecurityService securityService;
 
@@ -16,5 +16,8 @@ public class AbstractPublicController extends AbstractController {
 		return securityService;
 	}
 
+	void validateAndAddToken(HttpServletResponse httpResponse, String token) {
+		addTokenToResponseHeader(httpResponse, getSecurityService().validate(token));
+	}
 
 }
