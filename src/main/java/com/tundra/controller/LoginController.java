@@ -10,22 +10,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tundra.response.ValidationResponse;
-
 @Controller 
 @RequestMapping("/")
 public class LoginController extends AbstractPublicController {
 
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="login", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> login(HttpServletResponse httpResponse, @RequestParam(value="email") String email) {
 		
 		String token = getSecurityService().getToken(email);
 		addTokenToResponseHeader(httpResponse, token);
 		
-		return new ResponseEntity<ValidationResponse>(new ValidationResponse(token),HttpStatus.OK);		
-
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@SuppressWarnings("rawtypes")
