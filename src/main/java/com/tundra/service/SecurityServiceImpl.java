@@ -91,8 +91,6 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		device.setEmail(email);
 		device.setDeviceId(deviceId);
 		
-		device.setAuditUser(email);
-		
 		registeredDeviceDAO.save(device);
 		
 		return device;

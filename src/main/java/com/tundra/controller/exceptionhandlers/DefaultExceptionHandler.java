@@ -18,6 +18,6 @@ public class DefaultExceptionHandler extends AbstractExceptionHandler {
     @ExceptionHandler(value = { Exception.class })
     protected ResponseEntity<?> handleConflict(Exception ex, WebRequest request) {
     	logger.error("Default error", ex);
-		return new ResponseEntity<ErrorResonse>(new ErrorResonse(ERROR_PREFIX + ex.getMessage()) ,HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<ErrorResponse>(new ErrorResponse(ERROR_PREFIX + ex.getMessage()) ,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }	

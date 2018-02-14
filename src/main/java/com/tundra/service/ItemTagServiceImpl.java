@@ -10,7 +10,6 @@ import com.tundra.dao.ItemTagDAO;
 import com.tundra.dao.ItemTagMediaDAO;
 import com.tundra.entity.ItemTag;
 import com.tundra.entity.ItemTagMedia;
-import com.tundra.entity.User;
 import com.tundra.response.ItemTagSummaryResponse;
 
 @Service
@@ -72,13 +71,9 @@ public class ItemTagServiceImpl implements ItemTagService {
 	}
 
 	@Override
-	public void save(ItemTag tag, User user) {
-		
+	public void save(ItemTag tag) {
 		if (tag != null) {
-			
-			tag.setAuditUser(user.getUserName());
 			itemTagDAO.save(tag);
 		}
-		
 	}
 }

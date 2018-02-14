@@ -54,7 +54,6 @@ public interface ItemTagService {
 	 * Saves an ItemTag
 	 * 
 	 * @param tag
-	 * @param user
 	 */
-	void save (ItemTag tag, User user);
+	void save (ItemTag tag);
 }

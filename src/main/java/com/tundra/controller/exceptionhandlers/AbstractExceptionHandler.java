@@ -6,11 +6,11 @@ public abstract class AbstractExceptionHandler extends ResponseEntityExceptionHa
 
 	static final String ERROR_PREFIX = "Whoops : ";
 	
-	public class ErrorResonse {
+	public class ErrorResponse {
 
 		private String errorMessage;
 
-		public ErrorResonse(String errorMessage) {
+		public ErrorResponse(String errorMessage) {
 			this.errorMessage = errorMessage;
 		}
 

@@ -18,6 +18,6 @@ public class SecurityExceptionHandler extends AbstractExceptionHandler {
     @ExceptionHandler(value = { SecurityException.class })
     protected ResponseEntity<?> handleConflict(Exception ex, WebRequest request) {
     	logger.error("Security error", ex);
-		return new ResponseEntity<ErrorResonse>(new ErrorResonse(ERROR_PREFIX + ex.getMessage()) ,HttpStatus.FORBIDDEN);
+		return new ResponseEntity<ErrorResponse>(new ErrorResponse(ERROR_PREFIX + ex.getMessage()) ,HttpStatus.FORBIDDEN);
     }
 }	

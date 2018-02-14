@@ -4,14 +4,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tundra.controller.AbstractController;
 import com.tundra.response.AdminValidationResponse;
+import com.tundra.security.AdminAuthentication;
 import com.tundra.service.AdminSecurityService;
 
 @Component
+@ControllerAdvice
 public class AdminAuthenticationInterceptor extends AbstractInterceptor {
 
 	private static final long serialVersionUID = 1L;
@@ -39,6 +44,10 @@ public class AdminAuthenticationInterceptor extends AbstractInterceptor {
 
 		// validate and add new token to response
 		AdminValidationResponse validationResponse = securityService.validate(token);
+		
+		SecurityContext securityCtx = SecurityContextHolder.getContext();
+		securityCtx.setAuthentication(new AdminAuthentication(validationResponse.getUser(), validationResponse.getToken()));
+		
 		addTokenToResponseHeader(httpResponse, validationResponse.getToken());
 
 		return true;

@@ -12,9 +12,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.tundra.exception.AuditException;
 
@@ -45,9 +45,6 @@ public class AbstractEntity {
     @Column(name = "created_user")
     private String createdUser;
 
-    @Transient
-    private String auditUser;
-    
 	public Integer getId() {
 		return id;
 	}
@@ -88,13 +85,13 @@ public class AbstractEntity {
 		this.createdUser = createdUser;
 	}
 	
-	public void setAuditUser(String auditUser) {
-		this.auditUser = auditUser;
-	}
-
 	@PrePersist
     public void onPrePersist() {
-		checkAuditInfo();
+		
+		String auditUser = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		checkAuditInfo(auditUser);
+		
 		setCreated(new Date());
 		setCreatedUser(auditUser);
 		setUpdated(new Date());
@@ -103,12 +100,16 @@ public class AbstractEntity {
       
     @PreUpdate
     public void onPreUpdate() {
-    	checkAuditInfo();
+    	
+		String auditUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+    	checkAuditInfo(auditUser);
+    	
 		setUpdated(new Date());
 		setUpdatedUser(auditUser);
     }
 
-    private void checkAuditInfo() {
+    private void checkAuditInfo(String auditUser) {
 		if (StringUtils.isBlank(auditUser)) {
 			throw new AuditException("Audit user must exist");
 		}

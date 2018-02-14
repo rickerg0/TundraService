@@ -31,6 +31,7 @@ public class AdminOrganizationController extends AbstractAdminController {
 	public @ResponseBody ResponseEntity<?> getOrg(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
 
+		validate(httpResponse, token);
 		return new ResponseEntity<Organization>(organizationService.findOrganization(id),HttpStatus.OK);
 	}
 	
@@ -38,6 +39,7 @@ public class AdminOrganizationController extends AbstractAdminController {
 	public @ResponseBody ResponseEntity<?> getOrgs(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 
+		validate(httpResponse, token);
 		return new ResponseEntity<List<Organization>>(organizationService.findAllOrganizations(),HttpStatus.OK);
 	}
 	
@@ -45,6 +47,7 @@ public class AdminOrganizationController extends AbstractAdminController {
 	public @ResponseBody ResponseEntity<?> getOrgByName(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="name") String name) {
 
+		validate(httpResponse, token);
 		return new ResponseEntity<List<Organization>>(organizationService.findByName(name),HttpStatus.OK);
 	}
 }

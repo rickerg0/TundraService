@@ -11,13 +11,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.tundra.controller.admin.AbstractAdminController;
 import com.tundra.dao.RegisteredDeviceDAO;
-import com.tundra.dao.UserDAO;
 import com.tundra.entity.RegisteredDevice;
+import com.tundra.security.PublicAuthentication;
 import com.tundra.service.SecurityService;
 
 public class AbstractPublicControllerTest extends AbstractControllerTest {
@@ -32,14 +34,14 @@ public class AbstractPublicControllerTest extends AbstractControllerTest {
 	@Autowired
 	RegisteredDeviceDAO registeredDeviceDAO;
 	
-	@Autowired
-	UserDAO userDAO;
-	
 	String getResponseContent(MockMvc mockMvc, String url) throws Exception {
 
 		List<RegisteredDevice> devices = registeredDeviceDAO.findAll();
 		
 		String token = securityService.getToken(devices.get(0).getEmail());
+		
+		SecurityContext securityCtx = SecurityContextHolder.getContext();
+		securityCtx.setAuthentication(new PublicAuthentication(devices.get(0).getEmail(), token));
 		
 		MvcResult result = mockMvc.perform(get(url).contentType(CONTENT_TYPE)
 				.header(AbstractPublicController.HEADER_SECURITY_TOKEN, token))

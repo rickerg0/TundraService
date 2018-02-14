@@ -28,15 +28,15 @@ public class ApplicationConfig implements WebMvcConfigurer {
 	 @Override
     public void addInterceptors(InterceptorRegistry registry){
 		 
-        registry.addInterceptor(publicAuthenticationInterceptor)
-        	.addPathPatterns("/**")
-        	.excludePathPatterns("/admin/**")
-        	.excludePathPatterns("/login/**")
-        	.excludePathPatterns("/register/**");
-
-        registry.addInterceptor(adminAuthenticationInterceptor)
-	    	.addPathPatterns("/admin/**")
-	    	.excludePathPatterns("/admin/login/**");
+//        registry.addInterceptor(publicAuthenticationInterceptor)
+//        	.addPathPatterns("/**")
+//        	.excludePathPatterns("/admin/**")
+//        	.excludePathPatterns("/login/**")
+//        	.excludePathPatterns("/register/**");
+//
+//        registry.addInterceptor(adminAuthenticationInterceptor)
+//	    	.addPathPatterns("/admin/**")
+//	    	.excludePathPatterns("/admin/login/**");
         
 	 }
 

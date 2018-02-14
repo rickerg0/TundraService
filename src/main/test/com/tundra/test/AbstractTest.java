@@ -32,7 +32,6 @@ public class AbstractTest {
 		user.setEmail(EMAIL);
 		user.setUserName(USER_NAME);
 		user.setPassword(adminSecurityService.encode(PASSWORD));
-		user.setAuditUser(CREATE_USER);
 		
 		List<Organization>orgs = organizationDAO.findAll();
 		user.setOrganization(orgs.get(0));
