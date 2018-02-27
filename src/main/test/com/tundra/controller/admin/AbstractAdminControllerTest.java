@@ -1,5 +1,7 @@
 package com.tundra.controller.admin;
 
+import static com.tundra.security.SecurityConstants.HEADER_SECURITY_TOKEN;
+
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,11 +48,11 @@ public class AbstractAdminControllerTest extends AbstractControllerTest {
 		String token = response.getToken();
 		
 		MvcResult result = mockMvc.perform(get(url).contentType(CONTENT_TYPE)
-				.header(AbstractAdminController.HEADER_SECURITY_TOKEN, token)).andExpect(status().isOk()).andReturn();
+				.header(HEADER_SECURITY_TOKEN, token)).andExpect(status().isOk()).andReturn();
 
 		// the request should successfully complete
 		String content = result.getResponse().getContentAsString();
-		String newToken = result.getResponse().getHeader(AbstractAdminController.HEADER_SECURITY_TOKEN);
+		String newToken = result.getResponse().getHeader(HEADER_SECURITY_TOKEN);
 
 		assertThat(content, notNullValue());
 		assertThat(newToken, notNullValue());
@@ -69,12 +71,12 @@ public class AbstractAdminControllerTest extends AbstractControllerTest {
 
 		MvcResult result = mockMvc.perform(post(url).contentType(CONTENT_TYPE)
 				.content(convertObjectToJsonBytes(payload))
-				.header(AbstractAdminController.HEADER_SECURITY_TOKEN, token)).andExpect(status().isOk()).andReturn();
+				.header(HEADER_SECURITY_TOKEN, token)).andExpect(status().isOk()).andReturn();
 		
 
 		// the request should successfully complete
 		String content = result.getResponse().getContentAsString();
-		String newToken = result.getResponse().getHeader(AbstractAdminController.HEADER_SECURITY_TOKEN);
+		String newToken = result.getResponse().getHeader(HEADER_SECURITY_TOKEN);
 		
 		assertThat(content, notNullValue());
 		assertThat(newToken, notNullValue());

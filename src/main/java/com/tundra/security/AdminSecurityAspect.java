@@ -1,5 +1,7 @@
 package com.tundra.security;
 
+import static com.tundra.security.SecurityConstants.HEADER_SECURITY_TOKEN;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.aspectj.lang.JoinPoint;
@@ -10,7 +12,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.tundra.controller.AbstractPublicController;
 import com.tundra.response.AdminValidationResponse;
 import com.tundra.service.AdminSecurityService;
 
@@ -34,7 +35,7 @@ public class AdminSecurityAspect {
 		securityCtx.setAuthentication(
 				new AdminAuthentication(validationResponse.getUser(), validationResponse.getToken()));
 
-		httpResponse.addHeader(AbstractPublicController.HEADER_SECURITY_TOKEN, validationResponse.getToken());
+		httpResponse.addHeader(HEADER_SECURITY_TOKEN, validationResponse.getToken());
     
     }
     

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tundra.entity.ItemTagMedia;
 import com.tundra.response.ItemTagSummaryResponse;
 import com.tundra.security.annotation.SecurePublic;
+import static com.tundra.security.SecurityConstants.HEADER_SECURITY_TOKEN;
 import com.tundra.service.ItemTagService;
 
 

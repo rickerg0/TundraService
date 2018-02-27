@@ -1,5 +1,7 @@
 package com.tundra.controller.admin;
 
+import static com.tundra.security.SecurityConstants.HEADER_SECURITY_TOKEN;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -8,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,9 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tundra.entity.ItemTag;
 import com.tundra.entity.ItemTagMedia;
-import com.tundra.response.AdminValidationResponse;
 import com.tundra.response.ItemTagSummaryResponse;
-import com.tundra.security.AdminAuthentication;
 import com.tundra.security.annotation.SecureAdmin;
 import com.tundra.service.ItemTagService;
 

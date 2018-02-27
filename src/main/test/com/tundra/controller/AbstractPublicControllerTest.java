@@ -1,5 +1,6 @@
 package com.tundra.controller;
 
+import static com.tundra.security.SecurityConstants.HEADER_SECURITY_TOKEN;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import com.tundra.controller.admin.AbstractAdminController;
 import com.tundra.dao.RegisteredDeviceDAO;
 import com.tundra.entity.RegisteredDevice;
 import com.tundra.security.PublicAuthentication;
@@ -44,13 +44,13 @@ public class AbstractPublicControllerTest extends AbstractControllerTest {
 		securityCtx.setAuthentication(new PublicAuthentication(devices.get(0).getEmail(), token));
 		
 		MvcResult result = mockMvc.perform(get(url).contentType(CONTENT_TYPE)
-				.header(AbstractPublicController.HEADER_SECURITY_TOKEN, token))
+				.header(HEADER_SECURITY_TOKEN, token))
 				.andExpect(status().isOk()).andReturn();
 		
 
 		// the request should successfully complete
 		String content = result.getResponse().getContentAsString();
-		String newToken = result.getResponse().getHeader(AbstractAdminController.HEADER_SECURITY_TOKEN);
+		String newToken = result.getResponse().getHeader(HEADER_SECURITY_TOKEN);
 
 		assertThat(content, notNullValue());
 		assertThat(newToken, notNullValue());
