@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tundra.entity.ItemTagMedia;
 import com.tundra.response.ItemTagSummaryResponse;
+import com.tundra.security.annotation.SecurePublic;
 import com.tundra.service.ItemTagService;
 
 
@@ -30,26 +31,26 @@ public class ItemController extends AbstractPublicController {
 	@Autowired
 	private ItemTagService itemTagService;
 	
+	@SecurePublic
 	@RequestMapping(value="{tag}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemTagByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="tag") String tag) {
 
-		validate(httpResponse, token);
 		return new ResponseEntity<ItemTagSummaryResponse>(itemTagService.findSummaryByItemTag(tag),HttpStatus.OK);
 	}
 	
+	@SecurePublic
 	@RequestMapping(value="media/{id}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemMediaByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
 
-		validate(httpResponse, token);
 		return new ResponseEntity<ItemTagMedia>(itemTagService.findMediaById(id),HttpStatus.OK);
 	}
 		
+	@SecurePublic
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItems(HttpServletResponse httpResponse, @RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 
-		validate(httpResponse, token);
 		return new ResponseEntity<List<ItemTagSummaryResponse>>(itemTagService.findSummaryList(),HttpStatus.OK);
 	}
 	

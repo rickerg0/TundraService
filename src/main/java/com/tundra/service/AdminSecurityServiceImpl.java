@@ -73,14 +73,15 @@ public class AdminSecurityServiceImpl extends AbstractSecurityService implements
 		return createValidationResponse(user);
 	}
 	
-	private User doValidate(String token) {
+	private User doValidate(String jwtToken) {
 		
 		// check the date... it's always in the second position
 		User user = null;
 		String id = null;
+		String token = null;
 		
 		try {
-			token = getPayload(token);
+			token = getPayload(jwtToken);
 
 			// decrypt it - token ends up as UUID^^DATE_TIME^^ID
 			String source = decode(token);

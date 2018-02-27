@@ -41,5 +41,9 @@ public class LoginController extends AbstractPublicController {
 		
 		return new ResponseEntity(HttpStatus.OK);
 	}
+
+	private void addTokenToResponseHeader(HttpServletResponse httpResponse, String token) {
+		httpResponse.addHeader(HEADER_SECURITY_TOKEN, token);
+	}
 	
 }

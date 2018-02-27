@@ -11,8 +11,5 @@ public abstract class AbstractController implements Serializable {
 
 	public static final String HEADER_SECURITY_TOKEN = "X-Token";
 	
-	protected void addTokenToResponseHeader(HttpServletResponse httpResponse, String token) {
-		httpResponse.addHeader(HEADER_SECURITY_TOKEN, token);
-	}
-	
+
 }

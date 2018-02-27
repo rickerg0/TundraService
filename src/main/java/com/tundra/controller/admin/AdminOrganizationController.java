@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tundra.entity.Organization;
+import com.tundra.security.annotation.SecureAdmin;
 import com.tundra.service.OrganizationService;
 
 @Controller 
@@ -27,27 +28,27 @@ public class AdminOrganizationController extends AbstractAdminController {
 	@Autowired
 	private OrganizationService organizationService;
 	
+	@SecureAdmin
 	@RequestMapping(value="{id}", method=RequestMethod.GET) 
 	public @ResponseBody ResponseEntity<?> getOrg(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
 
-		validate(httpResponse, token);
 		return new ResponseEntity<Organization>(organizationService.findOrganization(id),HttpStatus.OK);
 	}
 	
+	@SecureAdmin
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getOrgs(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 
-		validate(httpResponse, token);
 		return new ResponseEntity<List<Organization>>(organizationService.findAllOrganizations(),HttpStatus.OK);
 	}
 	
+	@SecureAdmin
 	@RequestMapping(value="name/{name}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getOrgByName(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="name") String name) {
 
-		validate(httpResponse, token);
 		return new ResponseEntity<List<Organization>>(organizationService.findByName(name),HttpStatus.OK);
 	}
 }

@@ -22,6 +22,7 @@ import com.tundra.entity.ItemTagMedia;
 import com.tundra.response.AdminValidationResponse;
 import com.tundra.response.ItemTagSummaryResponse;
 import com.tundra.security.AdminAuthentication;
+import com.tundra.security.annotation.SecureAdmin;
 import com.tundra.service.ItemTagService;
 
 @Controller 
@@ -35,35 +36,35 @@ public class AdminItemController extends AbstractAdminController {
 	@Autowired
 	private ItemTagService itemTagService;
 
+	@SecureAdmin
 	@RequestMapping(value="{tag}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemTagByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="tag") String tag) {
 
-		validate(httpResponse, token);
 		return new ResponseEntity<ItemTagSummaryResponse>(itemTagService.findSummaryByItemTag(tag),HttpStatus.OK);
 	}
 	
+	@SecureAdmin
 	@RequestMapping(value="media/{id}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemMediaByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
 
-		validate(httpResponse, token);
 		return new ResponseEntity<ItemTagMedia>(itemTagService.findMediaById(id),HttpStatus.OK);
 	}
 		
+	@SecureAdmin
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItems(HttpServletResponse httpResponse, @RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 
-		validate(httpResponse, token);
 		return new ResponseEntity<List<ItemTagSummaryResponse>>(itemTagService.findSummaryList(),HttpStatus.OK);
 	}
 	
+	@SecureAdmin
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="save", method=RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> save(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @RequestBody ItemTag tag) {
 
-		validate(httpResponse, token);
 		itemTagService.save(tag);
 
 		return new ResponseEntity(HttpStatus.OK);
