@@ -4,11 +4,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.tundra.security.PublicAuthentication;
+
 import static com.tundra.security.SecurityConstants.HEADER_SECURITY_TOKEN;
 
 
@@ -36,6 +41,10 @@ public class LoginController extends AbstractPublicController {
 			@RequestParam(value="lastName") String lastName,
 			@RequestParam(value="deviceId") String deviceId,
 			@RequestParam(value="platform") String platform) {
+		
+		// one time security context with no token to save the registration record
+		SecurityContext securityCtx = SecurityContextHolder.getContext();
+		securityCtx.setAuthentication(new PublicAuthentication(email, null));
 		
 		getSecurityService().register(email, firstName, lastName, deviceId, platform);
 
