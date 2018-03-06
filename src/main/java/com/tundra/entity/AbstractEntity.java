@@ -16,8 +16,6 @@ import javax.persistence.TemporalType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.tundra.exception.AuditException;
-
 @MappedSuperclass
 public class AbstractEntity {
 	
@@ -111,7 +109,7 @@ public class AbstractEntity {
 
     private void checkAuditInfo(String auditUser) {
 		if (StringUtils.isBlank(auditUser)) {
-			throw new AuditException("Audit user must exist");
+			throw new SecurityException("User must be in scope to save");
 		}
     }
 
