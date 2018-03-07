@@ -2,6 +2,7 @@ package com.tundra.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContext;
@@ -13,21 +14,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tundra.security.PublicAuthentication;
+import com.tundra.service.SecurityService;
 
 import static com.tundra.security.SecurityConstants.HEADER_SECURITY_TOKEN;
 
 
 @Controller 
 @RequestMapping("/")
-public class LoginController extends AbstractPublicController {
+public class LoginController extends AbstractController {
 
 	private static final long serialVersionUID = 1L;
+
+	@Autowired
+	private SecurityService securityService;
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="login", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> login(HttpServletResponse httpResponse, @RequestParam(value="email") String email) {
 		
-		String token = getSecurityService().getToken(email);
+		String token = securityService.getToken(email);
 		addTokenToResponseHeader(httpResponse, token);
 		
 		return new ResponseEntity(HttpStatus.OK);
@@ -46,9 +51,9 @@ public class LoginController extends AbstractPublicController {
 		SecurityContext securityCtx = SecurityContextHolder.getContext();
 		securityCtx.setAuthentication(new PublicAuthentication(email, null));
 		
-		getSecurityService().register(email, firstName, lastName, deviceId, platform);
+		securityService.register(email, firstName, lastName, deviceId, platform);
 
-		addTokenToResponseHeader(httpResponse, getSecurityService().getToken(email));
+		addTokenToResponseHeader(httpResponse, securityService.getToken(email));
 		
 		return new ResponseEntity(HttpStatus.OK);
 	}

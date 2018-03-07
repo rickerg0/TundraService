@@ -24,7 +24,7 @@ import com.tundra.service.ItemTagService;
 
 @Controller 
 @RequestMapping("/tag/")
-public class ItemController extends AbstractPublicController {
+public class ItemController extends AbstractController {
 
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = Logger.getLogger(ItemController.class);

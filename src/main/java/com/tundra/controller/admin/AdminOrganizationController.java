@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tundra.controller.AbstractController;
 import com.tundra.entity.Organization;
 import com.tundra.security.annotation.SecureAdmin;
 import com.tundra.service.OrganizationService;
@@ -23,7 +24,7 @@ import com.tundra.service.OrganizationService;
 @Controller 
 
 @RequestMapping("/admin/org/")
-public class AdminOrganizationController extends AbstractAdminController {
+public class AdminOrganizationController extends AbstractController {
 
 	private static final long serialVersionUID = 1L;
 	

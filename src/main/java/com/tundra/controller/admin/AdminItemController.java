@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tundra.controller.AbstractController;
 import com.tundra.entity.ItemTag;
 import com.tundra.entity.ItemTagMedia;
 import com.tundra.response.ItemTagSummaryResponse;
@@ -27,7 +28,7 @@ import com.tundra.service.ItemTagService;
 @Controller 
 
 @RequestMapping("/admin/tag/")
-public class AdminItemController extends AbstractAdminController {
+public class AdminItemController extends AbstractController {
 
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = Logger.getLogger(AdminItemController.class);
