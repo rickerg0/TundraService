@@ -1,14 +1,21 @@
 package com.tundra.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  *
@@ -43,7 +50,18 @@ public class User extends AbstractEntity implements Serializable {
 	@JoinColumn(name = "organization_Id", referencedColumnName = "id")
 	private Organization organization;
 
-	public String getFirstName() {
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<UserAuthority> userAuthorities;
+
+    @ManyToMany
+    @JoinTable(
+        name="users_location",
+        joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
+        inverseJoinColumns=@JoinColumn(name="location_id", referencedColumnName="id"))
+    private Set<Location> locations;
+    
+    public String getFirstName() {
 		return firstName;
 	}
 
@@ -89,6 +107,22 @@ public class User extends AbstractEntity implements Serializable {
 
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
+	}
+
+	public Set<UserAuthority> getUserAuthorities() {
+		return userAuthorities;
+	}
+
+	public void setUserAuthorities(Set<UserAuthority> userAuthorities) {
+		this.userAuthorities = userAuthorities;
+	}
+
+	public Set<Location> getLocations() {
+		return locations;
+	}
+
+	public void setLocations(Set<Location> locations) {
+		this.locations = locations;
 	}
 
 }

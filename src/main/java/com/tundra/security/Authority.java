@@ -1,0 +1,14 @@
+package com.tundra.security;
+
+public enum Authority {
+	
+	CREATE_TAG,
+	READ_TAG,
+	UPDATE_TAG,
+	DELETE_TAG,
+	CREATE_ORGANIZATION,
+	READ_ORGANIZATION,
+	UPDATE_ORGANIZATION,
+	DELETE_ORGANIZATION
+	
+}

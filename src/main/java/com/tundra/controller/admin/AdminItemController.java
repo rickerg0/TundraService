@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,11 +23,9 @@ import com.tundra.controller.AbstractController;
 import com.tundra.entity.ItemTag;
 import com.tundra.entity.ItemTagMedia;
 import com.tundra.response.ItemTagSummaryResponse;
-import com.tundra.security.annotation.SecureAdmin;
 import com.tundra.service.ItemTagService;
 
 @Controller 
-
 @RequestMapping("/admin/tag/")
 public class AdminItemController extends AbstractController {
 
@@ -36,7 +35,9 @@ public class AdminItemController extends AbstractController {
 	@Autowired
 	private ItemTagService itemTagService;
 
-	@SecureAdmin
+	
+	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
+					" and @adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).READ_TAG)")
 	@RequestMapping(value="{tag}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemTagByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="tag") String tag) {
@@ -44,7 +45,8 @@ public class AdminItemController extends AbstractController {
 		return new ResponseEntity<ItemTagSummaryResponse>(itemTagService.findSummaryByItemTag(tag),HttpStatus.OK);
 	}
 	
-	@SecureAdmin
+	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
+					" and @adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).READ_TAG)")
 	@RequestMapping(value="media/{id}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemMediaByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
@@ -52,14 +54,17 @@ public class AdminItemController extends AbstractController {
 		return new ResponseEntity<ItemTagMedia>(itemTagService.findMediaById(id),HttpStatus.OK);
 	}
 		
-	@SecureAdmin
+	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
+					" and @adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).READ_TAG)")
 	@RequestMapping(value="list", method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> getItems(HttpServletResponse httpResponse, @RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
+	public @ResponseBody ResponseEntity<?> getItems(HttpServletResponse httpResponse, 
+			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 
 		return new ResponseEntity<List<ItemTagSummaryResponse>>(itemTagService.findSummaryList(),HttpStatus.OK);
 	}
 	
-	@SecureAdmin
+	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
+					" and @adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).UPDATE_TAG)")
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="save", method=RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> save(HttpServletResponse httpResponse, 

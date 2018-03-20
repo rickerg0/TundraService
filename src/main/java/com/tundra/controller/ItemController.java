@@ -1,5 +1,7 @@
 package com.tundra.controller;
 
+import static com.tundra.security.SecurityConstants.HEADER_SECURITY_TOKEN;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -17,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tundra.entity.ItemTagMedia;
 import com.tundra.response.ItemTagSummaryResponse;
-import com.tundra.security.annotation.SecurePublic;
-import static com.tundra.security.SecurityConstants.HEADER_SECURITY_TOKEN;
 import com.tundra.service.ItemTagService;
 
 
@@ -32,7 +33,7 @@ public class ItemController extends AbstractController {
 	@Autowired
 	private ItemTagService itemTagService;
 	
-	@SecurePublic
+	@PreAuthorize("@publicSecurityManager.isValidUser(#httpResponse, #token)")
 	@RequestMapping(value="{tag}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemTagByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="tag") String tag) {
@@ -40,7 +41,7 @@ public class ItemController extends AbstractController {
 		return new ResponseEntity<ItemTagSummaryResponse>(itemTagService.findSummaryByItemTag(tag),HttpStatus.OK);
 	}
 	
-	@SecurePublic
+	@PreAuthorize("@publicSecurityManager.isValidUser(#httpResponse, #token)")
 	@RequestMapping(value="media/{id}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemMediaByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
@@ -48,7 +49,7 @@ public class ItemController extends AbstractController {
 		return new ResponseEntity<ItemTagMedia>(itemTagService.findMediaById(id),HttpStatus.OK);
 	}
 		
-	@SecurePublic
+	@PreAuthorize("@publicSecurityManager.isValidUser(#httpResponse, #token)")
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItems(HttpServletResponse httpResponse, @RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 

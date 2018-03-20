@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.tundra.entity.ItemTag;
 import com.tundra.entity.ItemTagMedia;
-import com.tundra.entity.User;
 import com.tundra.response.ItemTagSummaryResponse;
 
 public interface ItemTagService {

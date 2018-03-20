@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @ComponentScan("com.tundra")
 @PropertySource("classpath:tundra.properties")
-@Import({DispatcherConfig.class, DatabaseConfig.class})
+@Import({DispatcherConfig.class, DatabaseConfig.class, SecurityConfig.class})
 public class ApplicationConfig implements WebMvcConfigurer {
 	
 	@Bean

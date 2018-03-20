@@ -1,11 +1,13 @@
 package com.tundra.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.tundra.entity.User;
+import com.tundra.entity.UserAuthority;
 
 public class AdminAuthentication implements Authentication {
 
@@ -13,11 +15,18 @@ public class AdminAuthentication implements Authentication {
 
 	private User user;
 	private String token;
+	private Collection<Authority> authoritiyStringList = new ArrayList<>();
 	
 	public AdminAuthentication(User user, String token) {
 		super();
 		this.user = user;
 		this.token = token;
+		
+		if (this.user != null && this.user.getUserAuthorities() != null && !this.user.getUserAuthorities().isEmpty()) {
+			for (UserAuthority auth: user.getUserAuthorities()) {
+				authoritiyStringList.add(Authority.valueOf(auth.getAuthority()));
+			}
+		}
 	}
 
 	@Override
@@ -34,17 +43,21 @@ public class AdminAuthentication implements Authentication {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return user.getUserAuthorities();
+	}
+
+	public Collection<Authority> getAuthoritityList() {
+		return authoritiyStringList;
 	}
 
 	@Override
 	public Object getCredentials() {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Object getDetails() {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -59,8 +72,8 @@ public class AdminAuthentication implements Authentication {
 
 	@Override
 	public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-		// no op.  authentication is determined based on user and token existence
-
+		if (user == null) {
+			throw new SecurityException("User not authenticated");
+		}
 	}
-
 }
