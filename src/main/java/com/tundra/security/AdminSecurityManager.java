@@ -10,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.tundra.response.AdminValidationResponse;
-import com.tundra.service.AdminSecurityService;
+import com.tundra.security.service.AdminSecurityService;
 
 @Component("adminSecurityManager")
 public class AdminSecurityManager {

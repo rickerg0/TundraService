@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.tundra.service.SecurityService;
+import com.tundra.security.service.SecurityService;
 
 @Component("publicSecurityManager")
 public class PublicSecurityManager {

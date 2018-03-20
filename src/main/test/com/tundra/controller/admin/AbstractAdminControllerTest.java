@@ -23,7 +23,7 @@ import com.tundra.dao.RegisteredDeviceDAO;
 import com.tundra.dao.UserDAO;
 import com.tundra.response.AdminValidationResponse;
 import com.tundra.security.AdminAuthentication;
-import com.tundra.service.AdminSecurityService;
+import com.tundra.security.service.AdminSecurityService;
 
 public class AbstractAdminControllerTest extends AbstractControllerTest {
 	

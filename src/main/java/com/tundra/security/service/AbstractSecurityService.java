@@ -1,4 +1,4 @@
-package com.tundra.service;
+package com.tundra.security.service;
 
 import java.security.InvalidKeyException;
 import java.security.Key;

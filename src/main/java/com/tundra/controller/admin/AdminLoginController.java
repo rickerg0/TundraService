@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tundra.controller.AbstractController;
 import com.tundra.response.AdminValidationResponse;
-import com.tundra.service.AdminSecurityService;
+import com.tundra.security.service.AdminSecurityService;
 
 @Controller 
 

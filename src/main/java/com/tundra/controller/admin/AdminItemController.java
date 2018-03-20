@@ -23,7 +23,7 @@ import com.tundra.controller.AbstractController;
 import com.tundra.entity.ItemTag;
 import com.tundra.entity.ItemTagMedia;
 import com.tundra.response.ItemTagSummaryResponse;
-import com.tundra.service.ItemTagService;
+import com.tundra.service.admin.AdminItemTagService;
 
 @Controller 
 @RequestMapping("/admin/tag/")
@@ -33,7 +33,7 @@ public class AdminItemController extends AbstractController {
 	private final static Logger logger = Logger.getLogger(AdminItemController.class);
 
 	@Autowired
-	private ItemTagService itemTagService;
+	private AdminItemTagService itemTagService;
 
 	
 	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
@@ -42,7 +42,7 @@ public class AdminItemController extends AbstractController {
 	public @ResponseBody ResponseEntity<?> getItemTagByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="tag") String tag) {
 
-		return new ResponseEntity<ItemTagSummaryResponse>(itemTagService.findSummaryByItemTag(tag),HttpStatus.OK);
+		return new ResponseEntity<ItemTagSummaryResponse>(itemTagService.findSummaryByItemTagForUser(tag),HttpStatus.OK);
 	}
 	
 	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
@@ -60,14 +60,14 @@ public class AdminItemController extends AbstractController {
 	public @ResponseBody ResponseEntity<?> getItems(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
 
-		return new ResponseEntity<List<ItemTagSummaryResponse>>(itemTagService.findSummaryList(),HttpStatus.OK);
+		return new ResponseEntity<List<ItemTagSummaryResponse>>(itemTagService.findSummaryListForUser(),HttpStatus.OK);
 	}
 	
 	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
 					" and @adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).UPDATE_TAG)")
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value="save", method=RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> save(HttpServletResponse httpResponse, 
+	@RequestMapping(value="update", method=RequestMethod.POST)
+	public @ResponseBody ResponseEntity<?> update(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @RequestBody ItemTag tag) {
 
 		itemTagService.save(tag);
@@ -76,4 +76,16 @@ public class AdminItemController extends AbstractController {
 		
 	}
 	
+	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
+					" and @adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).UPDATE_TAG)")
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value="add", method=RequestMethod.POST)
+	public @ResponseBody ResponseEntity<?> add(HttpServletResponse httpResponse, 
+			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @RequestBody ItemTag tag) {
+
+		itemTagService.save(tag);
+
+		return new ResponseEntity(HttpStatus.OK);
+
+	}
 }

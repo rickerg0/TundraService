@@ -1,4 +1,4 @@
-package com.tundra.service;
+package com.tundra.service.admin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import com.tundra.entity.ItemTagMedia;
 import com.tundra.response.ItemTagSummaryResponse;
 
 @Service
-public class ItemTagServiceImpl implements ItemTagService {
+public class AdminItemTagServiceImpl extends AbstractAdminService implements AdminItemTagService {
   
 	@Autowired
 	ItemTagDAO itemTagDAO;
@@ -23,28 +23,41 @@ public class ItemTagServiceImpl implements ItemTagService {
 	
 	@Override
 	public ItemTagMedia findMediaById(Integer id) {
-		// sorry guys... hibernate bought into the optional paradigm
-		return itemTagMediaDAO.findById(id).get();
+		
+		ItemTagMedia media = null;
+		List<ItemTagMedia> list = itemTagMediaDAO.findByIdForLocations(id, getCurrentUser().getLocations());
+		
+		if( list != null && list.size() == 1){
+			media = list.get(0);
+		}
+
+		return media;
 	}
 
 	@Override
-	public ItemTagSummaryResponse findSummaryByItemTag(String tag) {
-		
+	public void save(ItemTag tag) {
+		if (tag != null) {
+			itemTagDAO.save(tag);
+		}
+	}
+
+	@Override
+	public ItemTagSummaryResponse findSummaryByItemTagForUser(String tag) {
+
 		ItemTagSummaryResponse summary = null;
-		List<ItemTag> list = itemTagDAO.findByTag(tag);
+		List<ItemTag> list = itemTagDAO.findByTagForLocations(tag, getCurrentUser().getLocations());
 		
 		if( list != null && list.size() == 1){
 			summary = new ItemTagSummaryResponse(list.get(0));
 		}
 		return summary;
 	}
-	
+
 	@Override
-	public List<ItemTagSummaryResponse> findSummaryList() {
-		
+	public List<ItemTagSummaryResponse> findSummaryListForUser() {
+
 		List<ItemTagSummaryResponse> list = new ArrayList<>();
-		List<ItemTag> etList = itemTagDAO.findAll();
-		
+		List<ItemTag> etList = itemTagDAO.findAllForLocations(getCurrentUser().getLocations());
 		if (etList != null) {
 			for (ItemTag et: etList) {
 				list.add(new ItemTagSummaryResponse(et));
@@ -52,4 +65,5 @@ public class ItemTagServiceImpl implements ItemTagService {
 		}
 		return list;
 	}
+	
 }

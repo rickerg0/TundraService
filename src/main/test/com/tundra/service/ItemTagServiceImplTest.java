@@ -18,6 +18,7 @@ import com.tundra.dao.LocationDAO;
 import com.tundra.entity.ItemTag;
 import com.tundra.entity.Location;
 import com.tundra.response.ItemTagSummaryResponse;
+import com.tundra.service.admin.AdminItemTagService;
 import com.tundra.springconfig.ApplicationConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,6 +31,9 @@ public class ItemTagServiceImplTest {
 	
 	@Autowired 
 	private ItemTagService itemTagService;
+
+	@Autowired 
+	private AdminItemTagService adminItemTagService;
 
 	@Autowired
 	private LocationDAO locationDAO;
@@ -44,7 +48,7 @@ public class ItemTagServiceImplTest {
 	@Test
 	public void saveItemTagTest() {
 		
-		List<ItemTag> before = itemTagService.findAllTags();
+		List<ItemTagSummaryResponse> before = itemTagService.findSummaryList();
 		
 		ItemTag tag = new ItemTag();
 		tag.setTag("abcd-1234");
@@ -56,9 +60,9 @@ public class ItemTagServiceImplTest {
 		List<Location> locations = locationDAO.findAll();
 		tag.setLocation(locations.get(0));
 		
-		itemTagService.save(tag);
+		adminItemTagService.save(tag);
 		
-		List<ItemTag> after = itemTagService.findAllTags();
+		List<ItemTagSummaryResponse> after = itemTagService.findSummaryList();
 		
 		assertTrue((before.size() + 1) == after.size());
 		

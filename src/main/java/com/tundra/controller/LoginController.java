@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tundra.security.PublicAuthentication;
-import com.tundra.service.SecurityService;
+import com.tundra.security.service.SecurityService;
 
 import static com.tundra.security.SecurityConstants.HEADER_SECURITY_TOKEN;
 

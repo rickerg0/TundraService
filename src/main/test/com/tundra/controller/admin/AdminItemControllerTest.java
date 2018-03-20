@@ -27,7 +27,7 @@ import com.tundra.springconfig.ApplicationConfig;
 public class AdminItemControllerTest extends AbstractAdminControllerTest {
 
 	private static final String GET_TAG_URL = "/admin/tag/7c:ec:79:fc:ed:34-80";
-	private static final String SAVE_TAG_URL = "/admin/tag/save";
+	private static final String SAVE_TAG_URL = "/admin/tag/add";
 
 
 	@Autowired

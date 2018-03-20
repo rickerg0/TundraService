@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tundra.service.SecurityService;
+import com.tundra.security.service.SecurityService;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
 	

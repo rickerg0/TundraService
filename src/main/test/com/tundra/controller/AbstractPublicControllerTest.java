@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.tundra.dao.RegisteredDeviceDAO;
 import com.tundra.entity.RegisteredDevice;
 import com.tundra.security.PublicAuthentication;
-import com.tundra.service.SecurityService;
+import com.tundra.security.service.SecurityService;
 
 public class AbstractPublicControllerTest extends AbstractControllerTest {
 	

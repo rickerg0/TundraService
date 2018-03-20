@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tundra.dao.UserDAO;
 import com.tundra.entity.User;
 import com.tundra.response.AdminValidationResponse;
+import com.tundra.security.service.AdminSecurityService;
 import com.tundra.springconfig.ApplicationConfig;
 import com.tundra.test.AbstractTest;
 

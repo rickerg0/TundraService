@@ -12,7 +12,7 @@ import com.tundra.entity.Organization;
 import com.tundra.entity.User;
 import com.tundra.entity.UserAuthority;
 import com.tundra.security.Authority;
-import com.tundra.service.AdminSecurityService;
+import com.tundra.security.service.AdminSecurityService;
 
 public class AbstractTest {
 	
