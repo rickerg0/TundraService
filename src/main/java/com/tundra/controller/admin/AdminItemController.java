@@ -36,8 +36,7 @@ public class AdminItemController extends AbstractController {
 	private AdminItemTagService itemTagService;
 
 	
-	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
-					" and @adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).READ_TAG)")
+	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)")
 	@RequestMapping(value="{tag}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemTagByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="tag") String tag) {
@@ -45,8 +44,7 @@ public class AdminItemController extends AbstractController {
 		return new ResponseEntity<ItemTagSummaryResponse>(itemTagService.findSummaryByItemTagForUser(tag),HttpStatus.OK);
 	}
 	
-	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
-					" and @adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).READ_TAG)")
+	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)")
 	@RequestMapping(value="media/{id}", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItemMediaByTagId(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token, @PathVariable(value="id") Integer id) {
@@ -54,8 +52,7 @@ public class AdminItemController extends AbstractController {
 		return new ResponseEntity<ItemTagMedia>(itemTagService.findMediaById(id),HttpStatus.OK);
 	}
 		
-	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
-					" and @adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).READ_TAG)")
+	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)")
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getItems(HttpServletResponse httpResponse, 
 			@RequestHeader(value=HEADER_SECURITY_TOKEN) String token) {
@@ -63,8 +60,7 @@ public class AdminItemController extends AbstractController {
 		return new ResponseEntity<List<ItemTagSummaryResponse>>(itemTagService.findSummaryListForUser(),HttpStatus.OK);
 	}
 	
-	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
-					" and @adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).UPDATE_TAG)")
+	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)")
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="update", method=RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> update(HttpServletResponse httpResponse, 
@@ -76,8 +72,7 @@ public class AdminItemController extends AbstractController {
 		
 	}
 	
-	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)" + 
-					" and @adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).UPDATE_TAG)")
+	@PreAuthorize("@adminSecurityManager.isValidAdminUser(#httpResponse, #token)")
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="add", method=RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> add(HttpServletResponse httpResponse, 

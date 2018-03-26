@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.tundra.dao.ItemTagDAO;
@@ -22,6 +23,7 @@ public class AdminItemTagServiceImpl extends AbstractAdminService implements Adm
 	ItemTagMediaDAO itemTagMediaDAO;
 	
 	@Override
+	@PreAuthorize("@adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).READ_TAG)")
 	public ItemTagMedia findMediaById(Integer id) {
 		
 		ItemTagMedia media = null;
@@ -35,6 +37,7 @@ public class AdminItemTagServiceImpl extends AbstractAdminService implements Adm
 	}
 
 	@Override
+	@PreAuthorize("@adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).UPDATE_TAG)")
 	public void save(ItemTag tag) {
 		if (tag != null) {
 			itemTagDAO.save(tag);
@@ -42,6 +45,7 @@ public class AdminItemTagServiceImpl extends AbstractAdminService implements Adm
 	}
 
 	@Override
+	@PreAuthorize("@adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).READ_TAG)")
 	public ItemTagSummaryResponse findSummaryByItemTagForUser(String tag) {
 
 		ItemTagSummaryResponse summary = null;
@@ -54,6 +58,7 @@ public class AdminItemTagServiceImpl extends AbstractAdminService implements Adm
 	}
 
 	@Override
+	@PreAuthorize("@adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).READ_TAG)")
 	public List<ItemTagSummaryResponse> findSummaryListForUser() {
 
 		List<ItemTagSummaryResponse> list = new ArrayList<>();

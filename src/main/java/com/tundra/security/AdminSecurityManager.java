@@ -35,7 +35,6 @@ public class AdminSecurityManager {
 	public boolean hasAuthority(Authority authority) {
 		
 		AdminAuthentication auth = (AdminAuthentication)SecurityContextHolder.getContext().getAuthentication();
-		System.err.println("Checking authority: " + authority);
 		return auth.getAuthoritityList().contains(authority);
 	}
 }
