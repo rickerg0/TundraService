@@ -85,10 +85,4 @@ public class AbstractAdminControllerTest extends AbstractControllerTest {
 		return content;
 	}
 	
-	private void setSecurityContext() {
-		SecurityContext securityCtx = SecurityContextHolder.getContext();
-		AdminAuthentication auth = new AdminAuthentication(getUser(), "fauxtoken");
-		securityCtx.setAuthentication(auth);
-	}
-
 }

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tundra.dao.LocationDAO;
 import com.tundra.entity.ItemTag;
 import com.tundra.entity.Location;
+import com.tundra.response.AdminValidationResponse;
 import com.tundra.response.ItemTagSummaryResponse;
 import com.tundra.service.admin.AdminItemTagService;
 import com.tundra.springconfig.ApplicationConfig;
@@ -25,7 +27,7 @@ import com.tundra.springconfig.ApplicationConfig;
 @ContextConfiguration(classes = { ApplicationConfig.class })
 @WebAppConfiguration
 @Transactional // so tests roll back
-public class ItemTagServiceImplTest {
+public class ItemTagServiceImplTest extends AbstractServiceTest {
 
 	private static final String TAG = "7c:ec:79:fc:ed:34-90";
 	
@@ -37,6 +39,20 @@ public class ItemTagServiceImplTest {
 
 	@Autowired
 	private LocationDAO locationDAO;
+	
+	@Before
+	public void doBefore() {
+		
+		adminUser = getUser();
+		
+		setSecurityContext();
+		
+		userDAO.save(adminUser);
+		AdminValidationResponse response = adminSecurityService.login(USER_NAME, PASSWORD); 
+		String token = response.getToken();
+		
+		adminSecurityService.validate(token);
+	}
 	
 	@Test
 	public void getItemTagTest() {
@@ -66,6 +82,11 @@ public class ItemTagServiceImplTest {
 		
 		assertTrue((before.size() + 1) == after.size());
 		
+		after = itemTagService.findSummaryList();
+		
+		adminItemTagService.delete(tag);
+
+		assertTrue(before.size() == after.size());
 	}
 	
 }

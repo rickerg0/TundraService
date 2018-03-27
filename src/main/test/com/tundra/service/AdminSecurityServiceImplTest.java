@@ -20,19 +20,8 @@ import com.tundra.test.AbstractTest;
 @ContextConfiguration(classes = { ApplicationConfig.class })
 @WebAppConfiguration
 @Transactional // so tests roll back
-public class AdminSecurityServiceImplTest extends AbstractTest {
+public class AdminSecurityServiceImplTest extends AbstractServiceTest {
 
-	private static final String PASSWORD = "password";
-
-	@Autowired 
-	private AdminSecurityService adminSecurityService;
-	
-	@Autowired 
-	private UserDAO userDAO;
-	
-	
-	private User adminUser;
-	
 	@Before
 	public void doBefore() {
 	

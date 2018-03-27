@@ -27,7 +27,7 @@ public class AdminItemTagServiceImpl extends AbstractAdminService implements Adm
 	public ItemTagMedia findMediaById(Integer id) {
 		
 		ItemTagMedia media = null;
-		List<ItemTagMedia> list = itemTagMediaDAO.findByIdForLocations(id, getCurrentUser().getLocations());
+		List<ItemTagMedia> list = itemTagMediaDAO.findByIdForUserLocations(id, getCurrentUser().getLocations());
 		
 		if( list != null && list.size() == 1){
 			media = list.get(0);
@@ -49,7 +49,7 @@ public class AdminItemTagServiceImpl extends AbstractAdminService implements Adm
 	public ItemTagSummaryResponse findSummaryByItemTagForUser(String tag) {
 
 		ItemTagSummaryResponse summary = null;
-		List<ItemTag> list = itemTagDAO.findByTagForLocations(tag, getCurrentUser().getLocations());
+		List<ItemTag> list = itemTagDAO.findByTagForUserLocations(tag, getCurrentUser().getLocations());
 		
 		if( list != null && list.size() == 1){
 			summary = new ItemTagSummaryResponse(list.get(0));
@@ -62,13 +62,25 @@ public class AdminItemTagServiceImpl extends AbstractAdminService implements Adm
 	public List<ItemTagSummaryResponse> findSummaryListForUser() {
 
 		List<ItemTagSummaryResponse> list = new ArrayList<>();
-		List<ItemTag> etList = itemTagDAO.findAllForLocations(getCurrentUser().getLocations());
+		List<ItemTag> etList = itemTagDAO.findAllForUserLocations(getCurrentUser().getLocations());
 		if (etList != null) {
 			for (ItemTag et: etList) {
 				list.add(new ItemTagSummaryResponse(et));
 			}
 		}
 		return list;
+	}
+
+	@Override
+	@PreAuthorize("@adminSecurityManager.hasAuthority(T(com.tundra.security.Authority).DELETE_TAG)")
+	public void delete(ItemTag tag) {
+		// need to make sure the user has permission to the tag being deleted
+		List<ItemTag> list = itemTagDAO.findByIdForUserLocations(tag.getId(), getCurrentUser().getLocations());
+		if (list == null || list.isEmpty()) {
+			throw new SecurityException("Invalid permission for delete.");
+		}
+		itemTagDAO.delete(tag);
+		
 	}
 	
 }

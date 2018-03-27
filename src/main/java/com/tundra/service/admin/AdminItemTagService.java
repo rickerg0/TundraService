@@ -39,4 +39,12 @@ public interface AdminItemTagService {
 	 * @param tag
 	 */
 	void save (ItemTag tag);
+	
+	/**
+	 * Deletes an ItemTag
+	 * 
+	 * @param tag
+	 */
+	void delete(ItemTag tag);
+	
 }

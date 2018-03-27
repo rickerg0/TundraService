@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.tundra.dao.OrganizationDAO;
 import com.tundra.entity.Location;
 import com.tundra.entity.Organization;
 import com.tundra.entity.User;
 import com.tundra.entity.UserAuthority;
+import com.tundra.security.AdminAuthentication;
 import com.tundra.security.Authority;
 import com.tundra.security.service.AdminSecurityService;
 
@@ -41,12 +44,20 @@ public class AbstractTest {
 		List<Organization>orgs = organizationDAO.findAll();
 		user.setOrganization(orgs.get(0));
 		
-		user.setLocations(new HashSet<Location>(user.getOrganization().getLocationSet()));
+		Set<Location> locs = new HashSet<>();
+		
+		for (Organization org: orgs) {
+			locs.addAll(org.getLocationSet());
+		}
+		
+		//user.setLocations(new HashSet<>(user.getOrganization().getLocationSet()));
+		user.setLocations(locs);
 		
 		Set<UserAuthority> auths = new HashSet<>();
 		
 		auths.add(createAuth(user, Authority.READ_TAG));
 		auths.add(createAuth(user, Authority.UPDATE_TAG));
+		auths.add(createAuth(user, Authority.DELETE_TAG));
 		auths.add(createAuth(user, Authority.READ_ORGANIZATION));
 		
 		user.setUserAuthorities(auths);
@@ -63,4 +74,12 @@ public class AbstractTest {
 		return userauth;
 		
 	}
+	
+	protected void setSecurityContext() {
+		SecurityContext securityCtx = SecurityContextHolder.getContext();
+		AdminAuthentication auth = new AdminAuthentication(getUser(), "fauxtoken");
+		securityCtx.setAuthentication(auth);
+	}
+
+	
 }
