@@ -45,7 +45,7 @@ public class ItemTagServiceImplTest extends AbstractServiceTest {
 		
 		adminUser = getUser();
 		
-		setSecurityContext();
+		setSecurityContext(adminUser);
 		
 		userDAO.save(adminUser);
 		AdminValidationResponse response = adminSecurityService.login(USER_NAME, PASSWORD); 
@@ -82,10 +82,10 @@ public class ItemTagServiceImplTest extends AbstractServiceTest {
 		
 		assertTrue((before.size() + 1) == after.size());
 		
-		after = itemTagService.findSummaryList();
-		
 		adminItemTagService.delete(tag);
 
+		after = itemTagService.findSummaryList();
+		
 		assertTrue(before.size() == after.size());
 	}
 	

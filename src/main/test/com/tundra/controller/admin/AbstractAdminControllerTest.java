@@ -1,7 +1,6 @@
 package com.tundra.controller.admin;
 
 import static com.tundra.security.SecurityConstants.HEADER_SECURITY_TOKEN;
-
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,8 +12,6 @@ import java.nio.charset.Charset;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -22,7 +19,6 @@ import com.tundra.controller.AbstractControllerTest;
 import com.tundra.dao.RegisteredDeviceDAO;
 import com.tundra.dao.UserDAO;
 import com.tundra.response.AdminValidationResponse;
-import com.tundra.security.AdminAuthentication;
 import com.tundra.security.service.AdminSecurityService;
 
 public class AbstractAdminControllerTest extends AbstractControllerTest {
@@ -41,7 +37,11 @@ public class AbstractAdminControllerTest extends AbstractControllerTest {
 	UserDAO userDAO;
 	
 	String getResponseContent(MockMvc mockMvc, String url) throws Exception {
-		setSecurityContext();
+
+		adminUser = getUser();
+		
+		setSecurityContext(adminUser);
+		
 		// create a user and test auth
 		userDAO.save(getUser());
 		AdminValidationResponse response = securityService.login(USER_NAME, PASSWORD); 
@@ -62,7 +62,11 @@ public class AbstractAdminControllerTest extends AbstractControllerTest {
 	}
 	
 	String postResponseContent(MockMvc mockMvc, String url, Object payload) throws Exception {
-		setSecurityContext();
+
+		adminUser = getUser();
+		
+		setSecurityContext(adminUser);
+		
 		// create a user and test auth
 		userDAO.save(getUser());
 

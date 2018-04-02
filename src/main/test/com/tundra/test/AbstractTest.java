@@ -32,6 +32,8 @@ public class AbstractTest {
 	@Autowired
 	private OrganizationDAO organizationDAO;
 
+	protected User adminUser;
+	
 	protected User getUser() {
 		User user = new User();
 		
@@ -75,9 +77,9 @@ public class AbstractTest {
 		
 	}
 	
-	protected void setSecurityContext() {
+	protected void setSecurityContext(User adminUser) {
 		SecurityContext securityCtx = SecurityContextHolder.getContext();
-		AdminAuthentication auth = new AdminAuthentication(getUser(), "fauxtoken");
+		AdminAuthentication auth = new AdminAuthentication(adminUser, "fauxtoken");
 		securityCtx.setAuthentication(auth);
 	}
 
